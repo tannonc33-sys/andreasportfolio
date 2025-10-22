@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Shop</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <!-- Page-specific content goes here -->
+    <section class="hero">
+        <h1>Shop</h1>
+        <p class="small">Demo products to show e-commerce layout.</p>
+    </section>
+    <section class="products" id="shop-list"></section>
+
+    <script type="module">
+        import { addToCart } from './assets/js/main.js';
+        const products = [
+            { id: 'print-01', name: 'Ocean Print', price: 24.00, img: 'assets/img/IMG_1234.jpg' },
+            { id: 'print-02', name: 'Mountain Print', price: 24.00, img: 'assets/img/IMG_1235.jpg' },
+            { id: 'sticker-01', name: 'Sticker Pack', price: 9.00, img: 'assets/img/IMG_1236.jpg' }
+        ];
+        const list = document.getElementById('shop-list');
+        list.innerHTML = products.map(p => `
+            <article class="product">
+                <img src="${p.img}" alt="${p.name}"/>
+                <div class="info">
+                    <h3>${p.name}</h3>
+                    <div class="price">$${p.price.toFixed(2)}</div>
+                    <button class="btn" data-id="${p.id}">Add to cart</button>
+                </div>
+            </article>
+        `).join('');
+        list.addEventListener('click', (e) => {
+            if (e.target.matches('button[data-id]')) {
+            const id = e.target.getAttribute('data-id');
+            const item = products.find(p => p.id === id);
+            addToCart({ id: item.id, name: item.name, price: item.price });
+            }
+        });
+    </script>
+  </main>
+
+  <div id="site-footer"></div>
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

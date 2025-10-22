@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Contact</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <!-- Page-specific content goes here -->
+    <section class="hero">
+        <h1>Contact</h1>
+        <p class="small">Tell me about your project — I'll reply within 1–2 business days.</p>
+    </section>
+    <form class="grid" onsubmit="event.preventDefault(); alert('This is a static demo. Hook up a backend later.');">
+        <div class="card" style="grid-column: span 6;">
+            <label>Name</label><input class="input" required placeholder="Your name"/>
+        </div>
+        <div class="card" style="grid-column: span 6;">
+            <label>Email</label><input class="input" type="email" required placeholder="you@example.com"/>
+        </div>
+        <div class="card" style="grid-column: span 12;">
+            <label>Project details</label><textarea class="textarea" placeholder="What are you building?"></textarea>
+        </div>
+        <div style="grid-column: span 12; display:flex; gap:10px;">
+            <button class="btn" type="submit">Send</button>
+            <a class="btn ghost" href="mailto:hello@example.com">Email instead</a>
+        </div>
+    </form>
+  </main>
+
+  <div id="site-footer"></div>
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
