@@ -1,0 +1,29 @@
+:root{
+  /* palette: deep red w/ warm neutrals */
+  --bg:#0f0f10;
+  --card:#151517;
+  --text:#f6f5f3;
+  --muted:#b9b6b0;
+  --red:#b71525;        /* primary red */
+  --red-600:#9c0f1d;    /* hover */
+  --line:#242326;
+}
+body{
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+.serif{ font-family: "Cormorant Garamond", serif; }
+
+.logo{
+  font-family:"Cormorant Garamond", serif;
+  font-weight:600;
+  letter-spacing:.5px;
+  font-size:1.25rem;
+}
+.logo .dot{
+  color:var(--red);
+}
+.cta{ background:var(--red); }
+.cta:hover{ background:var(--red-600); }
+.btn{ background:var(--red); }
+.btn:hover{ background:var(--red-600); }
+.nav-links a.active, .nav-links a:hover{ background:#1e1d21; }

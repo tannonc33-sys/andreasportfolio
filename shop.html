@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="Paintings and ceramics by Andrea — organic, elegant works for home and gallery.">
   <title>Shop</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,36 +15,48 @@
   <main class="container">
     <!-- Page-specific content goes here -->
     <section class="hero">
-        <h1>Shop</h1>
-        <p class="small">Demo products to show e-commerce layout.</p>
+        <h1 class="serif">Shop</h1>
+        <p class="small">Original ceramics & paintings, plus limited edition prints.</p>
     </section>
-    <section class="products" id="shop-list"></section>
+
+    <h2 class="serif">Originals</h2>
+    <section class="products" id="originals"></section>
+
+    <h2 class="serif" style="margin-top:24px;">Prints</h2>
+    <section class="products" id="prints"></section>
 
     <script type="module">
         import { addToCart } from './assets/js/main.js';
-        const products = [
-            { id: 'print-01', name: 'Ocean Print', price: 24.00, img: 'assets/img/IMG_1234.jpg' },
-            { id: 'print-02', name: 'Mountain Print', price: 24.00, img: 'assets/img/IMG_1235.jpg' },
-            { id: 'sticker-01', name: 'Sticker Pack', price: 9.00, img: 'assets/img/IMG_1236.jpg' }
+
+        const originals = [
+            { id:'orig-vase-01', name:'Soft Vessel No. 3', price:180.00, img:'assets/img/IMG_2567.JPG' },
+            { id:'orig-paint-01', name:'Red Horizon (Original)', price:950.00, img:'assets/img/IMG_1113.jpg' }
         ];
-        const list = document.getElementById('shop-list');
-        list.innerHTML = products.map(p => `
+        const prints = [
+            { id:'print-horizon-01', name:'Red Horizon — 12×16" Print', price:45.00, img:'assets/img/IMG_1113.jpg' }
+        ];
+
+        function render(list, elId){
+            const el = document.getElementById(elId);
+            el.innerHTML = list.map(p => `
             <article class="product">
-                <img src="${p.img}" alt="${p.name}"/>
+                <img src="${p.img}" alt="${p.name}">
                 <div class="info">
-                    <h3>${p.name}</h3>
-                    <div class="price">$${p.price.toFixed(2)}</div>
-                    <button class="btn" data-id="${p.id}">Add to cart</button>
+                <h3>${p.name}</h3>
+                <div class="price">$${p.price.toFixed(2)}</div>
+                <button class="btn" data-id="${p.id}">Add to cart</button>
                 </div>
-            </article>
-        `).join('');
-        list.addEventListener('click', (e) => {
-            if (e.target.matches('button[data-id]')) {
-            const id = e.target.getAttribute('data-id');
-            const item = products.find(p => p.id === id);
-            addToCart({ id: item.id, name: item.name, price: item.price });
+            </article>`).join('');
+            el.addEventListener('click', e=>{
+            if(e.target.matches('button[data-id]')){
+                const id=e.target.getAttribute('data-id');
+                const item=[...originals, ...prints].find(p=>p.id===id);
+                addToCart({ id:item.id, name:item.name, price:item.price });
             }
-        });
+            });
+        }
+        render(originals,'originals');
+        render(prints,'prints');
     </script>
   </main>
 
