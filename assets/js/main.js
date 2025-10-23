@@ -1,44 +1,27 @@
 // assets/js/main.js
+async function load(id, url){
+  const host = document.getElementById(id);
+  if(!host) return;
+  const res = await fetch(url);
+  host.innerHTML = await res.text();
 
-// Mobile menu
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-burger]');
-  if (btn) document.querySelector('.nav-links')?.classList.toggle('open');
-});
-
-// Load header/footer on every page
-async function loadPartials() {
-  const header = document.getElementById('site-header');
-  const footer = document.getElementById('site-footer');
-  try {
-    // IMPORTANT: use RELATIVE paths (no leading slash) so it works on GitHub Pages
-    if (header) header.innerHTML = await (await fetch('partials/header.html')).text();
-    if (footer) footer.innerHTML = await (await fetch('partials/footer.html')).text();
-
-    // highlight active link
-    const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    document.querySelectorAll('a[data-link]').forEach(a => {
-      const href = a.getAttribute('href') || '';
-      if (href.toLowerCase().endsWith(path)) a.classList.add('active');
-    });
-  } catch (err) {
-    console.warn('Run with a local server so fetch() can load partials.', err);
-  }
+  // mark active nav
+  const path = location.pathname.split('/').pop() || 'index.html';
+  host.querySelectorAll('.nav-links a').forEach(a=>{
+    const href = a.getAttribute('href');
+    if(href === path) a.classList.add('active');
+  });
 }
-loadPartials();
 
-// Simple cart using localStorage
-const CART_KEY = 'cart_items_v1';
-export function addToCart(item) {
-  const items = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-  const existing = items.find(i => i.id === item.id);
-  if (existing) { existing.qty += item.qty || 1; } else { items.push({...item, qty: item.qty || 1}); }
-  localStorage.setItem(CART_KEY, JSON.stringify(items));
+load('site-header', 'partials/header.html');
+load('site-footer', 'partials/footer.html');
+
+// --- simple cart helpers (if you used them before) ---
+export function addToCart(item){
+  const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+  cart.push(item);
+  localStorage.setItem('cart', JSON.stringify(cart));
   alert('Added to cart');
 }
-export function getCart() { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); }
-export function removeFromCart(id) {
-  const items = getCart().filter(i => i.id !== id);
-  localStorage.setItem(CART_KEY, JSON.stringify(items));
-}
-export function clearCart() { localStorage.removeItem(CART_KEY); }
+export function getCart(){ return JSON.parse(localStorage.getItem('cart')||'[]'); }
+export function clearCart(){ localStorage.removeItem('cart'); }
