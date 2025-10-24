@@ -39,10 +39,11 @@ body {
 /* header / nav */
 .site-header{
   position:sticky; top:0; z-index:20;
-  background:rgba(15,15,16,.8);
-  backdrop-filter:blur(6px);
+  background:var(--card);           /* light */
+  backdrop-filter:saturate(100%);   /* keep a tiny effect, but not dark blur */
   border-bottom:1px solid var(--line);
 }
+
 .nav{display:flex;align-items:center;justify-content:space-between}
 .logo{
   font-family:"Cormorant Garamond", serif;

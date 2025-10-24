@@ -30,33 +30,7 @@
     <section class="products" id="gallery">
       <!-- Paintings -->
       <article class="product" data-cat="paintings">
-        <a href="assets/img/IMG_1113.jpg" data-lightbox data-title="Red Horizon — Oil on linen, 24 × 18 in, 2025">
-          <img src="assets/img/IMG_1113.jpg" alt="Red Horizon, oil on linen">
-        </a>
-        <div class="info">
-          <h3>Red Horizon</h3>
-          <p class="small">Oil on linen, 24 × 18 in (2025)</p>
-        </div>
-      </article>
-
-      <article class="product" data-cat="paintings">
-        <a href="assets/img/IMG_1224.jpeg" data-lightbox data-title="Field Study — Oil on panel, 12 × 16 in, 2025">
-          <img src="assets/img/IMG_1224.jpeg" alt="Field Study, oil on panel">
-        </a>
-        <div class="info">
-          <h3>Field Study</h3>
-          <p class="small">Oil on panel, 12 × 16 in (2025)</p>
-        </div>
-      </article>
-
-      <article class="product" data-cat="paintings">
-        <a href="assets/img/IMG_2068.jpeg" data-lightbox data-title="Soft Edge — Oil on linen, 20 × 16 in, 2024">
-          <img src="assets/img/IMG_2068.jpeg" alt="Soft Edge, oil on linen">
-        </a>
-        <div class="info">
-          <h3>Soft Edge</h3>
-          <p class="small">Oil on linen, 20 × 16 in (2024)</p>
-        </div>
+    
       </article>
 
       <!-- Ceramics -->
@@ -88,6 +62,34 @@
           <h3>Curve Bowl</h3>
           <p class="small">Stoneware, satin glaze, 7 in Ø</p>
         </div>
+
+        <a href="assets/img/IMG_1113.jpg" data-lightbox data-title="Red Horizon — Oil on linen, 24 × 18 in, 2025">
+          <img src="assets/img/IMG_1113.jpg" alt="Red Horizon, oil on linen">
+        </a>
+        <div class="info">
+          <h3>Red Horizon</h3>
+          <p class="small">Oil on linen, 24 × 18 in (2025)</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="paintings">
+        <a href="assets/img/IMG_1224.jpeg" data-lightbox data-title="Field Study — Oil on panel, 12 × 16 in, 2025">
+          <img src="assets/img/IMG_1224.jpeg" alt="Field Study, oil on panel">
+        </a>
+        <div class="info">
+          <h3>Field Study</h3>
+          <p class="small">Oil on panel, 12 × 16 in (2025)</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="paintings">
+        <a href="assets/img/IMG_2068.jpeg" data-lightbox data-title="Soft Edge — Oil on linen, 20 × 16 in, 2024">
+          <img src="assets/img/IMG_2068.jpeg" alt="Soft Edge, oil on linen">
+        </a>
+        <div class="info">
+          <h3>Soft Edge</h3>
+          <p class="small">Oil on linen, 20 × 16 in (2024)</p>
+        </div>
       </article>
     </section>
   </main>
@@ -109,16 +111,24 @@
     // FILTERS
     const buttons = document.querySelectorAll('.filters [data-filter]');
     const cards = document.querySelectorAll('#gallery .product');
-    buttons.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const f = btn.dataset.filter;
-        buttons.forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        cards.forEach(card=>{
-          card.style.display = (f==='all' || card.dataset.cat===f) ? '' : 'none';
-        });
+
+    function applyFilter(f){
+      buttons.forEach(b=>b.classList.toggle('active', b.dataset.filter === f));
+      cards.forEach(card=>{
+        card.style.display = (f==='all' || card.dataset.cat===f) ? '' : 'none';
       });
+    }
+
+    buttons.forEach(btn=>{
+      btn.addEventListener('click', ()=> applyFilter(btn.dataset.filter));
     });
+
+    // Default to ceramics
+    applyFilter('ceramics');
+
+    // --- lightbox code stays the same below ---
+  </script>
+
 
     // LIGHTBOX
     const lb = document.getElementById('lightbox');
