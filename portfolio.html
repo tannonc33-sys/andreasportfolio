@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="Paintings and ceramics by Andrea — organic, elegant works for home and gallery.">
-  <title>Portfolio</title>
+  <title>Portfolio — Andrea</title>
+
+  <!-- Fonts + Styles -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css"/>
@@ -13,37 +14,150 @@
   <div id="site-header"></div>
 
   <main class="container">
-    <!-- Page-specific content goes here -->
     <section class="hero">
       <h1 class="serif">Portfolio</h1>
       <p class="small">Selected works in painting and ceramics.</p>
     </section>
-    <h2 id="paintings" class="serif">Paintings</h2>
-    <div class="products">
-      <!-- Repeat item blocks as needed -->
-      <article class="product">
-        <img src="assets/img/IMG_1113.jpg" alt="Painting title by Andrea">
+
+    <!-- Filters -->
+    <div class="filters">
+      <button class="btn ghost" data-filter="all">All</button>
+      <button class="btn ghost" data-filter="paintings">Paintings</button>
+      <button class="btn ghost" data-filter="ceramics">Ceramics</button>
+    </div>
+
+    <!-- Gallery grid -->
+    <section class="products" id="gallery">
+      <!-- Paintings -->
+      <article class="product" data-cat="paintings">
+        <a href="assets/img/IMG_1113.jpg" data-lightbox data-title="Red Horizon — Oil on linen, 24 × 18 in, 2025">
+          <img src="assets/img/IMG_1113.jpg" alt="Red Horizon, oil on linen">
+        </a>
         <div class="info">
           <h3>Red Horizon</h3>
-          <p class="small">Oil on linen, 24 × 18 in, 2025</p>
+          <p class="small">Oil on linen, 24 × 18 in (2025)</p>
         </div>
       </article>
-      <!-- ...more paintings -->
-    </div>
-    <h2 id="ceramics" class="serif" style="margin-top:32px;">Ceramics</h2>
-    <div class="products">
-      <article class="product">
-        <img src="assets/img/IMG_2567.JPG" alt="Stoneware vase by Andrea">
+
+      <article class="product" data-cat="paintings">
+        <a href="assets/img/IMG_1224.jpeg" data-lightbox data-title="Field Study — Oil on panel, 12 × 16 in, 2025">
+          <img src="assets/img/IMG_1224.jpeg" alt="Field Study, oil on panel">
+        </a>
+        <div class="info">
+          <h3>Field Study</h3>
+          <p class="small">Oil on panel, 12 × 16 in (2025)</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="paintings">
+        <a href="assets/img/IMG_2068.jpeg" data-lightbox data-title="Soft Edge — Oil on linen, 20 × 16 in, 2024">
+          <img src="assets/img/IMG_2068.jpeg" alt="Soft Edge, oil on linen">
+        </a>
+        <div class="info">
+          <h3>Soft Edge</h3>
+          <p class="small">Oil on linen, 20 × 16 in (2024)</p>
+        </div>
+      </article>
+
+      <!-- Ceramics -->
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_2567.JPG" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in tall">
+          <img src="assets/img/IMG_2567.JPG" alt="Soft Vessel No. 3, stoneware">
+        </a>
         <div class="info">
           <h3>Soft Vessel No. 3</h3>
-          <p class="small">Stoneware, satin glaze, 9 in tall</p>
+          <p class="small">Stoneware, satin glaze, 9 in</p>
         </div>
       </article>
-      <!-- ...more ceramics -->
-    </div>
+
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_2576.JPG" data-lightbox data-title="Arc Cup — Stoneware, satin glaze, 8 oz">
+          <img src="assets/img/IMG_2576.JPG" alt="Arc Cup, stoneware">
+        </a>
+        <div class="info">
+          <h3>Arc Cup</h3>
+          <p class="small">Stoneware, satin glaze, 8 oz</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_2073.jpeg" data-lightbox data-title="Curve Bowl — Stoneware, satin glaze, 7 in Ø">
+          <img src="assets/img/IMG_2073.jpeg" alt="Curve Bowl, stoneware">
+        </a>
+        <div class="info">
+          <h3>Curve Bowl</h3>
+          <p class="small">Stoneware, satin glaze, 7 in Ø</p>
+        </div>
+      </article>
+    </section>
   </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" aria-hidden="true">
+    <button class="lb-close" aria-label="Close">×</button>
+    <img class="lb-img" alt="">
+    <div class="lb-caption"></div>
+    <button class="lb-prev" aria-label="Previous">‹</button>
+    <button class="lb-next" aria-label="Next">›</button>
+  </div>
 
   <div id="site-footer"></div>
   <script type="module" src="assets/js/main.js"></script>
+
+  <!-- Page-only script: filters + lightbox -->
+  <script type="module">
+    // FILTERS
+    const buttons = document.querySelectorAll('.filters [data-filter]');
+    const cards = document.querySelectorAll('#gallery .product');
+    buttons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const f = btn.dataset.filter;
+        buttons.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        cards.forEach(card=>{
+          card.style.display = (f==='all' || card.dataset.cat===f) ? '' : 'none';
+        });
+      });
+    });
+
+    // LIGHTBOX
+    const lb = document.getElementById('lightbox');
+    const lbImg = lb.querySelector('.lb-img');
+    const lbCap = lb.querySelector('.lb-caption');
+    const links = [...document.querySelectorAll('[data-lightbox]')];
+    let idx = -1;
+
+    function open(i){
+      idx = i;
+      const a = links[idx];
+      lbImg.src = a.getAttribute('href');
+      lbImg.alt = a.dataset.title || '';
+      lbCap.textContent = a.dataset.title || '';
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    }
+    function close(){
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+    }
+    function next(){ open((idx+1)%links.length); }
+    function prev(){ open((idx-1+links.length)%links.length); }
+
+    links.forEach((a,i)=>{
+      a.addEventListener('click', e=>{ e.preventDefault(); open(i); });
+    });
+    lb.querySelector('.lb-close').addEventListener('click', close);
+    lb.querySelector('.lb-next').addEventListener('click', next);
+    lb.querySelector('.lb-prev').addEventListener('click', prev);
+    lb.addEventListener('click', e=>{ if(e.target===lb) close(); });
+    window.addEventListener('keydown', e=>{
+      if(!lb.classList.contains('open')) return;
+      if(e.key==='Escape') close();
+      if(e.key==='ArrowRight') next();
+      if(e.key==='ArrowLeft') prev();
+    });
+  </script>
 </body>
 </html>

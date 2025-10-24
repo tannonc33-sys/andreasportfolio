@@ -85,3 +85,34 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
 
 /* footer */
 .site-footer{ margin-top:24px; border-top:1px solid var(--line); padding:24px 0 }
+
+/* PORTFOLIO PAGE */
+
+/* portfolio filters */
+.filters{ display:flex; gap:8px; padding:0 24px 8px; }
+.filters .btn.ghost.active{ border-color:var(--red); }
+
+/* lightbox */
+#lightbox{
+  position:fixed; inset:0; background:rgba(0,0,0,.8);
+  display:none; align-items:center; justify-content:center; z-index:1000;
+}
+#lightbox.open{ display:flex; }
+#lightbox .lb-img{
+  max-width:min(92vw,1200px); max-height:82vh; border-radius:10px;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+#lightbox .lb-caption{
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  color:var(--text); background:rgba(21,21,23,.85);
+  border:1px solid var(--line); border-radius:12px; padding:10px 14px;
+  max-width:min(92vw,900px); text-align:center;
+}
+#lightbox .lb-close, #lightbox .lb-prev, #lightbox .lb-next{
+  position:fixed; background:rgba(21,21,23,.85); color:var(--text);
+  border:1px solid var(--line); border-radius:10px; padding:6px 12px;
+  font-size:24px; line-height:1; cursor:pointer;
+}
+#lightbox .lb-close{ top:24px; right:24px; }
+#lightbox .lb-prev{ left:24px; top:50%; transform:translateY(-50%); }
+#lightbox .lb-next{ right:24px; top:50%; transform:translateY(-50%); }
