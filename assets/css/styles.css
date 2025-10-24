@@ -1,12 +1,12 @@
 :root{
-  /* palette: deep red w/ warm neutrals */
-  --bg:#0f0f10;
-  --card:#151517;
-  --text:#f6f5f3;
-  --muted:#b9b6b0;
-  --red:#b71525;      /* primary red */
-  --red-600:#9c0f1d;  /* hover */
-  --line:#242326;
+  /* palette: creamy light mode w/ deep red accents */
+  --bg:#f7f4ef;         /* background (soft cream) */
+  --card:#ffffff;       /* cards and sections */
+  --text:#2b2b2b;       /* main text */
+  --muted:#7a7a7a;      /* subtle text */
+  --red:#a02a2a;        /* primary red */
+  --red-600:#c23b3b;    /* hover red */
+  --line:#e5e0d8;       /* light beige border */
 }
 
 /* reset / base */
@@ -14,12 +14,24 @@
 html,body{margin:0;padding:0}
 img{max-width:100%;display:block}
 a{color:inherit}
-body{
-  background:var(--bg);
-  color:var(--text);
+body {
+  background-color: var(--bg);
+  color: var(--text);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  line-height:1.6;
+  line-height: 1.6;
+  transition: background-color .3s ease, color .3s ease;
 }
+
+.site-header, .site-footer {
+  background: var(--card);
+  border-color: var(--line);
+}
+
+.card {
+  background: var(--card);
+  border-color: var(--line);
+}
+
 .serif{ font-family:"Cormorant Garamond", serif; }
 
 .container{max-width:1100px;margin:0 auto;padding:24px}
