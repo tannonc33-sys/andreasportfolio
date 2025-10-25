@@ -77,6 +77,74 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
 
 /* --- Portfolio polish --- */
 
+/* Image link must be positioned for overlays */
+.product a{
+  position: relative;
+  display: block;
+  line-height: 0;
+  overflow: hidden;
+}
+
+/* --- Cream gradient fade (under the caption) --- */
+.product a::before{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 46%;
+  /* soft cream to transparent; tweak stops if you want more/less fade */
+  background: linear-gradient(
+    to top,
+    rgba(247, 244, 239, .95) 0%,   /* #f7f4ef with alpha */
+    rgba(247, 244, 239, .75) 55%,
+    rgba(247, 244, 239, 0) 100%
+  );
+  border-top: 1px solid #e5de08;  /* light beige line to match scheme */
+  transform: translateY(12%);
+  opacity: 0;
+  transition: transform .35s ease, opacity .35s ease;
+  pointer-events: none;
+  z-index: 0; /* sits under the text label */
+}
+
+/* --- Caption pulled from aria-label (stays on top) --- */
+.product a::after{
+  content: attr(aria-label);
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 14px 16px;
+  color: #9d1525;              /* primary red text */
+  font-weight: 600;
+  letter-spacing: .2px;
+  line-height: 1.3;
+  /* no solid background now — the cream fade shows through */
+  background: transparent;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform .35s ease, opacity .35s ease;
+  pointer-events: none;
+  z-index: 1; /* above the gradient */
+}
+
+/* Reveal on hover/focus */
+.product:hover a::before,
+.product:hover a::after,
+.product a:focus-visible::before,
+.product a:focus-visible::after{
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Reduced motion: keep it simple */
+@media (prefers-reduced-motion: reduce){
+  .product a::before,
+  .product a::after{
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+
 /* Keep grid as-is but give it some breathing room */
 .products{ gap:28px; padding:16px 0 48px; }
 
