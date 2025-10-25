@@ -194,7 +194,6 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
   overflow: hidden; 
 }
 
-/* Overlay caption pulled from aria-label */
 /* --- Caption overlay with warm cream + red accent --- */
 .product a { 
   position: relative; 
