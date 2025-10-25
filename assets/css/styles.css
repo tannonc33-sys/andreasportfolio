@@ -8,9 +8,10 @@
   --red-600:#c23b3b;    /* hover red */
   --line:#e5e0d8;       /* light beige border */
   --gold:#bfa06a;       /* accent gold */
+  --darkgreen:#3a4a3a;   /* Main dark green */
 }
 
-/* reset / base */
+/* reset / base */v
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 img{max-width:100%;display:block}
@@ -24,8 +25,8 @@ body {
 }
 
 .site-header, .site-footer {
-  background: var(--card);
-  border-color: var(--line);
+  background: var(--darkgreen);
+  /*border-color: var(--line);*/
 }
 
 .card {
