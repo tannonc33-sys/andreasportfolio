@@ -1,8 +1,8 @@
 :root{
   /* palette: creamy light mode w/ deep red accents */
   --bg:#f7f4ef;         /* background (soft cream) */
-  --card:#0E332A;       /* cards and sections */
-  --text:#D39A0B;       /* main text */
+  --card:#ffffff;       /* cards and sections */
+  --text:#2b2b2b;       /* main text */
   --muted:#7a7a7a;      /* subtle text */
   --red:#a02a2a;        /* primary red */
   --red-600:#c23b3b;    /* hover red */
