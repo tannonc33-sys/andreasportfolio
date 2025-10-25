@@ -82,6 +82,33 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
   grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
 }
 
+/* --- Card tilt setup --- */
+.products {               /* the grid wrapper */
+  perspective: 900px;     /* adds depth for children */
+}
+
+.product {                 /* each card */
+  transform-style: preserve-3d;
+  transition: transform 120ms ease;
+  will-change: transform;
+}
+
+.product.tilt {            /* transform is driven via CSS vars set by JS */
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+}
+
+/* slightly snappier while moving over cards */
+.products:has(.product.tilt) .product { transition: transform 80ms ease; }
+
+/* Safety: if any old code was tilting the image only, neutralize it */
+.product img { transform: none !important; }
+
+/* Respect accessibility: completely disable the effect if motion is reduced */
+@media (prefers-reduced-motion: reduce) {
+  .product,
+  .product.tilt { transform: none !important; }
+}
+
 /* make each card a vertical stack */
 .product{
   display:flex;
@@ -90,64 +117,6 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
   border:1px solid var(--line);
   border-radius:14px;
   overflow:hidden;
-}
-
-/* --- Card 3D tilt on hover --- */
-.products {
-  /* perspective must be on the parent of transformed elements */
-  perspective: 1000px;
-}
-
-.product {
-  position: relative;
-  overflow: hidden;                /* keep the shine inside the card */
-  transform-style: preserve-3d;
-  will-change: transform;
-  transition: transform 180ms ease, box-shadow 180ms ease;
-  /* rotation + cursor position controlled from JS via CSS variables */
-  --rx: 0deg;
-  --ry: 0deg;
-  --mx: 50%;
-  --my: 50%;
-  transform: rotateX(var(--rx)) rotateY(var(--ry));
-}
-
-/* Slightly elevate on hover for a crisp feel (no movement in layout) */
-.product:hover {
-  box-shadow:
-    0 12px 24px rgba(0,0,0,.10),
-    0 2px 6px rgba(0,0,0,.06);
-}
-
-/* Soft “shine” that follows the cursor */
-.product::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    400px circle at var(--mx) var(--my),
-    rgba(255,255,255,.18),
-    rgba(255,255,255,0) 60%
-  );
-  opacity: 0;
-  transition: opacity 180ms ease;
-}
-
-.product:hover::after {
-  opacity: .9; /* tune to taste */
-}
-
-/* If you want the image to pop very slightly in 3D */
-.product img {
-  transform: translateZ(0); /* set a 3D context; change to 10px for stronger pop */
-  transition: transform 200ms ease;
-}
-
-/* Motion-safe: turn everything off for users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .product { transition: none; transform: none !important; }
-  .product::after { display: none !important; }
 }
 
 /* ensure the image box is consistent */

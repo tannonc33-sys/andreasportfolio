@@ -26,42 +26,52 @@ export function addToCart(item){
 export function getCart(){ return JSON.parse(localStorage.getItem('cart')||'[]'); }
 export function clearCart(){ localStorage.removeItem('cart'); }
 
-// Gentle 3D tilt that follows the cursor
-(function () {
-  const MAX_TILT = 8; // degrees (keep subtle)
-  const cards = document.querySelectorAll('.product');
+// --- Card tilt that follows the cursor across the grid ---
+(() => {
+  // Respect touch devices and reduced motion users
+  if (window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return;
 
-  // Respect reduced motion
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced || !cards.length) return;
+  const grid = document.querySelector('.products');
+  if (!grid) return;
 
-  cards.forEach((card) => {
-    const onMove = (e) => {
+  const cards = Array.from(grid.querySelectorAll('.product'));
+  if (!cards.length) return;
+
+  const MAX_DEG = 8; // maximum tilt angle in degrees
+
+  const clamp = (n, min, max) => (n < min ? min : n > max ? max : n);
+
+  function setTilt(e) {
+    const mx = e.clientX;
+    const my = e.clientY;
+
+    cards.forEach(card => {
       const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width;   // 0..1
-      const py = (e.clientY - r.top) / r.height;   // 0..1
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
 
-      // Map cursor position to rotation
-      const ry = (0.5 - px) * (MAX_TILT * 2); // rotateY: left/right
-      const rx = (py - 0.5) * (MAX_TILT * 2); // rotateX: up/down
+      // -1..1 relative offsets from the card center
+      const dx = (mx - cx) / (r.width / 2);
+      const dy = (my - cy) / (r.height / 2);
 
-      card.style.setProperty('--ry', `${ry}deg`);
-      card.style.setProperty('--rx', `${rx}deg`);
-      card.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
-      card.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
-    };
+      // Map to angles (invert X/Y to feel natural)
+      const ry = clamp(dx * MAX_DEG, -MAX_DEG, MAX_DEG);     // rotateY (left/right)
+      const rx = clamp(-dy * MAX_DEG, -MAX_DEG, MAX_DEG);    // rotateX (up/down)
 
-    const onLeave = () => {
-      card.style.transition = 'transform 220ms ease, box-shadow 220ms ease';
-      card.style.setProperty('--ry', '0deg');
-      card.style.setProperty('--rx', '0deg');
-      card.style.setProperty('--mx', '50%');
-      card.style.setProperty('--my', '50%');
-      // after the reset, restore normal transition
-      setTimeout(() => { card.style.transition = 'transform 180ms ease, box-shadow 180ms ease'; }, 220);
-    };
+      card.style.setProperty('--rx', `${rx.toFixed(2)}deg`);
+      card.style.setProperty('--ry', `${ry.toFixed(2)}deg`);
+      card.classList.add('tilt');
+    });
+  }
 
-    card.addEventListener('pointermove', onMove);
-    card.addEventListener('pointerleave', onLeave);
-  });
+  function resetTilt() {
+    cards.forEach(card => {
+      card.style.removeProperty('--rx');
+      card.style.removeProperty('--ry');
+      card.classList.remove('tilt');
+    });
+  }
+
+  grid.addEventListener('pointermove', setTilt);
+  grid.addEventListener('pointerleave', resetTilt);
 })();
