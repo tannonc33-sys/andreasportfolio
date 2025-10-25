@@ -41,7 +41,7 @@ body {
 /* header / nav */
 .site-header{
   position:sticky; top:0; z-index:20;
-  background:var(--card);           /* light */
+  background:var(--darkgreen);           /* light */
   backdrop-filter:saturate(100%);   /* keep a tiny effect, but not dark blur */
   border-bottom:1px solid var(--line);
 }
