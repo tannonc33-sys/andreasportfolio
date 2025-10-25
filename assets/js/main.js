@@ -26,7 +26,7 @@ export function addToCart(item){
 export function getCart(){ return JSON.parse(localStorage.getItem('cart')||'[]'); }
 export function clearCart(){ localStorage.removeItem('cart'); }
 
-// --- Card tilt that follows the cursor across the grid ---
+// --- Whole-card tilt that follows the cursor anywhere on the page ---
 (() => {
   // Respect touch devices and reduced motion users
   if (window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return;
@@ -37,41 +37,86 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   const cards = Array.from(grid.querySelectorAll('.product'));
   if (!cards.length) return;
 
-  const MAX_DEG = 8; // maximum tilt angle in degrees
+  const MAX_DEG = 8;          // max tilt angle
+  const SOFT_RADIUS = 0.8;    // larger = slower falloff with distance (0.6–1.2 feels good)
+  const UPDATE_MS = 120;      // how often to refresh rects on scroll/resize (ms)
 
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let ticking = false;
+
+  // cache card rects for faster math
+  let cardRects = [];
+  function cacheRects() {
+    cardRects = cards.map(c => {
+      const r = c.getBoundingClientRect();
+      return { el: c, rect: r };
+    });
+  }
+  cacheRects();
+
+  // refresh rects on resize/scroll (throttled)
+  let lastRectUpdate = 0;
+  function maybeUpdateRects() {
+    const now = performance.now();
+    if (now - lastRectUpdate > UPDATE_MS) {
+      cacheRects();
+      lastRectUpdate = now;
+    }
+  }
+  window.addEventListener('resize', cacheRects, { passive: true });
+  window.addEventListener('scroll',  () => { maybeUpdateRects(); }, { passive: true });
+
+  // map to [-1..1] with falloff so even far-away cursor still gives subtle tilt
   const clamp = (n, min, max) => (n < min ? min : n > max ? max : n);
 
-  function setTilt(e) {
-    const mx = e.clientX;
-    const my = e.clientY;
+  function update() {
+    ticking = false;
 
-    cards.forEach(card => {
-      const r = card.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
+    cardRects.forEach(({ el, rect }) => {
+      const cx = rect.left + rect.width  / 2;
+      const cy = rect.top  + rect.height / 2;
 
-      // -1..1 relative offsets from the card center
-      const dx = (mx - cx) / (r.width / 2);
-      const dy = (my - cy) / (r.height / 2);
+      // denom controls falloff; larger soft radius means the effect reaches farther
+      const denomX = (rect.width  / 2) * SOFT_RADIUS;
+      const denomY = (rect.height / 2) * SOFT_RADIUS;
 
-      // Map to angles (invert X/Y to feel natural)
-      const ry = clamp(dx * MAX_DEG, -MAX_DEG, MAX_DEG);     // rotateY (left/right)
-      const rx = clamp(-dy * MAX_DEG, -MAX_DEG, MAX_DEG);    // rotateX (up/down)
+      const dx = clamp((mouseX - cx) / denomX, -1, 1);
+      const dy = clamp((mouseY - cy) / denomY, -1, 1);
 
-      card.style.setProperty('--rx', `${rx.toFixed(2)}deg`);
-      card.style.setProperty('--ry', `${ry.toFixed(2)}deg`);
-      card.classList.add('tilt');
+      // distance-based falloff (optional but feels nice)
+      const dist = Math.hypot(dx, dy);        // 0..~1.4
+      const falloff = clamp(1 - dist * 0.35, 0, 1); // tweak 0.35 for softer/harder rolloff
+
+      const ry = clamp(dx * MAX_DEG * falloff, -MAX_DEG, MAX_DEG);   // left/right
+      const rx = clamp(-dy * MAX_DEG * falloff, -MAX_DEG, MAX_DEG);  // up/down
+
+      el.style.setProperty('--rx', `${rx.toFixed(2)}deg`);
+      el.style.setProperty('--ry', `${ry.toFixed(2)}deg`);
+      el.classList.add('tilt');
     });
   }
 
+  function onPointerMove(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    maybeUpdateRects();
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  // Reset gently if the pointer leaves the window
   function resetTilt() {
-    cards.forEach(card => {
-      card.style.removeProperty('--rx');
-      card.style.removeProperty('--ry');
-      card.classList.remove('tilt');
+    cards.forEach(c => {
+      c.style.removeProperty('--rx');
+      c.style.removeProperty('--ry');
+      c.classList.remove('tilt');
     });
   }
 
-  grid.addEventListener('pointermove', setTilt);
-  grid.addEventListener('pointerleave', resetTilt);
+  window.addEventListener('pointermove', onPointerMove, { passive: true });
+  window.addEventListener('pointerleave', resetTilt);
+  window.addEventListener('blur', resetTilt);
 })();
