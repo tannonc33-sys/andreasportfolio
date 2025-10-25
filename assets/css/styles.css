@@ -37,28 +37,43 @@ body {
 .container{max-width:1100px;margin:0 auto;padding:24px}
 
 /* header / nav */
-.site-header{
-  position:sticky; top:0; z-index:20;
-  background:var(--card);           /* light */
-  backdrop-filter:saturate(100%);   /* keep a tiny effect, but not dark blur */
-  border-bottom:1px solid var(--line);
+/* ===== NAV BAR STYLING ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--green-900); /* Dark lavish green background */
+  border-bottom: 1px solid color-mix(in oklab, var(--green-700) 40%, black);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(4px);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.nav{display:flex;align-items:center;justify-content:space-between}
-.logo{
-  font-family:"Cormorant Garamond", serif;
-  font-weight:600; letter-spacing:.5px; font-size:1.25rem;
+/* Logo text color */
+.logo, .logo a {
+  color: var(--bg); /* cream */
+  text-decoration: none;
+}
+.logo a:hover {
+  color: var(--gold-600); /* subtle gold hover */
 }
 
-.logo .dot{ color:var(--red); }
-.nav-links{display:flex; gap:8px; flex-wrap:wrap}
-.nav-links a{
-  padding:8px 10px; border-radius:8px; text-decoration:none;
-  color:var(--text); border:1px solid transparent;
+/* Nav links */
+.nav-links a {
+  color: var(--bg); /* cream text */
+  background: transparent;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: color 0.25s ease, background 0.25s ease;
 }
 
-.nav-links a.active,.nav-links a:hover{ background:#1e1d21; border-color:var(--line) }
-.burger{display:none}
+/* Hover / active states */
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--gold-600); /* warm gold on hover */
+  background: color-mix(in oklab, var(--green-800) 60%, transparent);
+}
 
 /* hero */
 .hero{padding:48px 24px 16px}
