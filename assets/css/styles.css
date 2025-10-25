@@ -49,10 +49,11 @@ body {
 .nav{display:flex;align-items:center;justify-content:space-between}
 .logo{
   font-family:"Cormorant Garamond", serif;
-  font-weight:600; letter-spacing:.5px; font-size:1.25rem;
+  font-weight:600; letter-spacing:.5px; font-size:1.5rem;
+  color:var(--gold);
 }
 
-.logo .dot{ color:var(--gold); }
+.logo .dot{ color:inherit; }
 .nav-links{display:flex; gap:8px; flex-wrap:wrap}
 .nav-links a{
   padding:8px 10px; border-radius:8px; text-decoration:none;
