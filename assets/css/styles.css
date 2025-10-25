@@ -7,6 +7,7 @@
   --red:#a02a2a;        /* primary red */
   --red-600:#c23b3b;    /* hover red */
   --line:#e5e0d8;       /* light beige border */
+  --gold:#bfa06a;       /* accent gold */
 }
 
 /* reset / base */
@@ -50,11 +51,11 @@ body {
   font-weight:600; letter-spacing:.5px; font-size:1.25rem;
 }
 
-.logo .dot{ color:var(--red); }
+.logo .dot{ color:var(--gold); }
 .nav-links{display:flex; gap:8px; flex-wrap:wrap}
 .nav-links a{
   padding:8px 10px; border-radius:8px; text-decoration:none;
-  color:var(--text); border:1px solid transparent;
+  color:var(--gold); border:1px solid transparent;
 }
 
 .nav-links a.active,.nav-links a:hover{ background:#1e1d21; border-color:var(--line) }
