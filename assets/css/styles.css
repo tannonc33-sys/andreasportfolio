@@ -43,7 +43,7 @@ body {
   position:sticky; top:0; z-index:20;
   background:var(--darkgreen);           /* light */
   backdrop-filter:saturate(100%);   /* keep a tiny effect, but not dark blur */
-  border-bottom:1px solid var(--line);
+  border-bottom:1px solid var(--gold);
 }
 
 .nav{display:flex;align-items:center;justify-content:space-between}
@@ -56,7 +56,7 @@ body {
 .nav-links{display:flex; gap:8px; flex-wrap:wrap}
 .nav-links a{
   padding:8px 10px; border-radius:8px; text-decoration:none;
-  color:var(--gold); border:1px solid transparent;
+  color:var(--red); border:1px solid transparent;
 }
 
 .nav-links a.active,.nav-links a:hover{ background:#1e1d21; border-color:var(--line) }
