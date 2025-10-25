@@ -210,6 +210,50 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
 }*/
 
 /* Optional: slight lift shadow */
-/*.product:active {*/
+/*.product:active {
   transform: translateY(-2px);
+}*/
+
+/* --- 3D tilt polish: depth shadow + ambient light ---------------------------------- */
+.products .product{
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  /* base shadow */
+  box-shadow:
+    0 4px 18px rgba(0,0,0,.08),
+    0 1px 0 rgba(0,0,0,.04);
 }
+
+/* Shadow that subtly “leans” in the direction of the cursor */
+.products .product{
+  /* JS keeps --dx / --dy in [-1, 1] */
+  --dx: 0;
+  --dy: 0;
+  box-shadow:
+    calc(var(--dx) * 8px) calc(var(--dy) * 8px) 24px rgba(0,0,0,.16),
+    0 3px 10px rgba(0,0,0,.06);
+}
+
+/* Ambient gallery light that follows the cursor */
+.products .product::before{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  /* JS sets --mx / --my as percentages within the card */
+  --mx: 50%; --my: 50%;
+  background:
+    radial-gradient(600px 600px at var(--mx) var(--my),
+      rgba(255,255,255,.18), rgba(255,255,255,0) 60%);
+  mix-blend-mode: soft-light;      /* feels like real gallery lighting */
+  opacity:.55;                     /* gentle; tweak 0.35–0.65 if desired */
+  transition: opacity .20s ease;
+  border-radius: inherit;
+}
+
+/* Optional: very soft lift when pointer is on the page (JS toggles this class) */
+.products.tilt-active .product::before{ opacity:.65; }
+
+/* Keep cards crisp */
+.products .product img{ display:block; width:100%; height:auto; }
