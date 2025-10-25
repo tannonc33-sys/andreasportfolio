@@ -1,61 +1,229 @@
-<main class="container">
-  <header class="hero">
-    <h1 class="serif">Portfolio</h1>
-    <small>Selected works in painting and ceramics.</small>
-  </header>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Portfolio — Andrea</title>
 
-  <!-- Filters -->
-  <div class="filters" id="filters">
-    <button class="btn ghost active" data-filter="all">All</button>
-    <button class="btn ghost" data-filter="paintings">Paintings</button>
-    <button class="btn ghost" data-filter="ceramics">Ceramics</button>
+  <!-- Fonts + Styles -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <section class="hero">
+      <h1 class="serif">Portfolio</h1>
+      <p class="small">Selected works in painting and ceramics.</p>
+    </section>
+
+    <!-- Filters -->
+    <div class="filters">
+      <button class="btn ghost" data-filter="all">All</button>
+      <button class="btn ghost" data-filter="paintings">Paintings</button>
+      <button class="btn ghost" data-filter="ceramics">Ceramics</button>
+    </div>
+
+    <!-- Gallery grid -->
+    <section class="products" id="gallery">
+      <!-- Paintings -->
+
+      <!-- Ceramics -->
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_2567.JPG" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2567.JPG"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
+        </a>
+        <div class="info">
+          <h3>Soft Vessel No. 3</h3>
+          <p class="small">Stoneware, satin glaze, 9 in</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_2576.JPG" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2576.JPG"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
+        </a>
+        <div class="info">
+          <h3>Arc Cup</h3>
+          <p class="small">Stoneware, satin glaze, 8 oz</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_2073.jpeg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2073.jpeg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
+        </a>
+        <div class="info">
+          <h3>Curve Bowl</h3>
+          <p class="small">Stoneware, satin glaze, 7 in Ø</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_1113.jpg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_1113.jpg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
+        </a>
+        <div class="info">
+          <h3>Red Horizon</h3>
+          <p class="small">Oil on linen, 24 × 18 in (2025)</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_1224.jpeg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_1224.jpeg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
+        </a>
+        <div class="info">
+          <h3>Field Study</h3>
+          <p class="small">Oil on panel, 12 × 16 in (2025)</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_2068.jpeg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2068.jpeg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
+        </a>
+        <div class="info">
+          <h3>Soft Edge</h3>
+          <p class="small">Oil on linen, 20 × 16 in (2024)</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_2065.jpeg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2065.jpeg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
+        </a>
+        <div class="info">
+          <h3>Soft Edge</h3>
+          <p class="small">Oil on linen, 20 × 16 in (2024)</p>
+        </div>
+      </article>
+
+      <article class="product" data-cat="ceramics">
+        <a href="assets/img/IMG_2585.JPG" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2585.JPG"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
+        </a>
+        <div class="info">
+          <h3>Soft Edge</h3>
+          <p class="small">Oil on linen, 20 × 16 in (2024)</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" aria-hidden="true">
+    <button class="lb-close" aria-label="Close">×</button>
+    <img class="lb-img" alt="">
+    <div class="lb-caption"></div>
+    <button class="lb-prev" aria-label="Previous">‹</button>
+    <button class="lb-next" aria-label="Next">›</button>
   </div>
 
-  <!-- Grid -->
-  <section class="products" id="products">
+  <div id="site-footer"></div>
+  <script type="module" src="assets/js/main.js"></script>
 
-    <!-- 1 — Ceramic -->
-    <article class="product" data-cat="ceramics">
-      <a href="assets/img/IMG_2576.JPG"
-         data-lightbox
-         data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in Ø"
-         aria-label="Soft Vessel No. 3">
-        <img src="assets/img/IMG_2576.JPG" alt="Soft Vessel No. 3">
-      </a>
-      <div class="info">
-        <h3 class="serif">Soft Vessel No. 3</h3>
-        <p class="meta">Stoneware, satin glaze, 9 in Ø</p>
-      </div>
-    </article>
+  <!-- Page-only script: filters + lightbox -->
+  <script type="module">
+    // FILTERS
+    const buttons = document.querySelectorAll('.filters [data-filter]');
+    const cards = document.querySelectorAll('#gallery .product');
 
-    <!-- 2 — Ceramic -->
-    <article class="product" data-cat="ceramics">
-      <a href="assets/img/IMG_2567.JPG"
-         data-lightbox
-         data-title="Arc Cup — Stoneware, satin glaze, 8 oz"
-         aria-label="Arc Cup">
-        <img src="assets/img/IMG_2567.JPG" alt="Arc Cup">
-      </a>
-      <div class="info">
-        <h3 class="serif">Arc Cup</h3>
-        <p class="meta">Stoneware, satin glaze, 8 oz</p>
-      </div>
-    </article>
+    function applyFilter(f){
+      buttons.forEach(b=>b.classList.toggle('active', b.dataset.filter === f));
+      cards.forEach(card=>{
+        card.style.display = (f==='all' || card.dataset.cat===f) ? '' : 'none';
+      });
+    }
 
-    <!-- 3 — Painting (example placeholder) -->
-    <article class="product" data-cat="paintings">
-      <a href="assets/img/IMG_2065.jpeg"
-         data-lightbox
-         data-title="Soft Edge — Oil on linen, 20 × 16 in (2024)"
-         aria-label="Soft Edge">
-        <img src="assets/img/IMG_2065.jpeg" alt="Soft Edge painting">
-      </a>
-      <div class="info">
-        <h3 class="serif">Soft Edge</h3>
-        <p class="meta">Oil on linen, 20 × 16 in (2024)</p>
-      </div>
-    </article>
+    buttons.forEach(btn=>{
+      btn.addEventListener('click', ()=> applyFilter(btn.dataset.filter));
+    });
 
-    <!-- Add more items by duplicating an <article class="product">…</article> -->
-  </section>
-</main>
+    // Default to ceramics
+    applyFilter('all');
+
+    // LIGHTBOX
+    const lb = document.getElementById('lightbox');
+    const lbImg = lb.querySelector('.lb-img');
+    const lbCap = lb.querySelector('.lb-caption');
+    const links = [...document.querySelectorAll('[data-lightbox]')];
+    let idx = -1;
+
+    function open(i){
+      idx = i;
+      const a = links[idx];
+      lbImg.src = a.getAttribute('href');
+      lbImg.alt = a.dataset.title || '';
+      lbCap.textContent = a.dataset.title || '';
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+    }
+    function close(){
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+    }
+    function next(){ open((idx+1)%links.length); }
+    function prev(){ open((idx-1+links.length)%links.length); }
+
+    links.forEach((a,i)=>{
+      a.addEventListener('click', e=>{ e.preventDefault(); open(i); });
+    });
+    lb.querySelector('.lb-close').addEventListener('click', close);
+    lb.querySelector('.lb-next').addEventListener('click', next);
+    lb.querySelector('.lb-prev').addEventListener('click', prev);
+    lb.addEventListener('click', e=>{ if(e.target===lb) close(); });
+    window.addEventListener('keydown', e=>{
+      if(!lb.classList.contains('open')) return;
+      if(e.key==='Escape') close();
+      if(e.key==='ArrowRight') next();
+      if(e.key==='ArrowLeft') prev();
+    });
+
+    // Make entire card open its lightbox image (but don't double-trigger when clicking the image)
+    document.querySelectorAll('#gallery .product').forEach(card=>{
+      card.addEventListener('click', (e)=>{
+        if (e.target.closest('a')) return;  // user clicked the image/link already
+        const a = card.querySelector('[data-lightbox]');
+        a?.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true}));
+      });
+      // Keyboard support: Enter opens lightbox when card is focused
+      card.tabIndex = 0;
+      card.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter'){
+          const a = card.querySelector('[data-lightbox]');
+          a?.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true}));
+        }
+      });
+    });
+  </script>
+</body>
+</html>
