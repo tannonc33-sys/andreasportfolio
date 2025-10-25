@@ -60,7 +60,7 @@ body {
   color:var(--gold); border:1px solid transparent;
 }
 
-.nav-links a.active,.nav-links a:hover{ background:#bfa06a; border-color:var(--red) }
+.nav-links a.active,.nav-links a:hover{ color:var(--red); border-color:var(--red) }
 .burger{display:none}
 
 /* hero */
