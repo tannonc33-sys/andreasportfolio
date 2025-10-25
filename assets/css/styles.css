@@ -232,8 +232,8 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
   --dx: 0;
   --dy: 0;
   box-shadow:
-    calc(var(--dx) * 8px) calc(var(--dy) * 8px) 24px rgba(87,6,6,0.35),
-    0 3px 10px rgba(87,6,6,0.35);
+    calc(var(--dx) * 8px) calc(var(--dy) * 8px) 24px rgba(87,6,6,0.25),
+    0 3px 10px rgba(87,6,6,0.25);
 }
 
 /* Ambient gallery light that follows the cursor */
