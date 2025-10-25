@@ -67,7 +67,7 @@ body {
 .hero{padding:48px 24px 16px}
 h1,h2,h3{margin:0 0 8px}
 h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
-.small{color:var(--muted); font-size:.95rem}
+.small{color:var(--gold); font-size:.95rem}
 
 /* cards / grid */
 .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:16px; padding:24px}
@@ -150,7 +150,7 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
 .cta:hover{ background:var(--red-600); }
 
 /* footer */
-.site-footer{ margin-top:24px; border-top:1px solid var(--line); padding:24px 0; color: #bfa06a; background: var(--darkgreen); }
+.site-footer{ margin-top:24px; border-top:1px solid var(--line); padding:24px 0 }
 
 /* PORTFOLIO PAGE */
 
