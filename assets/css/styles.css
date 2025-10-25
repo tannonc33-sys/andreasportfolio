@@ -50,16 +50,17 @@ body {
 .logo{
   font-family:"Cormorant Garamond", serif;
   font-weight:600; letter-spacing:.5px; font-size:1.25rem;
+  color:var(--gold);
 }
 
-.logo .dot{ color:var(--gold); }
+.logo .dot{ color:var(--red); }
 .nav-links{display:flex; gap:8px; flex-wrap:wrap}
 .nav-links a{
   padding:8px 10px; border-radius:8px; text-decoration:none;
   color:var(--gold); border:1px solid transparent;
 }
 
-.nav-links a.active,.nav-links a:hover{ background:#bfa06a; border-color:var(--red); color:var(--red) }
+.nav-links a.active,.nav-links a:hover{ background:#bfa06a; border-color:var(--red); color:var(--red); }
 .burger{display:none}
 
 /* hero */
