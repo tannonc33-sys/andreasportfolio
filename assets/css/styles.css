@@ -56,7 +56,7 @@ body {
 .nav-links{display:flex; gap:8px; flex-wrap:wrap}
 .nav-links a{
   padding:8px 10px; border-radius:8px; text-decoration:none;
-  color:var(--red); border:1px solid transparent;
+  color:var(--gold); border:1px solid transparent;
 }
 
 .nav-links a.active,.nav-links a:hover{ background:#1e1d21; border-color:var(--line) }
