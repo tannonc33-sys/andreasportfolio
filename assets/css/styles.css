@@ -59,7 +59,7 @@ body {
   color:var(--gold); border:1px solid transparent;
 }
 
-.nav-links a.active,.nav-links a:hover{ background:#bfa06a; border-color:var(--line); color:var(--red) }
+.nav-links a.active,.nav-links a:hover{ background:#bfa06a; border-color:var(--red); color:var(--red) }
 .burger{display:none}
 
 /* hero */
