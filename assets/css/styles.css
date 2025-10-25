@@ -1,7 +1,7 @@
 :root{
   /* palette: creamy light mode w/ deep red accents */
   --bg:#f7f4ef;         /* background (soft cream) */
-  --card:#ffffff;       /* cards and sections */
+  --card:#0E332A;       /* cards and sections */
   --text:#2b2b2b;       /* main text */
   --muted:#7a7a7a;      /* subtle text */
   --red:#a02a2a;        /* primary red */
