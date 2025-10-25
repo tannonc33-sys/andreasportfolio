@@ -156,3 +156,33 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
 #lightbox .lb-close{ top:24px; right:24px; }
 #lightbox .lb-prev{ left:24px; top:50%; transform:translateY(-50%); }
 #lightbox .lb-next{ right:24px; top:50%; transform:translateY(-50%); }
+
+/* Smooth hover effect for portfolio cards */
+.product {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.product:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+/* Image zooms in just a touch */
+.product img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+}
+
+.product:hover img {
+  transform: scale(1.05);
+}
+
+/* Optional: slight lift shadow */
+.product:active {
+  transform: translateY(-2px);
+}
