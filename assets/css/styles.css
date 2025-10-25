@@ -74,6 +74,74 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
 }
 
 /* product tiles (used for portfolio + shop) */
+
+/* --- Portfolio polish --- */
+
+/* Keep grid as-is but give it some breathing room */
+.products{ gap:28px; padding:16px 0 48px; }
+
+/* Make each card feel like a real object */
+.product{
+  display:flex; flex-direction:column;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow: 0 1px 0 rgba(0,0,0,.03);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.product{
+  display:flex; flex-direction:column;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow: 0 1px 0 rgba(0,0,0,.03);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+/* Image wrapper for clean zoom effect */
+.product a{ display:block; line-height:0; }
+.product img{
+  width:100%;
+  aspect-ratio: 4 / 3;
+  object-fit:cover;
+  display:block;
+  transition: transform .5s ease, filter .3s ease;
+}
+
+/* Hover: gentle lift + soft shadow; image zooms a touch */
+.product:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.07), 0 2px 6px rgba(0,0,0,.05);
+  border-color: #e7e0d6; /* slightly warmer on cream */
+}
+.product:hover img{ transform: scale(1.03); }
+
+/* Tidy text area */
+.product .info{ padding:14px 16px; }
+.product h3{ margin:0 0 6px; }
+.product .small{ color:var(--muted); }
+
+/* Sticky filters under the header for easier browsing */
+.filters{
+  position: sticky;
+  top: 72px;              /* adjust if your header height changes */
+  z-index: 5;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0 14px;
+  margin-bottom: 10px;
+}
+
+/* Focus style for keyboard users */
+.product a:focus-visible{
+  outline: 2px solid var(--red-600);
+  outline-offset: -2px;
+}
+
+
 /* uniform gallery grid */
 .products{
   display:grid;

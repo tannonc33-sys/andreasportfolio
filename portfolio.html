@@ -32,8 +32,11 @@
 
       <!-- Ceramics -->
       <article class="product" data-cat="ceramics">
-        <a href="assets/img/IMG_2567.JPG" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in tall">
-          <img src="assets/img/IMG_2567.JPG" alt="Soft Vessel No. 3, stoneware">
+        <a href="assets/img/IMG_2567.JPG" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2567.JPG"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
         </a>
         <div class="info">
           <h3>Soft Vessel No. 3</h3>
@@ -42,8 +45,11 @@
       </article>
 
       <article class="product" data-cat="ceramics">
-        <a href="assets/img/IMG_2576.JPG" data-lightbox data-title="Arc Cup — Stoneware, satin glaze, 8 oz">
-          <img src="assets/img/IMG_2576.JPG" alt="Arc Cup, stoneware">
+        <a href="assets/img/IMG_2576.JPG" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2576.JPG"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
         </a>
         <div class="info">
           <h3>Arc Cup</h3>
@@ -52,8 +58,11 @@
       </article>
 
       <article class="product" data-cat="ceramics">
-        <a href="assets/img/IMG_2073.jpeg" data-lightbox data-title="Curve Bowl — Stoneware, satin glaze, 7 in Ø">
-          <img src="assets/img/IMG_2073.jpeg" alt="Curve Bowl, stoneware">
+        <a href="assets/img/IMG_2073.jpeg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2073.jpeg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
         </a>
         <div class="info">
           <h3>Curve Bowl</h3>
@@ -62,8 +71,11 @@
       </article>
 
       <article class="product" data-cat="ceramics">
-        <a href="assets/img/IMG_1113.jpg" data-lightbox data-title="Red Horizon — Oil on linen, 24 × 18 in, 2025">
-          <img src="assets/img/IMG_1113.jpg" alt="Red Horizon, oil on linen">
+        <a href="assets/img/IMG_1113.jpg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_1113.jpg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
         </a>
         <div class="info">
           <h3>Red Horizon</h3>
@@ -72,8 +84,11 @@
       </article>
 
       <article class="product" data-cat="ceramics">
-        <a href="assets/img/IMG_1224.jpeg" data-lightbox data-title="Field Study — Oil on panel, 12 × 16 in, 2025">
-          <img src="assets/img/IMG_1224.jpeg" alt="Field Study, oil on panel">
+        <a href="assets/img/IMG_1224.jpeg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_1224.jpeg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
         </a>
         <div class="info">
           <h3>Field Study</h3>
@@ -82,8 +97,11 @@
       </article>
 
       <article class="product" data-cat="ceramics">
-        <a href="assets/img/IMG_2068.jpeg" data-lightbox data-title="Soft Edge — Oil on linen, 20 × 16 in, 2024">
-          <img src="assets/img/IMG_2068.jpeg" alt="Soft Edge, oil on linen">
+        <a href="assets/img/IMG_2068.jpeg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2068.jpeg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
         </a>
         <div class="info">
           <h3>Soft Edge</h3>
@@ -92,8 +110,11 @@
       </article>
 
       <article class="product" data-cat="ceramics">
-        <a href="assets/img/IMG_2065.jpeg" data-lightbox data-title="Soft Edge — Oil on linen, 20 × 16 in, 2024">
-          <img src="assets/img/IMG_2065.jpeg" alt="Soft Edge, oil on linen">
+        <a href="assets/img/IMG_2065.jpeg" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2065.jpeg"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
         </a>
         <div class="info">
           <h3>Soft Edge</h3>
@@ -102,8 +123,11 @@
       </article>
 
       <article class="product" data-cat="ceramics">
-        <a href="assets/img/IMG_2585.JPG" data-lightbox data-title="Soft Edge — Oil on linen, 20 × 16 in, 2024">
-          <img src="assets/img/IMG_2585.JPG" alt="Soft Edge, oil on linen">
+        <a href="assets/img/IMG_2585.JPG" data-lightbox data-title="Soft Vessel No. 3 — Stoneware, satin glaze, 9 in">
+          <img src="assets/img/IMG_2585.JPG"
+              alt="Soft Vessel No. 3"
+              loading="lazy"
+              decoding="async">
         </a>
         <div class="info">
           <h3>Soft Edge</h3>
@@ -143,7 +167,7 @@
     });
 
     // Default to ceramics
-    applyFilter('ceramics');
+    applyFilter('all');
 
     // LIGHTBOX
     const lb = document.getElementById('lightbox');
@@ -182,6 +206,23 @@
       if(e.key==='Escape') close();
       if(e.key==='ArrowRight') next();
       if(e.key==='ArrowLeft') prev();
+    });
+
+    // Make entire card open its lightbox image (but don't double-trigger when clicking the image)
+    document.querySelectorAll('#gallery .product').forEach(card=>{
+      card.addEventListener('click', (e)=>{
+        if (e.target.closest('a')) return;  // user clicked the image/link already
+        const a = card.querySelector('[data-lightbox]');
+        a?.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true}));
+      });
+      // Keyboard support: Enter opens lightbox when card is focused
+      card.tabIndex = 0;
+      card.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter'){
+          const a = card.querySelector('[data-lightbox]');
+          a?.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true}));
+        }
+      });
     });
   </script>
 </body>
