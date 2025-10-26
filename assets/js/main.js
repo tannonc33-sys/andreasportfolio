@@ -93,62 +93,57 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   queue();
 })();
 
-/* ============================
-   Featured Reel — continuous loop with drag + inertia
-   ============================ */
+/* ===========================
+   Featured Reel (continuous)
+   =========================== */
 (function () {
   const mask  = document.querySelector('.reel-mask');
   const track = document.getElementById('reelTrack');
   if (!mask || !track) return;
 
-  // Duplicate row once for seamless wrap
-  track.innerHTML = track.innerHTML + track.innerHTML;
+  // Duplicate once for seamless wrap
+  track.innerHTML += track.innerHTML;
 
-  // --- Auto play / state ---
-  let autoSpeed = 0.35;   // keep the gentle pace
-  let playing  = true;
-  let rafId    = null;
+  // ---- SHARED STATE (this is what was missing) ----
+  let autoSpeed = 0.35;   // px per frame
+  let playing   = true;   // auto-scroll when not dragging
+  let rafId     = null;
 
-  // fractional accumulator so integer scrollLeft still moves
-  let acc = 0;
+  let dragging  = false;  // pointer drag state
+  let moved     = false;  // whether pointer moved far enough to be a drag
+  let startX    = 0;
+  let lastX     = 0;
+  let vx        = 0;      // inertial velocity
 
+  const halfWidth = () => track.scrollWidth / 2;
+
+  // Animation loop
   const step = () => {
     if (playing && !dragging) {
-      acc += autoSpeed;
-      // apply only whole pixels, keep the remainder
-      const dx = (acc > 0 ? Math.floor(acc) : Math.ceil(acc));
-      if (dx !== 0) {
-        mask.scrollLeft += dx;
-        acc -= dx;
-      }
+      // auto scroll
+      mask.scrollLeft += autoSpeed;
     } else if (!dragging && Math.abs(vx) > 0.05) {
-      // inertia after flick (vx is already integer-ish)
+      // inertia after flick
       mask.scrollLeft -= vx;
-      vx *= 0.95;           // friction
+      vx *= 0.95; // friction
     }
 
-    // wrap seamlessly
+    // Seamless wrap
     const hw = halfWidth();
     if (mask.scrollLeft >= hw) mask.scrollLeft -= hw;
     if (mask.scrollLeft < 0)   mask.scrollLeft += hw;
 
     rafId = requestAnimationFrame(step);
   };
+  rafId = requestAnimationFrame(step);
 
+  // Pause on hover (optional)
+  mask.addEventListener('mouseenter', () => { playing = false; });
+  mask.addEventListener('mouseleave', () => { if (!dragging) { vx = 0; playing = true; } });
 
-  // Hover pause/resume
-  const pause  = () => { playing = false; };
-  const resume = () => { playing = true;  };
-
-  mask.addEventListener('mouseenter', pause,  { passive: true });
-  mask.addEventListener('mouseleave', resume, { passive: true });
-
-  // --- Drag handlers (pointer events) ---
+  // ---- Drag handlers ----
   const onPointerDown = (e) => {
-    // capture the pointer so we continue to receive events even if the
-    // pointer leaves the mask while dragging
     mask.setPointerCapture?.(e.pointerId);
-
     dragging = true;
     playing  = false;
     moved    = false;
@@ -157,10 +152,8 @@ export function clearCart(){ localStorage.removeItem('cart'); }
     lastX  = e.clientX;
     vx     = 0;
 
-    // nicer feel while dragging
     document.body.style.userSelect = 'none';
-    mask.classList.add('dragging');   // optional (see CSS below)
-
+    mask.classList.add('dragging');
     e.preventDefault();
   };
 
@@ -168,42 +161,36 @@ export function clearCart(){ localStorage.removeItem('cart'); }
     if (!dragging) return;
 
     const dx = e.clientX - lastX;
-    // treat as a real drag once we’ve moved a few px
     if (Math.abs(e.clientX - startX) > 3) moved = true;
 
-    mask.scrollLeft -= dx;   // move with the pointer
+    mask.scrollLeft -= dx; // move with pointer
     lastX = e.clientX;
-
-    vx = dx;                 // velocity for inertia
+    vx = dx;               // velocity for inertia
   };
 
   const release = () => {
     if (!dragging) return;
 
     dragging = false;
-    // let the step loop finish inertia for a short moment,
-    // then resume the auto-scrolling
+    // resume auto after brief moment so inertia can play out
     setTimeout(() => { playing = true; }, 200);
 
     document.body.style.userSelect = '';
     mask.classList.remove('dragging');
   };
 
-  // Important: attach “up/cancel” to window so you don’t have to leave the box
   mask.addEventListener('pointerdown', onPointerDown);
-  window.addEventListener('pointermove', onPointerMove);
+  mask.addEventListener('pointermove', onPointerMove);
   window.addEventListener('pointerup', release);
-  window.addEventListener('pointercancel', release);
-  window.addEventListener('blur', release);
+  mask.addEventListener('pointerleave', release);
 
-  // Prevent “click-through” when the user dragged
+  // If the user dragged, prevent the click from following the link
   track.addEventListener('click', (e) => {
-    if (moved) e.preventDefault();
+    if (moved) {
+      e.preventDefault();
+      moved = false;
+    }
   });
-
-  // Kick it off
-  cancelAnimationFrame(rafId);
-  rafId = requestAnimationFrame(step);
 
   console.log('reel ready');
 })();
