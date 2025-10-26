@@ -295,7 +295,7 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
 .btn:hover{ background:var(--red-600); }
 .btn.ghost{ background:transparent; border-color:var(--line); }
 .btn.ghost:hover{ border-color:var(--red); color:var(--text); }
-.cta{ background:var(--red); }
+.cta{ background:var(--line); }
 .cta:hover{ background:var(--red-600); }
 
 /* footer */
