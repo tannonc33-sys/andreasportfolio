@@ -1,3 +1,5 @@
+console.log('carousel js loaded');
+
 // assets/js/main.js
 async function load(id, url){
   const host = document.getElementById(id);
