@@ -135,7 +135,7 @@ a.logo:focus-visible::after {
   width: 0;
   background-color: var(--gold);
   border-radius: 1px;
-  transition: width 1.2s cubic-bezier(.25,.8,.25,1); /* slower, smoother */
+  transition: width 2.0s cubic-bezier(.25,.8,.25,1); /* slower, smoother */
 }
 
 .site-header .logo:hover::after{
