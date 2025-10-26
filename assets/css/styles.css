@@ -107,7 +107,6 @@ a.logo::after {
   bottom: -1px;                       /* gap below the text */
   width: 0%;
   height: 2px;
-  opacity: 0;
   background-color: var(--gold);
   transition: width .8s ease-in-out;
   border-radius: 1px;
