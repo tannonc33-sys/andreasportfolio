@@ -104,7 +104,7 @@ a.logo::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -1px;                       /* gap below the text */
+  bottom: 0px;                       /* gap below the text */
   width: 0%;
   height: 2px;
   background-color: var(--gold);
