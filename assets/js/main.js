@@ -96,104 +96,103 @@ export function clearCart(){ localStorage.removeItem('cart'); }
 })();
 
 /* =========================
-   Featured Reel – continuous loop with drag + inertia
+   Featured Reel — continuous loop with drag + inertia
    ========================= */
-(function(){
+
+(function () {
   const mask  = document.querySelector('.reel-mask');
   const track = document.getElementById('reelTrack');
   if (!mask || !track) return;
 
-  // Duplicate the row once to allow seamless wrap
+  // Duplicate the row so we can wrap seamlessly
   track.innerHTML = track.innerHTML + track.innerHTML;
 
-  // Autoplay settings
-  let autoSpeed = 0.35;      // px per frame (steady medium pace)
-  let playing   = true;      // paused on hover/drag
-  let rafId     = null;
+  // --- settings / state ---
+  const autoSpeed = 0.35;  // px per frame (steady pace)
+  let playing = true;      // paused on hover/drag
+  let rafId = null;
 
-  // Drag / inertia state
+  // drag / inertia
   let dragging = false;
   let startX = 0;
   let startLeft = 0;
-  let vx = 0;                // velocity for flick
+  let vx = 0;              // flick velocity
   let lastX = 0;
   let lastT = 0;
 
   const halfWidth = () => track.scrollWidth / 2;
 
-  // We use native scrollLeft on the mask for buttery performance
-  const step = () => {
+  // --- animation loop ---
+  const step = (t) => {
+    // first timestamp
+    if (!lastT) lastT = t;
+
     if (playing && !dragging) {
       mask.scrollLeft += autoSpeed;
-    } else if (!dragging && Math.abs(vx) > 0.05) {
-      // inertia after flick
-      mask.scrollLeft -= vx;         // invert because scrollLeft grows to the right
-      vx *= 0.95;                    // friction
+    } else if (!playing && Math.abs(vx) > 0.05) {
+      // inertia
+      mask.scrollLeft -= vx;           // invert because scrollLeft grows to the right
+      vx *= 0.95;                      // friction
     }
 
-    // wrap seamlessly
+    // seamless wrap
     const hw = halfWidth();
     if (mask.scrollLeft >= hw) mask.scrollLeft -= hw;
-    if (mask.scrollLeft < 0)      mask.scrollLeft += hw;
+    if (mask.scrollLeft < 0)    mask.scrollLeft += hw;
 
     rafId = requestAnimationFrame(step);
   };
 
-  const pause = () => { playing = false; };
-  const play  = () => { playing = true;  };
+  const play  = () => (playing = true);
+  const pause = () => (playing = false);
 
-  // Pause on hover
+  // --- hover pause ---
   mask.addEventListener('mouseenter', pause);
   mask.addEventListener('mouseleave', play);
 
-  // Pointer events for drag
-  const onDown = (e) => {
-    dragging  = true;
+  // --- drag / flick (pointer events) ---
+  mask.addEventListener('pointerdown', (e) => {
+    dragging = true;
     pause();
-    startX    = (e.touches ? e.touches[0].clientX : e.clientX);
+    mask.setPointerCapture(e.pointerId);
+    startX = e.clientX;
     startLeft = mask.scrollLeft;
-    vx = 0;
-    lastX = startX;
+    lastX = e.clientX;
     lastT = performance.now();
-    mask.classList.add('is-dragging');
-  };
+    vx = 0;
+  });
 
-  const onMove = (e) => {
+  mask.addEventListener('pointermove', (e) => {
     if (!dragging) return;
-    const x = (e.touches ? e.touches[0].clientX : e.clientX);
-    const dx = x - startX;
+    const dx = e.clientX - startX;
     mask.scrollLeft = startLeft - dx;
 
-    // wrap while dragging
+    // wrap while dragging so it never snaps
     const hw = halfWidth();
     if (mask.scrollLeft >= hw) mask.scrollLeft -= hw;
-    if (mask.scrollLeft < 0)   mask.scrollLeft += hw;
+    if (mask.scrollLeft < 0)    mask.scrollLeft += hw;
 
-    // velocity
+    // velocity sampling
     const now = performance.now();
-    const dt  = now - lastT;
-    if (dt > 0) vx = (x - lastX) / dt * 16.7; // px per frame estimate
-    lastX = x;
+    const dt = now - lastT || 16;
+    vx = (e.clientX - lastX) / dt * 16; // px per ~frame
+    lastX = e.clientX;
     lastT = now;
-  };
+  });
 
-  const onUp = () => {
-    if (!dragging) return;
+  mask.addEventListener('pointerup', () => {
     dragging = false;
-    mask.classList.remove('is-dragging');
-    // let inertia take it from here; autoplay will resume once vx decays
-    setTimeout(play, 400);
-  };
+    // remain paused briefly to let inertia run; loop continues in step()
+    // If you want autoplay to resume immediately after the flick dies out,
+    // you can start a timer to call play() after a second or so.
+  });
 
-  mask.addEventListener('mousedown', onDown);
-  mask.addEventListener('touchstart', onDown, {passive:true});
-  window.addEventListener('mousemove', onMove, {passive:false});
-  window.addEventListener('touchmove', onMove, {passive:true});
-  window.addEventListener('mouseup', onUp);
-  window.addEventListener('touchend', onUp);
+  // (Optional) start from zero
+  mask.scrollLeft = 0;
 
-  // Kick off looping after images have sized
-  const start = () => { if (!rafId) rafId = requestAnimationFrame(step); };
-  if (document.readyState === 'complete') start();
-  else window.addEventListener('load', start);
+  // ✅ Start the loop
+  rafId = requestAnimationFrame(step);
+
+  // Debug: confirm we loaded
+  console.log('carousel js loaded');
 })();
