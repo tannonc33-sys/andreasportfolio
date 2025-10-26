@@ -53,54 +53,39 @@ body {
   color:var(--gold);
 }
 
-.logo .dot{ color:var(--red); }
-.nav-links{display:flex; gap:8px; flex-wrap:wrap}
-.nav-links a{
-  padding:8px 10px; border-radius:8px; text-decoration:none;
-  color:var(--gold); border:1px solid transparent;
+/* NAV: base link styling */
+.site-header .nav-links a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 14px;
+  color: var(--gold);                 /* gold text in your scheme */
+  text-decoration: none;
+  transition: transform .2s ease, text-shadow .2s ease, color .2s ease;
+  will-change: transform;
 }
 
-/*.nav-links a.active,.nav-links a:hover{ background:#bfa06a; border-color:var(--red); color:var(--red); }
-.burger{display:none}*/
-
-/* --- Floating/bob hover for nav links (header & footer) --- */
-.site-header .nav a,
-.site-footer .nav a,
-.nav-links a {
-  display: inline-block;                /* required so transform affects just the text */
-  transform: translateY(0);             /* baseline position */
-  transition: color .2s ease, text-shadow .2s ease;
-  will-change: transform;               /* smooth on hover */
+/* Bob on hover: slight lift, then gentle up/down while hovered */
+.site-header .nav-links a:hover,
+.site-header .nav-links a:focus-visible {
+  transform: translateY(-2px);
+  animation: nav-bob 1.8s ease-in-out .1s infinite alternate;
+  text-shadow: 0 0 8px rgba(186,160,106,.25);  /* soft gold glow */
 }
 
-/* On hover/focus: start a soft bobbing animation */
-.site-header .nav a:hover,
-.site-header .nav a:focus-visible,
-.site-footer .nav a:hover,
-.site-footer .nav a:focus-visible,
-.nav-links a:hover,
-.nav-links a:focus-visible {
-  text-shadow: 0 2px 6px rgba(0,0,0,.18);       /* a touch of depth; adjust if needed */
-  animation: nav-bob 1.35s ease-in-out infinite;
-}
-
-/* Keyframes: slight lift, then gentle up/down bob */
+/* Gentle bob motion */
 @keyframes nav-bob {
-  0%   { transform: translateY(-2px); }  /* immediate lift */
-  50%  { transform: translateY(-5px); }  /* highest point */
-  100% { transform: translateY(-2px); }  /* settle but keep bobbing */
+  0%   { transform: translateY(-2px); }
+  50%  { transform: translateY(-5px); }
+  100% { transform: translateY(-2px); }
 }
 
-/* Respect reduced motion */
+/* Respect reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .site-header .nav a:hover,
-  .site-header .nav a:focus-visible,
-  .site-footer .nav a:hover,
-  .site-footer .nav a:focus-visible,
-  .nav-links a:hover,
-  .nav-links a:focus-visible {
+  .site-header .nav-links a:hover,
+  .site-header .nav-links a:focus-visible {
     animation: none;
-    transform: translateY(-2px);  /* still give a tiny lift */
+    transform: none;
+    text-shadow: none;
   }
 }
 
