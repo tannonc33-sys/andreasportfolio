@@ -63,6 +63,47 @@ body {
 .nav-links a.active,.nav-links a:hover{ background:#bfa06a; border-color:var(--red); color:var(--red); }
 .burger{display:none}
 
+/* --- Floating/bob hover for nav links (header & footer) --- */
+.site-header .nav a,
+.site-footer .nav a,
+.nav-links a {
+  display: inline-block;                /* required so transform affects just the text */
+  transform: translateY(0);             /* baseline position */
+  transition: color .2s ease, text-shadow .2s ease;
+  will-change: transform;               /* smooth on hover */
+}
+
+/* On hover/focus: start a soft bobbing animation */
+.site-header .nav a:hover,
+.site-header .nav a:focus-visible,
+.site-footer .nav a:hover,
+.site-footer .nav a:focus-visible,
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  text-shadow: 0 2px 6px rgba(0,0,0,.18);       /* a touch of depth; adjust if needed */
+  animation: nav-bob 1.35s ease-in-out infinite;
+}
+
+/* Keyframes: slight lift, then gentle up/down bob */
+@keyframes nav-bob {
+  0%   { transform: translateY(-2px); }  /* immediate lift */
+  50%  { transform: translateY(-5px); }  /* highest point */
+  100% { transform: translateY(-2px); }  /* settle but keep bobbing */
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .site-header .nav a:hover,
+  .site-header .nav a:focus-visible,
+  .site-footer .nav a:hover,
+  .site-footer .nav a:focus-visible,
+  .nav-links a:hover,
+  .nav-links a:focus-visible {
+    animation: none;
+    transform: translateY(-2px);  /* still give a tiny lift */
+  }
+}
+
 /* hero */
 .hero{padding:48px 24px 16px}
 h1,h2,h3{margin:0 0 8px}
