@@ -36,10 +36,10 @@ body {
 
 .serif{ font-family:"Cormorant Garamond", serif; }
 
-.container {
-  max-width: 1440px;     /* wider content area */
-  margin: 0 auto;
-  padding: 0 2rem;       /* give it some side breathing room */
+.container{
+  max-width:1280px;   /* try 1280; or 1360/1440 if you want wider */
+  margin:0 auto;
+  padding:24px;
 }
 
 /* header / nav */
