@@ -461,6 +461,9 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
   background: linear-gradient(to left, var(--bg), rgba(0,0,0,0));
 }
 
+.reel-mask { cursor: grab; }
+.reel-mask.dragging { cursor: grabbing; }
+
 .reel-track{
   display: flex;
   align-items: center;
