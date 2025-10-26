@@ -142,6 +142,24 @@ a.logo:focus-visible::after {
   width: 100%;
 }
 
+/* Glow effect on hover */
+.site-header .nav-links a:hover {
+  color: var(--gold);
+  text-shadow: 0 0 6px rgba(191, 160, 106, 0.8), 0 0 12px rgba(191, 160, 106, 0.5);
+  transform: translateY(-2px);
+  transition: 
+    color 0.3s ease,
+    text-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.site-header .nav-links a {
+  transition: 
+    color 0.3s ease,
+    text-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
 /* Optional: very subtle breathing once fully revealed */
 /*
 a.logo:hover::after { animation: underline-pulse 2s ease-in-out infinite; }
