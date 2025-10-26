@@ -522,3 +522,29 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 .reel-mask {
   touch-action: pan-y;
 }
+
+/* --- CAROUSEL: simplify behavior ---------------------------------- */
+
+/* 1) Kill the hover “lift/glow” effect */
+.reel-track a,
+.reel-track img {
+  transform: none !important;
+  filter: none !important;
+}
+.reel-track a:hover,
+.reel-track img:hover {
+  transform: none !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,.12) !important; /* keep your resting shadow */
+  filter: none !important;
+}
+
+/* 2) Make items non-clickable (we're removing link behavior) */
+.reel-track a {
+  pointer-events: none !important;
+}
+
+/* 3) Use a normal cursor; remove grab/grabbing */
+.reel-mask,
+.reel-mask.dragging {
+  cursor: default !important;
+}

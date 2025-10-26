@@ -196,14 +196,4 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   window.addEventListener('pointerup',    release);
   window.addEventListener('pointercancel',release);
   window.addEventListener('blur',         release);
-
-  // ---- Allow clicks only when not dragged ----
-  track.addEventListener('click', (e) => {
-    if (moved) {
-      e.preventDefault(); // we dragged—don’t follow the link
-      moved = false;      // reset for the next click
-    }
-  });
-
-  console.log('reel ready (autoplay + pause + drag + click-through)');
 })();
