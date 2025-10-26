@@ -145,30 +145,48 @@ export function clearCart(){ localStorage.removeItem('cart'); }
 
   // --- Drag handlers (pointer events) ---
   const onPointerDown = (e) => {
+    // capture the pointer so we continue to receive events even if the
+    // pointer leaves the mask while dragging
     mask.setPointerCapture?.(e.pointerId);
+
     dragging = true;
     playing  = false;
     moved    = false;
-    startX   = e.clientX;
-    lastX    = e.clientX;
-    vx       = 0;
+
+    startX = e.clientX;
+    lastX  = e.clientX;
+    vx     = 0;
+
+    // nicer feel while dragging
+    document.body.style.userSelect = 'none';
+    mask.classList.add('dragging');   // optional (see CSS below)
+
     e.preventDefault();
   };
 
   const onPointerMove = (e) => {
     if (!dragging) return;
+
     const dx = e.clientX - lastX;
-    if (Math.abs(e.clientX - startX) > 3) moved = true; // distinguish real drag
-    mask.scrollLeft -= dx;
+    // treat as a real drag once we’ve moved a few px
+    if (Math.abs(e.clientX - startX) > 3) moved = true;
+
+    mask.scrollLeft -= dx;   // move with the pointer
     lastX = e.clientX;
-    vx    = dx; // velocity for inertia
+
+    vx = dx;                 // velocity for inertia
   };
 
   const release = () => {
     if (!dragging) return;
+
     dragging = false;
-    // resume auto after a short delay so inertia can run
+    // let the step loop finish inertia for a short moment,
+    // then resume the auto-scrolling
     setTimeout(() => { playing = true; }, 200);
+
+    document.body.style.userSelect = '';
+    mask.classList.remove('dragging');
   };
 
   // Important: attach “up/cancel” to window so you don’t have to leave the box
