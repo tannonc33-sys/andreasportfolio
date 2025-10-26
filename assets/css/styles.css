@@ -93,7 +93,7 @@ body {
 a.logo {
   position: relative;
   display: inline-block;
-  font-size: 1.15rem;                 /* tweak as you like */
+  font-size: 1.35rem;                 /* tweak as you like */
   color: var(--gold);
   text-decoration: none;
   transition: color .3s ease;
