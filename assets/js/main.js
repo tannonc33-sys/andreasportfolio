@@ -93,104 +93,115 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   queue();
 })();
 
-/* =========================
-   Featured Reel — continuous loop with drag + inertia
-   ========================= */
-
-(function () {
-  const mask  = document.querySelector('.reel-mask');
+/* ==============================
+   Featured Reel – Continuous Loop
+   with smooth autoplay, flick, and non-sticky drag
+   ============================== */
+(function(){
+  const mask = document.querySelector('.reel-mask');
   const track = document.getElementById('reelTrack');
   if (!mask || !track) return;
 
-  // Duplicate the row so we can wrap seamlessly
+  // Duplicate content for seamless looping
   track.innerHTML = track.innerHTML + track.innerHTML;
 
-  // --- settings / state ---
-  const autoSpeed = 0.35;  // px per frame (steady pace)
-  let playing = true;      // paused on hover/drag
-  let rafId = null;
-
-  // drag / inertia
-  let dragging = false;
+  /* === CONFIG === */
+  const autoSpeed = 0.4;     // px per frame (smooth medium speed)
+  const friction = 0.95;     // flick slowdown
+  let isPlaying = true;
+  let isDragging = false;
   let startX = 0;
-  let startLeft = 0;
-  let vx = 0;              // flick velocity
-  let lastX = 0;
-  let lastT = 0;
+  let scrollStart = 0;
+  let velocity = 0;
+  let rafId;
 
+  // Make sure the content loops properly
   const halfWidth = () => track.scrollWidth / 2;
 
-  // --- animation loop ---
-  const step = (t) => {
-    // first timestamp
-    if (!lastT) lastT = t;
-
-    if (playing && !dragging) {
+  function step() {
+    if (isPlaying && !isDragging) {
       mask.scrollLeft += autoSpeed;
-    } else if (!playing && Math.abs(vx) > 0.05) {
-      // inertia
-      mask.scrollLeft -= vx;           // invert because scrollLeft grows to the right
-      vx *= 0.95;                      // friction
+    } else if (!isDragging && Math.abs(velocity) > 0.05) {
+      mask.scrollLeft -= velocity;
+      velocity *= friction;
     }
 
-    // seamless wrap
+    // wrap seamlessly
     const hw = halfWidth();
     if (mask.scrollLeft >= hw) mask.scrollLeft -= hw;
-    if (mask.scrollLeft < 0)    mask.scrollLeft += hw;
+    if (mask.scrollLeft < 0) mask.scrollLeft += hw;
 
     rafId = requestAnimationFrame(step);
-  };
+  }
 
-  const play  = () => (playing = true);
-  const pause = () => (playing = false);
+  // === Hover pause ===
+  mask.addEventListener('mouseenter', () => isPlaying = false);
+  mask.addEventListener('mouseleave', () => isPlaying = true);
 
-  // --- hover pause ---
-  mask.addEventListener('mouseenter', pause);
-  mask.addEventListener('mouseleave', play);
-
-  // --- drag / flick (pointer events) ---
-  mask.addEventListener('pointerdown', (e) => {
-    dragging = true;
-    pause();
-    mask.setPointerCapture(e.pointerId);
-    startX = e.clientX;
-    startLeft = mask.scrollLeft;
-    lastX = e.clientX;
-    lastT = performance.now();
-    vx = 0;
+  // === Drag + Flick ===
+  mask.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    isPlaying = false;
+    startX = e.pageX;
+    scrollStart = mask.scrollLeft;
+    velocity = 0;
+    mask.style.cursor = 'grabbing';
+    e.preventDefault();
   });
 
-  mask.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
-    const dx = e.clientX - startX;
-    mask.scrollLeft = startLeft - dx;
-
-    // wrap while dragging so it never snaps
-    const hw = halfWidth();
-    if (mask.scrollLeft >= hw) mask.scrollLeft -= hw;
-    if (mask.scrollLeft < 0)    mask.scrollLeft += hw;
-
-    // velocity sampling
-    const now = performance.now();
-    const dt = now - lastT || 16;
-    vx = (e.clientX - lastX) / dt * 16; // px per ~frame
-    lastX = e.clientX;
-    lastT = now;
+  mask.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const dx = e.pageX - startX;
+    mask.scrollLeft = scrollStart - dx;
+    velocity = dx; // used for flick inertia
   });
 
-  mask.addEventListener('pointerup', () => {
-    dragging = false;
-    // remain paused briefly to let inertia run; loop continues in step()
-    // If you want autoplay to resume immediately after the flick dies out,
-    // you can start a timer to call play() after a second or so.
+  // When mouse released
+  mask.addEventListener('mouseup', () => {
+    isDragging = false;
+    isPlaying = true;
+    mask.style.cursor = '';
   });
 
-  // (Optional) start from zero
-  mask.scrollLeft = 0;
+  // In case mouse leaves window mid-drag
+  mask.addEventListener('mouseleave', () => {
+    if (isDragging) {
+      isDragging = false;
+      isPlaying = true;
+      mask.style.cursor = '';
+    }
+  });
 
-  // ✅ Start the loop
-  rafId = requestAnimationFrame(step);
+  // === Touch support ===
+  mask.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    isPlaying = false;
+    startX = e.touches[0].pageX;
+    scrollStart = mask.scrollLeft;
+    velocity = 0;
+  }, { passive: true });
 
-  // Debug: confirm we loaded
-  console.log('carousel js loaded');
+  mask.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const dx = e.touches[0].pageX - startX;
+    mask.scrollLeft = scrollStart - dx;
+    velocity = dx;
+  }, { passive: true });
+
+  mask.addEventListener('touchend', () => {
+    isDragging = false;
+    isPlaying = true;
+  });
+
+  // === Click pass-through fix ===
+  // Allow click if drag distance is small
+  let dragMoved = false;
+  mask.addEventListener('mousedown', () => dragMoved = false);
+  mask.addEventListener('mousemove', () => dragMoved = true);
+  mask.addEventListener('click', (e) => {
+    if (dragMoved) e.preventDefault();
+  });
+
+  console.log('carousel_js loaded');
+  step();
 })();
