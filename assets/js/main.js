@@ -92,3 +92,106 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   // Initial position
   queue();
 })();
+
+/* =========================
+   Featured Reel – continuous loop with drag + inertia
+   ========================= */
+(function(){
+  const mask  = document.querySelector('.reel-mask');
+  const track = document.getElementById('reelTrack');
+  if (!mask || !track) return;
+
+  // Duplicate the row once to allow seamless wrap
+  track.innerHTML = track.innerHTML + track.innerHTML;
+
+  // Autoplay settings
+  let autoSpeed = 0.35;      // px per frame (steady medium pace)
+  let playing   = true;      // paused on hover/drag
+  let rafId     = null;
+
+  // Drag / inertia state
+  let dragging = false;
+  let startX = 0;
+  let startLeft = 0;
+  let vx = 0;                // velocity for flick
+  let lastX = 0;
+  let lastT = 0;
+
+  const halfWidth = () => track.scrollWidth / 2;
+
+  // We use native scrollLeft on the mask for buttery performance
+  const step = () => {
+    if (playing && !dragging) {
+      mask.scrollLeft += autoSpeed;
+    } else if (!dragging && Math.abs(vx) > 0.05) {
+      // inertia after flick
+      mask.scrollLeft -= vx;         // invert because scrollLeft grows to the right
+      vx *= 0.95;                    // friction
+    }
+
+    // wrap seamlessly
+    const hw = halfWidth();
+    if (mask.scrollLeft >= hw) mask.scrollLeft -= hw;
+    if (mask.scrollLeft < 0)      mask.scrollLeft += hw;
+
+    rafId = requestAnimationFrame(step);
+  };
+
+  const pause = () => { playing = false; };
+  const play  = () => { playing = true;  };
+
+  // Pause on hover
+  mask.addEventListener('mouseenter', pause);
+  mask.addEventListener('mouseleave', play);
+
+  // Pointer events for drag
+  const onDown = (e) => {
+    dragging  = true;
+    pause();
+    startX    = (e.touches ? e.touches[0].clientX : e.clientX);
+    startLeft = mask.scrollLeft;
+    vx = 0;
+    lastX = startX;
+    lastT = performance.now();
+    mask.classList.add('is-dragging');
+  };
+
+  const onMove = (e) => {
+    if (!dragging) return;
+    const x = (e.touches ? e.touches[0].clientX : e.clientX);
+    const dx = x - startX;
+    mask.scrollLeft = startLeft - dx;
+
+    // wrap while dragging
+    const hw = halfWidth();
+    if (mask.scrollLeft >= hw) mask.scrollLeft -= hw;
+    if (mask.scrollLeft < 0)   mask.scrollLeft += hw;
+
+    // velocity
+    const now = performance.now();
+    const dt  = now - lastT;
+    if (dt > 0) vx = (x - lastX) / dt * 16.7; // px per frame estimate
+    lastX = x;
+    lastT = now;
+  };
+
+  const onUp = () => {
+    if (!dragging) return;
+    dragging = false;
+    mask.classList.remove('is-dragging');
+    // let inertia take it from here; autoplay will resume once vx decays
+    setTimeout(play, 400);
+  };
+
+  mask.addEventListener('mousedown', onDown);
+  mask.addEventListener('touchstart', onDown, {passive:true});
+  window.addEventListener('mousemove', onMove, {passive:false});
+  window.addEventListener('touchmove', onMove, {passive:true});
+  window.addEventListener('mouseup', onUp);
+  window.addEventListener('touchend', onUp);
+
+  // Kick off looping after images have sized
+  const start = () => { if (!rafId) rafId = requestAnimationFrame(step); };
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start);
+})();
