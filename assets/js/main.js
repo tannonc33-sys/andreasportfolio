@@ -105,37 +105,36 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   track.innerHTML = track.innerHTML + track.innerHTML;
 
   // --- Auto play / state ---
-  let autoSpeed = 0.35;          // px per frame (steady medium pace)
-  let playing  = true;           // paused on hover/drag
+  let autoSpeed = 0.35;   // keep the gentle pace
+  let playing  = true;
   let rafId    = null;
 
-  // --- Drag / inertia state ---
-  let dragging = false;
-  let startX   = 0;
-  let lastX    = 0;
-  let vx       = 0;              // velocity for flick
-  let moved    = false;          // to cancel click on real drags
+  // fractional accumulator so integer scrollLeft still moves
+  let acc = 0;
 
-  // Helpful: total half width of duplicated content
-  const halfWidth = () => track.scrollWidth / 2;
-
-  // Smooth auto loop + inertia
   const step = () => {
     if (playing && !dragging) {
-      mask.scrollLeft += autoSpeed;
+      acc += autoSpeed;
+      // apply only whole pixels, keep the remainder
+      const dx = (acc > 0 ? Math.floor(acc) : Math.ceil(acc));
+      if (dx !== 0) {
+        mask.scrollLeft += dx;
+        acc -= dx;
+      }
     } else if (!dragging && Math.abs(vx) > 0.05) {
-      // inertia after flick
-      mask.scrollLeft -= vx;        // invert: scrollLeft grows to the right
-      vx *= 0.95;                   // friction
+      // inertia after flick (vx is already integer-ish)
+      mask.scrollLeft -= vx;
+      vx *= 0.95;           // friction
     }
 
     // wrap seamlessly
     const hw = halfWidth();
     if (mask.scrollLeft >= hw) mask.scrollLeft -= hw;
-    if (mask.scrollLeft < 0)    mask.scrollLeft += hw;
+    if (mask.scrollLeft < 0)   mask.scrollLeft += hw;
 
     rafId = requestAnimationFrame(step);
   };
+
 
   // Hover pause/resume
   const pause  = () => { playing = false; };
