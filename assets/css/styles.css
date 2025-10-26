@@ -89,6 +89,41 @@ body {
   }
 }
 
+/* Make the logo a bit larger than the nav links (as you wanted) */
+a.logo {
+  position: relative;
+  display: inline-block;
+  font-size: 1.15rem;                 /* tweak as you like */
+  color: var(--gold);
+  text-decoration: none;
+  transition: color .3s ease;
+}
+
+/* Animated underline */
+a.logo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;                       /* gap below the text */
+  width: 0%;
+  height: 2px;
+  background-color: var(--gold);
+  transition: width .4s ease-in-out;
+  border-radius: 1px;
+}
+
+a.logo:hover::after,
+a.logo:focus-visible::after {
+  width: 100%;
+}
+
+/* Optional: very subtle breathing once fully revealed */
+/*
+a.logo:hover::after { animation: underline-pulse 2s ease-in-out infinite; }
+@keyframes underline-pulse { 0%,100%{transform:scaleX(1)} 50%{transform:scaleX(1.05)} }
+*/
+
+
 /* hero */
 .hero{padding:48px 24px 16px}
 h1,h2,h3{margin:0 0 8px}
