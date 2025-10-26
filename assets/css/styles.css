@@ -36,7 +36,11 @@ body {
 
 .serif{ font-family:"Cormorant Garamond", serif; }
 
-.container{max-height:1500px; max-width:1100px;margin:0 auto;padding:24px; }
+.container {
+  max-width: 1400px;     /* wider content area */
+  margin: 0 auto;
+  padding: 0 2rem;       /* give it some side breathing room */
+}
 
 /* header / nav */
 .site-header{
@@ -422,8 +426,9 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 /* =========================
    Reel (infinite carousel)
    ========================= */
-.reel { 
-  margin: 32px 0 40px;
+.reel {
+  margin: 48px auto;
+  max-width: 1400px;
 }
 
   /* soft edge fade using a mask — center visible, edges fade out */
