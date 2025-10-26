@@ -519,9 +519,6 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   .reel-track img{ height: 180px; width: 280px; }
 }
 
-.reel-mask { cursor: grab; }
-.reel-mask.dragging { cursor: grabbing; }
-
 .reel-mask {
   touch-action: pan-y;
 }
