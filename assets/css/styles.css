@@ -417,29 +417,42 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
   margin: 32px 0 40px;
 }
 
+/* soft edge fade using a mask */
 .reel-mask{
   position: relative;
   overflow: hidden;
-  /* soft edge fade using a mask (works in WebKit & modern browsers) */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+
+  /* Use your page bg, not black, so the fade blends perfectly */
+  -webkit-mask-image:
+    linear-gradient(to right,
+      var(--bg) 0%, rgba(0,0,0,0) 8%,
+      rgba(0,0,0,0) 92%, var(--bg) 100%);
+  mask-image:
+    linear-gradient(to right,
+      var(--bg) 0%, rgba(0,0,0,0) 8%,
+      rgba(0,0,0,0) 92%, var(--bg) 100%);
 }
 
-/* extra insurance for browsers without mask-image (overlay gradients) */
+/* Fallback for browsers without mask-image support */
 .reel-mask::before,
 .reel-mask::after{
-  content:"";
-  position:absolute; top:0; bottom:0; width:8%;
-  pointer-events:none;
-  z-index:2;
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 8%;
+  pointer-events: none;
+  z-index: 2;
+  display: none;         /* hidden when mask-image works */
 }
+
 .reel-mask::before{
-  left:0;
-  background:linear-gradient(to right, var(--bg), rgba(0,0,0,0));
+  left: 0;
+  background: linear-gradient(to right, var(--bg), rgba(0,0,0,0));
 }
+
 .reel-mask::after{
-  right:0;
-  background:linear-gradient(to left, var(--bg), rgba(0,0,0,0));
+  right: 0;
+  background: linear-gradient(to left, var(--bg), rgba(0,0,0,0));
 }
 
 .reel-track{
