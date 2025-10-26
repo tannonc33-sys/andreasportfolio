@@ -209,7 +209,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 
 /* supporting copy */
 .hero .small {
-  color: var(--gold);       /* change to var(--text) if you don't want gold */
+  color: var(--text);       /* change to var(--text) if you don't want gold */
   font-size: .95rem;
   max-width: 58ch;
 }
