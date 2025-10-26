@@ -123,6 +123,24 @@ a.logo:hover::after { animation: underline-pulse 2s ease-in-out infinite; }
 @keyframes underline-pulse { 0%,100%{transform:scaleX(1)} 50%{transform:scaleX(1.05)} }
 */
 
+/* Hide burger menu on large screens */
+.burger {
+  display: none;
+}
+
+/* Show it again on mobile if you decide to make it responsive later */
+@media (max-width: 768px) {
+  .burger {
+    display: block;
+    background: none;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+}
 
 /* hero */
 .hero{padding:48px 24px 16px}
