@@ -104,11 +104,11 @@ a.logo::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -3px;                       /* gap below the text */
+  bottom: -1px;                       /* gap below the text */
   width: 0%;
   height: 2px;
   background-color: var(--gold);
-  transition: width .4s ease-in-out;
+  transition: width .8s ease-in-out;
   border-radius: 1px;
 }
 
