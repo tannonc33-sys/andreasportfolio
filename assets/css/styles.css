@@ -483,11 +483,13 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   padding: 10px 2px;
   user-select: none;
   will-change: transform;
+  position: relative;
+  z-index: 1;
 }
 
 /* cards in the reel */
 .reel-track a{
-  display:block;
+  display: block;
   flex: 0 0 auto;
   border-radius: 14px;
   overflow: hidden;
@@ -519,3 +521,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 
 .reel-mask { cursor: grab; }
 .reel-mask.dragging { cursor: grabbing; }
+
+.reel-mask {
+  touch-action: pan-y;
+}
