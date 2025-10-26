@@ -64,28 +64,31 @@ body {
   will-change: transform;
 }
 
-/* Bob on hover: slight lift, then gentle up/down while hovered */
-.site-header .nav-links a:hover,
-.site-header .nav-links a:focus-visible {
-  transform: translateY(-2px);
-  animation: nav-bob 1.8s ease-in-out .1s infinite alternate;
-  text-shadow: 0 0 8px rgba(186,160,106,.25);  /* soft gold glow */
+/* Base state */
+.site-header .nav-links a {
+  display: inline-block;
+  color: var(--gold);
+  text-decoration: none;
+  transition:
+    color 0.3s ease,
+    text-shadow 0.3s ease,
+    transform 0.5s ease-in-out; /* makes exit smooth */
 }
 
-/* Gentle bob motion */
-@keyframes nav-bob {
-  0%   { transform: translateY(-2px); }
-  50%  { transform: translateY(-5px); }
-  100% { transform: translateY(-2px); }
+/* Hover state with bobbing + glow */
+.site-header .nav-links a:hover {
+  color: var(--gold);
+  text-shadow: 0 0 6px rgba(191, 160, 106, 0.8), 0 0 12px rgba(191, 160, 106, 0.5);
+  animation: bob 1.8s ease-in-out infinite;
 }
 
-/* Respect reduced-motion */
-@media (prefers-reduced-motion: reduce) {
-  .site-header .nav-links a:hover,
-  .site-header .nav-links a:focus-visible {
-    animation: none;
-    transform: none;
-    text-shadow: none;
+/* Bobbing motion */
+@keyframes bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
   }
 }
 
