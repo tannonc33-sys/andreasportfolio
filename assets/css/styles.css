@@ -125,7 +125,7 @@ a.logo:focus-visible::after {
   position: relative;         /* keep */
   display: inline-block;      /* keeps underline width to text */
   line-height: 1.05;          /* smaller line height = less extra space */
-  padding: 10px 16px 10px;     /* ↓ small bottom padding */
+  padding: 10px 16px 8px;     /* ↓ small bottom padding */
 }
 
 /* animated underline – bring it closer and slow it down */
