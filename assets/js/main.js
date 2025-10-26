@@ -115,7 +115,7 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   let rafId    = 0;
 
   // ---- tune here ----
-  const AUTO_SPEED = 0.45;  // px / frame (autoplay speed)
+  const AUTO_SPEED = 0.75;  // px / frame (autoplay speed)
   const FRICTION   = 0.95;  // inertia decay
   const DRAG_EPS   = 3;     // pixels to treat as a real drag
 
