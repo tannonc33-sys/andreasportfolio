@@ -94,7 +94,7 @@ export function clearCart(){ localStorage.removeItem('cart'); }
 })();
 
 /* ===========================
-   Featured Reel (continuous)
+   Featured Reel - transform-based
    =========================== */
 (function () {
   const mask  = document.querySelector('.reel-mask');
@@ -104,45 +104,55 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   // Duplicate once for seamless wrap
   track.innerHTML += track.innerHTML;
 
-  // ---- SHARED STATE (this is what was missing) ----
-  let autoSpeed = 0.35;   // px per frame
-  let playing   = true;   // auto-scroll when not dragging
-  let rafId     = null;
+  // ---- SHARED STATE ----
+  let x        = 0;        // current translateX
+  let vx       = 0;        // velocity for inertia
+  let playing  = true;     // auto scroll when not dragging
+  let dragging = false;    // pointer drag state
+  let moved    = false;    // dragged beyond a tiny threshold
+  let startX   = 0;
+  let lastX    = 0;
+  let rafId    = null;
 
-  let dragging  = false;  // pointer drag state
-  let moved     = false;  // whether pointer moved far enough to be a drag
-  let startX    = 0;
-  let lastX     = 0;
-  let vx        = 0;      // inertial velocity
+  const AUTO_SPEED = 0.35; // px per frame (tune to taste)
+  const FRICTION   = 0.95; // inertia decay 0..1 (higher = longer)
+  const DRAG_EPS   = 3;    // pixels to count as "real" drag
 
+  // Precompute half width (original content) for seamless wrap.
   const halfWidth = () => track.scrollWidth / 2;
 
-  // Animation loop
-  const step = () => {
-    if (playing && !dragging) {
-      // auto scroll
-      mask.scrollLeft += autoSpeed;
-    } else if (!dragging && Math.abs(vx) > 0.05) {
-      // inertia after flick
-      mask.scrollLeft -= vx;
-      vx *= 0.95; // friction
-    }
+  // Apply transform
+  function render() {
+    track.style.transform = `translateX(${x}px)`;
+  }
 
-    // Seamless wrap
+  // Seamless wrap: when we've shifted beyond one half, wrap back
+  function wrap() {
     const hw = halfWidth();
-    if (mask.scrollLeft >= hw) mask.scrollLeft -= hw;
-    if (mask.scrollLeft < 0)   mask.scrollLeft += hw;
+    if (x <= -hw) x += hw;
+    if (x > 0)     x -= hw;
+  }
 
+  // Main loop
+  function step() {
+    if (playing && !dragging) {
+      x -= AUTO_SPEED;            // autoplay
+    } else if (!dragging && Math.abs(vx) > 0.02) {
+      x += vx;                    // inertia
+      vx *= FRICTION;
+    }
+    wrap();
+    render();
     rafId = requestAnimationFrame(step);
-  };
+  }
   rafId = requestAnimationFrame(step);
 
-  // Pause on hover (optional)
-  mask.addEventListener('mouseenter', () => { playing = false; });
-  mask.addEventListener('mouseleave', () => { if (!dragging) { vx = 0; playing = true; } });
+  // Optional: pause on hover, resume on leave
+  mask.addEventListener('mouseenter', () => { if (!dragging) playing = false; });
+  mask.addEventListener('mouseleave', () => { if (!dragging) playing = true;  });
 
   // ---- Drag handlers ----
-  const onPointerDown = (e) => {
+  function onPointerDown(e) {
     mask.setPointerCapture?.(e.pointerId);
     dragging = true;
     playing  = false;
@@ -155,36 +165,36 @@ export function clearCart(){ localStorage.removeItem('cart'); }
     document.body.style.userSelect = 'none';
     mask.classList.add('dragging');
     e.preventDefault();
-  };
+  }
 
-  const onPointerMove = (e) => {
+  function onPointerMove(e) {
     if (!dragging) return;
 
     const dx = e.clientX - lastX;
-    if (Math.abs(e.clientX - startX) > 3) moved = true;
+    if (Math.abs(e.clientX - startX) > DRAG_EPS) moved = true;
 
-    mask.scrollLeft -= dx; // move with pointer
+    x += dx;          // follow the pointer
     lastX = e.clientX;
-    vx = dx;               // velocity for inertia
-  };
+    vx = dx;          // capture velocity for inertia
+  }
 
-  const release = () => {
+  function release() {
     if (!dragging) return;
 
     dragging = false;
-    // resume auto after brief moment so inertia can play out
-    setTimeout(() => { playing = true; }, 200);
-
     document.body.style.userSelect = '';
     mask.classList.remove('dragging');
-  };
+
+    // Let inertia play, then resume autoplay
+    setTimeout(() => { if (!dragging) playing = true; }, 200);
+  }
 
   mask.addEventListener('pointerdown', onPointerDown);
   mask.addEventListener('pointermove', onPointerMove);
   window.addEventListener('pointerup', release);
   mask.addEventListener('pointerleave', release);
 
-  // If the user dragged, prevent the click from following the link
+  // If the user dragged, stop the click from following the link
   track.addEventListener('click', (e) => {
     if (moved) {
       e.preventDefault();
@@ -192,5 +202,5 @@ export function clearCart(){ localStorage.removeItem('cart'); }
     }
   });
 
-  console.log('reel ready');
+  console.log('reel ready (transform)');
 })();
