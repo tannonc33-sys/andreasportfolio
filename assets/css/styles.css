@@ -409,3 +409,74 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
 
 /* Keep cards crisp */
 .products .product img{ display:block; width:100%; height:auto; }
+
+/* =========================
+   Reel (infinite carousel)
+   ========================= */
+.reel { 
+  margin: 32px 0 40px;
+}
+
+.reel-mask{
+  position: relative;
+  overflow: hidden;
+  /* soft edge fade using a mask (works in WebKit & modern browsers) */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+/* extra insurance for browsers without mask-image (overlay gradients) */
+.reel-mask::before,
+.reel-mask::after{
+  content:"";
+  position:absolute; top:0; bottom:0; width:8%;
+  pointer-events:none;
+  z-index:2;
+}
+.reel-mask::before{
+  left:0;
+  background:linear-gradient(to right, var(--bg), rgba(0,0,0,0));
+}
+.reel-mask::after{
+  right:0;
+  background:linear-gradient(to left, var(--bg), rgba(0,0,0,0));
+}
+
+.reel-track{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 2px;
+  user-select: none;
+  will-change: transform;
+}
+
+/* cards in the reel */
+.reel-track a{
+  display:block;
+  flex: 0 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  border:1px solid var(--line);
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+
+.reel-track img{
+  display:block;
+  height: 140px;           /* mobile height */
+  width: 220px;
+  object-fit: cover;
+}
+
+/* hover state */
+.reel-track a:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,.18);
+  filter: saturate(1.02) contrast(1.02);
+}
+
+/* a bit taller on larger screens */
+@media (min-width: 900px){
+  .reel-track img{ height: 180px; width: 280px; }
+}
