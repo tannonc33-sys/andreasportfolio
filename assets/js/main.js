@@ -117,7 +117,7 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   // ---- tune here ----
   const AUTO_SPEED = 0.15;  // px / frame (autoplay speed)
   const FRICTION   = 0.95;  // inertia decay
-  const DRAG_EPS   = 3;     // pixels to treat as a real drag
+  const DRAG_EPS   = 2;     // pixels to treat as a real drag
 
   // Half the width of the original content (for wrapping)
   const halfWidth = () => track.scrollWidth / 2;
