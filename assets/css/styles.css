@@ -417,20 +417,26 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
   margin: 32px 0 40px;
 }
 
-/* soft edge fade using a mask */
+  /* soft edge fade using a mask — center visible, edges fade out */
 .reel-mask{
   position: relative;
   overflow: hidden;
 
-  /* Use your page bg, not black, so the fade blends perfectly */
-  -webkit-mask-image:
-    linear-gradient(to right,
-      var(--bg) 0%, rgba(0,0,0,0) 8%,
-      rgba(0,0,0,0) 92%, var(--bg) 100%);
-  mask-image:
-    linear-gradient(to right,
-      var(--bg) 0%, rgba(0,0,0,0) 8%,
-      rgba(0,0,0,0) 92%, var(--bg) 100%);
+  /* WebKit + standards */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 8%,
+    rgba(0,0,0,1) 92%,
+    rgba(0,0,0,0) 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 8%,
+    rgba(0,0,0,1) 92%,
+    rgba(0,0,0,0) 100%
+  );
 }
 
 /* Fallback for browsers without mask-image support */
@@ -493,3 +499,4 @@ h1.serif,h2.serif,h3.serif{font-family:"Cormorant Garamond",serif}
 @media (min-width: 900px){
   .reel-track img{ height: 180px; width: 280px; }
 }
+
