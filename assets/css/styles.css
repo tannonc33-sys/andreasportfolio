@@ -117,6 +117,31 @@ a.logo:focus-visible::after {
   width: 100%;
 }
 
+/* tighten the logo box */
+.site-header .logo{
+  position: relative;         /* keep */
+  display: inline-block;      /* keeps underline width to text */
+  line-height: 1.05;          /* smaller line height = less extra space */
+  padding: 10px 16px 4px;     /* ↓ small bottom padding */
+}
+
+/* animated underline – bring it closer and slow it down */
+.site-header .logo::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;                /* ↑ raise the line closer to the text */
+  height: 2px;
+  width: 0;
+  background-color: var(--gold);
+  border-radius: 1px;
+  transition: width 1.2s cubic-bezier(.25,.8,.25,1); /* slower, smoother */
+}
+
+.site-header .logo:hover::after{
+  width: 100%;
+}
+
 /* Optional: very subtle breathing once fully revealed */
 /*
 a.logo:hover::after { animation: underline-pulse 2s ease-in-out infinite; }
