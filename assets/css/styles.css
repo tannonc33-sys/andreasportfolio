@@ -37,7 +37,7 @@ body {
 .serif{ font-family:"Cormorant Garamond", serif; }
 
 .container {
-  max-width: 1400px;     /* wider content area */
+  max-width: 1440px;     /* wider content area */
   margin: 0 auto;
   padding: 0 2rem;       /* give it some side breathing room */
 }

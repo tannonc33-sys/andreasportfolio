@@ -111,6 +111,8 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   let startX   = 0;
   let lastX    = 0;
   let rafId    = null;
+  let hovering = false;   // <— add this line
+
 
   // ---- Tunables ----
   const AUTO_SPEED = 0.15;  // px per frame
@@ -144,8 +146,15 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   rafId = requestAnimationFrame(step);
 
   // ---- Pause / resume on hover ----
-  mask.addEventListener('mouseenter', () => { playing = false; });
-  mask.addEventListener('mouseleave', () => { if (!dragging) playing = true; });
+  mask.addEventListener('mouseenter', () => {
+    hovering = true;
+    playing  = false;   // pause while hovered
+  });
+
+  mask.addEventListener('mouseleave', () => {
+    hovering = false;
+    if (!dragging) playing = true;   // only resume if not dragging
+  });
 
   // ---- Drag handlers ----
   function onPointerDown(e) {
@@ -176,7 +185,10 @@ export function clearCart(){ localStorage.removeItem('cart'); }
     document.body.style.userSelect = '';
     mask.classList.remove('dragging');
     // let inertia play a moment, then resume autoplay
-    setTimeout(() => { if (!dragging) playing = true; }, 150);
+    // Let inertia play a moment, then resume autoplay — unless still hovered
+    setTimeout(() => {
+      if (!dragging && !hovering) playing = true;
+    }, 150);
   }
 
   mask.addEventListener('pointerdown', onPointerDown);
