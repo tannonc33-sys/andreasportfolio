@@ -130,7 +130,7 @@ a.logo:focus-visible::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 4px;                /* ↑ raise the line closer to the text */
+  bottom: 6px;                /* ↑ raise the line closer to the text */
   height: 2px;
   width: 0;
   background-color: var(--gold);
