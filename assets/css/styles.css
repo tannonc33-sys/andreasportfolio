@@ -463,6 +463,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   pointer-events: none;
   z-index: 2;
   display: none;         /* hidden when mask-image works */
+  pointer-events: none !important;
 }
 
 .reel-mask::before{
@@ -493,6 +494,8 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   box-shadow: 0 6px 18px rgba(0,0,0,.12);
   border:1px solid var(--line);
   transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .reel-track img{
