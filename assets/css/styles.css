@@ -236,9 +236,9 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 }
 
 /* smooth, steady fade-in for hero pieces */
-.hero h1       { animation: hero-in .7s ease .05s both; }
-.hero .small   { animation: hero-in .7s ease .18s both; }
-.hero-actions  { animation: hero-in .7s ease .28s both; }
+.hero h1       { animation: hero-in 1s ease .05s both; }
+.hero .small   { animation: hero-in 1s ease .18s both; }
+.hero-actions  { animation: hero-in 1s ease .28s both; }
 
 @keyframes hero-in {
   from { opacity: 0; transform: translateY(8px); }
