@@ -86,6 +86,72 @@ body {
   animation: bob 1.8s ease-in-out infinite;
 }
 
+/* Burger button base (hidden on desktop) */
+.burger {
+  display: none;
+  position: relative;
+  width: 44px;
+  height: 36px;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  background: transparent;
+  padding: 6px;
+  cursor: pointer;
+}
+.burger span {
+  display: block;
+  height: 2px;
+  background: var(--gold);
+  margin: 6px 0;
+  transition: transform .25s ease, opacity .2s ease;
+}
+
+/* Optional: animate burger to "X" when open */
+.burger.is-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.burger.is-open span:nth-child(2) { opacity: 0; }
+.burger.is-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* --- mobile behavior --- */
+@media (max-width: 768px) {
+  /* show burger, hide desktop layout */
+  .burger { display: inline-flex; align-items: center; justify-content: center; }
+
+  /* The links become a slide-down panel */
+  .nav-links {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 64px;                  /* adjust to your header height */
+    background: var(--darkgreen);
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--gold);
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .28s ease, opacity .28s ease;
+    padding: 8px 0;
+  }
+  .nav-links a {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    color: var(--gold);
+  }
+
+  /* open state */
+  .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* hide inline desktop layout space */
+  .nav-links:not(.open) { height: auto; }
+
+  /* prevent body scroll when menu is open */
+  body.menu-open { overflow: hidden; }
+}
+
 /* Bobbing motion */
 @keyframes bob {
   0%, 100% {
