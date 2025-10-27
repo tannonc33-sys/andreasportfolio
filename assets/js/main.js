@@ -93,107 +93,65 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   queue();
 })();
 
-/* ===== Featured Reel (transform version): autoplay + pause on hover + drag with inertia ===== */
+/* ============ Reel (CSS-driven) bootstrap ============ */
 (function () {
   const mask  = document.querySelector('.reel-mask');
   const track = document.getElementById('reelTrack');
   if (!mask || !track) return;
 
-  // Make the loop seamless by duplicating once
-  track.innerHTML += track.innerHTML;
+  // 1) Duplicate the row once for a seamless wrap
+  track.innerHTML = track.innerHTML + track.innerHTML;
 
-  // ---- State ----
-  let x = 0;           // current translateX
-  let vx = 0;          // velocity for inertia
-  let playing  = true; // auto-scroll when not dragging
+  // 2) After images settle, compute loop distance (half the track width)
+  const setLoop = () => {
+    const half = track.scrollWidth / 2;              // pixels
+    track.style.setProperty('--loop', `${half}px`);
+  };
+  // If images are cached, timeout is enough; otherwise wait for them
+  window.addEventListener('load', setLoop);
+  setTimeout(setLoop, 200);
+
+  // 3) Simple drag (no inertia): pause while dragging, shift by delta
   let dragging = false;
-  let moved    = false; // did we actually drag (to decide click cancel)
-  let startX   = 0;
-  let lastX    = 0;
-  let rafId    = null;
-  let hovering = false;   // <— add this line
+  let startX = 0;
+  let shiftStart = 0;
 
+  const getShift = () =>
+    parseFloat(getComputedStyle(track).getPropertyValue('--shift')) || 0;
 
-  // ---- Tunables ----
-  const AUTO_SPEED = 0.15;  // px per frame
-  const FRICTION   = 0.96;  // inertia decay; higher = longer glide
-  const DRAG_EPS   = 3;     // pixels to count as a real drag
+  const wrapShift = (s) => {
+    const half = parseFloat(getComputedStyle(track).getPropertyValue('--loop')) || 0;
+    if (!half) return s;
+    // keep shift in [-half, 0] range to avoid large numbers
+    while (s <= -half) s += half;
+    while (s > 0) s -= half;
+    return s;
+  };
 
-  // Helpers
-  const halfWidth = () => track.scrollWidth / 2;
-
-  function render() {
-    track.style.transform = `translateX(${x}px)`;
-  }
-
-  function wrap() {
-    const hw = halfWidth();
-    if (x <= -hw) x += hw;
-    if (x >= 0)   x -= hw;
-  }
-
-  function step() {
-    if (playing && !dragging) {
-      x -= AUTO_SPEED;             // autoplay
-    } else if (!dragging && Math.abs(vx) > 0.02) {
-      x += vx;                     // inertia after drag/flick
-      vx *= FRICTION;
-    }
-    wrap();
-    render();
-    rafId = requestAnimationFrame(step);
-  }
-  rafId = requestAnimationFrame(step);
-
-  // ---- Pause / resume on hover ----
-  mask.addEventListener('mouseenter', () => {
-    hovering = true;
-    playing  = false;   // pause while hovered
-  });
-
-  mask.addEventListener('mouseleave', () => {
-    hovering = false;
-    if (!dragging) playing = true;   // only resume if not dragging
-  });
-
-  // ---- Drag handlers ----
-  function onPointerDown(e) {
-    mask.setPointerCapture?.(e.pointerId);
+  const down = (e) => {
     dragging = true;
-    moved    = false;
-    playing  = false;
-    vx       = 0;
-    startX = lastX = e.clientX;
-
-    document.body.style.userSelect = 'none'; // avoid text selection while dragging
     mask.classList.add('dragging');
+    startX = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
+    shiftStart = getShift();
     e.preventDefault();
-  }
+  };
 
-  function onPointerMove(e) {
+  const move = (e) => {
     if (!dragging) return;
-    const dx = e.clientX - lastX;
-    x += dx;                   // follow the pointer
-    lastX = e.clientX;
-    if (!moved && Math.abs(e.clientX - startX) > DRAG_EPS) moved = true;
-    vx = dx;                   // capture velocity for inertia
-  }
+    const x = e.clientX || (e.touches && e.touches[0]?.clientX) || 0;
+    const dx = x - startX;
+    const next = wrapShift(shiftStart + dx);
+    track.style.setProperty('--shift', `${next}px`);
+  };
 
-  function release() {
+  const up = () => {
     if (!dragging) return;
     dragging = false;
-    document.body.style.userSelect = '';
-    mask.classList.remove('dragging');
-    // let inertia play a moment, then resume autoplay
-    // Let inertia play a moment, then resume autoplay — unless still hovered
-    setTimeout(() => {
-      if (!dragging && !hovering) playing = true;
-    }, 150);
-  }
+    mask.classList.remove('dragging');   // CSS animation resumes automatically
+  };
 
-  mask.addEventListener('pointerdown', onPointerDown);
-  window.addEventListener('pointermove',  onPointerMove);
-  window.addEventListener('pointerup',    release);
-  window.addEventListener('pointercancel',release);
-  window.addEventListener('blur',         release);
+  mask.addEventListener('pointerdown', down);
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', up);
+  window.addEventListener('pointercancel', up);
 })();
