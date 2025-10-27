@@ -467,7 +467,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 .reel-mask::after {
   content: "";
   position: absolute;
-  top: 0; bottom: 0; width: 20%;
+  top: 0; bottom: 0; width: 35%;
   pointer-events: none;
   z-index: 2;
 }
