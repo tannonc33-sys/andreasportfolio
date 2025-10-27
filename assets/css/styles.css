@@ -167,6 +167,18 @@ a.logo:focus-visible::after {
     transform 0.3s ease;
 }
 
+/* Wider header container only */
+.site-header .container {
+  max-width: 1320px;   /* try 1320–1400px; pick what feels best */
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Optional: a little more spacing between brand and links */
+.nav {
+  gap: 28px;
+}
+
 /* Optional: very subtle breathing once fully revealed */
 /*
 a.logo:hover::after { animation: underline-pulse 2s ease-in-out infinite; }
@@ -313,6 +325,16 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 
 /* footer */
 .site-footer{ margin-top:24px; border-top:1px solid var(--line); padding:24px 0; background-color:var(--darkgreen); }
+
+/* Footer color */
+#site-footer,
+#site-footer a {
+  color: var(--gold);
+}
+#site-footer a:hover {
+  opacity: .9;
+  text-decoration: underline;
+}
 
 /* PORTFOLIO PAGE */
 
