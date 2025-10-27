@@ -169,7 +169,7 @@ a.logo:focus-visible::after {
 
 /* Wider header container only */
 .site-header .container {
-  max-width: 1320px;   /* try 1320–1400px; pick what feels best */
+  max-width: 1400px;   /* try 1320–1400px; pick what feels best */
   padding-left: 24px;
   padding-right: 24px;
 }
