@@ -516,7 +516,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 .reel {
   position: relative;
   max-width: 1440px;
-  margin: 300px 20px 60px 20px;
+  margin: 340px 20px 60px 20px;
 }
 
 /* The fade mask only wraps the moving image track */
