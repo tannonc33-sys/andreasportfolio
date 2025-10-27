@@ -154,4 +154,33 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   window.addEventListener('pointermove', move);
   window.addEventListener('pointerup', up);
   window.addEventListener('pointercancel', up);
+  })();
+
+  /* === Keep the cards below the fold: dynamic spacer for .reel === */
+(function () {
+  const reel = document.querySelector('.reel');
+  if (!reel) return;
+
+  const GAP = 24;                 // how many pixels you want between reel bottom and viewport bottom
+  const MIN = 96;                 // never less than this margin
+  const MAX = 640;                // never more than this margin
+
+  function setReelSpacer() {
+    // Where is the bottom of the reel right now?
+    const rect = reel.getBoundingClientRect();
+    // How much room remains from reel bottom to viewport bottom?
+    const needed = window.innerHeight - rect.bottom - GAP;
+    // Clamp to a sane range so it doesn't go weird on huge/small screens
+    const mb = Math.max(MIN, Math.min(MAX, needed));
+    reel.style.marginBottom = `${mb}px`;
+  }
+
+  const onResize = () => {
+    setReelSpacer();
+  };
+
+  window.addEventListener('load', setReelSpacer);
+  window.addEventListener('resize', onResize);
+  // If fonts/images shift layout after load, a small delayed check helps:
+  setTimeout(setReelSpacer, 150);
 })();
