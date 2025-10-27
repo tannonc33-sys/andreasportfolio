@@ -246,7 +246,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 }
 
 /* cards / grid */
-.grid{display:grid; grid-template-columns:repeat(12,1fr); gap:16px; padding:24px 24px 60px 24px;}
+.grid{display:grid; grid-template-columns:repeat(12,1fr); gap:16px; padding:24px 24px 80px 24px;}
 .card{
   background:var(--card); border:1px solid var(--line);
   border-radius:14px; padding:16px;
