@@ -508,7 +508,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 }
 
 /* Optional: very soft lift when pointer is on the page (JS toggles this class) */
-.products.tilt-active .product::before{ opacity:.65; }
+.products.tilt-active .product::before{ opacity:.65; margin: 0px 0px 35px 0px; }
 
 /* Keep cards crisp */
 .products .product img{ display:block; width:100%; height:auto; }
