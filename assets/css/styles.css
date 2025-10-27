@@ -458,8 +458,22 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   --speed: 70s;          /* slower = lighter & calmer */
   --shift: 0px;          /* JS updates this while dragging */
   --loop: 0px;           /* JS sets to half the track width (pixels) */
-  margin: 320px 20px 0px 20px;
+  margin: 330px 20px 0px 20px;
   max-width: 1280px;
+}
+
+/* push the next section below the fold */
+.reel {
+  margin-bottom: clamp(120px, 32vh, 520px);
+}
+
+@media (max-width: 600px) {
+  .reel { margin-bottom: clamp(80px, 22vh, 320px); }
+}
+
+.reel-mask {
+  position: relative;
+  overflow: hidden;
 }
 
 /* soft edge fade (keeps cost low vs heavy blurs) */
