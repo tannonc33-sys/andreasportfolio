@@ -456,7 +456,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   --speed: 70s;          /* slower = lighter & calmer */
   --shift: 0px;          /* JS updates this while dragging */
   --loop: 0px;           /* JS sets to half the track width (pixels) */
-  margin: 48px auto;
+  margin: 150px auto;
   max-width: 1280px;
 }
 
