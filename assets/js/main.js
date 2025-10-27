@@ -172,7 +172,6 @@ export function clearCart(){ localStorage.removeItem('cart'); }
     const needed = window.innerHeight - rect.bottom - GAP;
     // Clamp to a sane range so it doesn't go weird on huge/small screens
     const mb = Math.max(MIN, Math.min(MAX, needed));
-    reel.style.marginBottom = `${mb}px`;
   }
 
   const onResize = () => {
