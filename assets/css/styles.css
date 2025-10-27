@@ -462,20 +462,6 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   max-width: 1460px;
 }
 
-/* push the next section below the fold */
-.reel {
-  margin-bottom: clamp(120px, 32vh, 520px);
-}
-
-@media (max-width: 600px) {
-  .reel { margin-bottom: clamp(80px, 22vh, 320px); }
-}
-
-.reel-mask {
-  position: relative;
-  overflow: hidden;
-}
-
 /* soft edge fade (keeps cost low vs heavy blurs) */
 .reel-mask::before,
 .reel-mask::after {
