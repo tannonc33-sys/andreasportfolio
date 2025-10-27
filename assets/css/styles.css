@@ -515,7 +515,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 /* === Carousel mask limited to the reel === */
 .reel {
   position: relative;
-  max-width: 1440px;
+  max-width: 100%;
   margin: 325px 0px 100px 0px;
 }
 
