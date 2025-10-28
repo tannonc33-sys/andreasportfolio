@@ -392,7 +392,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 .cta:hover{ border-color:var(--line); color:var(--card); background:var(--red); }
 
 /* footer */
-.site-footer{ margin-top:24px; border-top:1px solid var(--line); padding:24px 0; background-color:var(--darkgreen); }
+.site-footer{ margin-top:24px; border-top:1px solid var(--line); padding:24px 0; background-color:var(--darkgreen); width: 1460px; }
 
 /* Footer color */
 #site-footer,
