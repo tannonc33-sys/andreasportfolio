@@ -606,35 +606,6 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   background: #2f7a3b; /* quick success color flash */
 }
 
-/* ===== Product image hover zoom (adjustable) ===== */
-:root {
-  /* Tweak these anytime */
-  --product-zoom-amount: 1.05;   /* 1.00 = no zoom; try 1.03–1.08 */
-  --product-zoom-speed:  280ms;  /* animation speed */
-}
-
-/* Target the shop cards' images */
-.products .card img,
-#originals .card img,
-#prints .card img {
-  transform-origin: center center;
-  transition: transform var(--product-zoom-speed) ease,
-              filter var(--product-zoom-speed) ease;
-  will-change: transform; /* small perf win */
-}
-
-/* Hover/focus states (mouse + keyboard) */
-.products .card:hover img,
-.products .card:focus-within img,
-#originals .card:hover img,
-#originals .card:focus-within img,
-#prints .card:hover img,
-#prints .card:focus-within img {
-  transform: scale(var(--product-zoom-amount));
-  /* optional: add a subtle clarity bump */
-  filter: saturate(1.02) contrast(1.02);
-}
-
 /* =========================
    Reel (infinite carousel)
    ========================= */
