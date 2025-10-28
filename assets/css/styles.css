@@ -732,3 +732,31 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 }
 
 .reel-track a { pointer-events: none; }
+
+/* ================================
+   PRODUCT IMAGE HOVER ZOOM EFFECT
+   ================================ */
+
+/* Adjust these values any time */
+:root {
+  --product-zoom-scale: 1.06;   /* 1.0 = none, 1.06 = 6% zoom */
+  --product-zoom-speed: 300ms;  /* how fast the zoom happens */
+}
+
+/* Target the image inside your rendered product cards */
+.products article img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform var(--product-zoom-speed) ease,
+              filter var(--product-zoom-speed) ease;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Zoom effect on hover/focus */
+.products article:hover img,
+.products article:focus-within img {
+  transform: scale(var(--product-zoom-scale));
+  filter: saturate(1.05) contrast(1.05);
+}
