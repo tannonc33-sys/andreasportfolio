@@ -43,7 +43,7 @@
       {
         id: 'orig-vase-01',
         group: 'originals',
-        name: 'Soft Vessel No. 3',
+        name: 'Soft Vessel No. 3 (Original)',
         price: 180.00,
         currency: 'USD',
         image: 'assets/img/IMG_2567.JPG',
@@ -56,7 +56,7 @@
         id: 'orig-horizon-01',
         group: 'originals',
         name: 'Red Horizon (Original)',
-        price: 950.00,
+        price: 300.00,
         currency: 'USD',
         image: 'assets/img/IMG_1113.jpg',
         width: 800, height: 800,
@@ -69,7 +69,7 @@
       {
         id: 'orig-bowl-02',
         group: 'originals',
-        name: 'Stoneware Bowl No. 2',   // <-- colon
+        name: 'Stoneware Bowl No. 2 (Original)',   // <-- colon
         price: 240.00,
         currency: 'USD',
         image: 'assets/img/IMG_2068.jpeg',
@@ -79,12 +79,11 @@
         inventory: 1,
         priceId: 'price_bowl_no2'
       },
-      
-      // -------- Prints --------
+
       {
         id: 'print-horizon-01',
         group: 'originals',
-        name: 'Red Horizon — 12×16" Print',
+        name: 'Red Horizon — (Original)',
         price: 200.00,
         currency: 'USD',
         image: 'assets/img/IMG_2073.jpeg',
@@ -92,9 +91,50 @@
         alt: 'Fine art print of Red Horizon sculpture, 12×16 inches',
         inventory: 1,
         priceId: 'price_red_horizon_print_12x16' // placeholder
+      },
+
+      {
+        id: 'print-horizon-01',
+        group: 'originals',
+        name: 'Red Horizon — (Original)',
+        price: 200.00,
+        currency: 'USD',
+        image: 'assets/img/IMG_1224.jpeg',
+        width: 800, height: 800,
+        alt: 'Fine art print of Red Horizon sculpture, 12×16 inches',
+        inventory: 1,
+        priceId: 'price_red_horizon_print_12x16' // placeholder
+      },
+      
+      {
+        id: 'print-bowl-01',
+        group: 'prints',
+        name: 'Stoneware Bowl No. 1 (Original)',
+        price: 80.00,
+        currency: 'USD',
+        image: 'assets/img/IMG_2065.jpeg',
+        width: 800, height: 800,
+        alt: 'Fine art print of stoneware bowl, 8×8 inches',
+        inventory: 5,
+        priceId: 'price_bowl_no1_print_8x8' // placeholder
+      },
+
+      {
+        id: 'print-bowl-02',
+        group: 'prints',
+        name: 'Stoneware Bowl No. 2 (Original)',
+        price: 80.00,
+        currency: 'USD',
+        image: 'assets/img/IMG_2585.JPG',
+        width: 800, height: 800,
+        alt: 'Fine art print of stoneware bowl, 8×8 inches',
+        inventory: 5,
+        priceId: 'price_bowl_no2_print_8x8' // placeholder
       }
     ];
-
+      
+      // -------- Prints --------
+      
     // ---------- Render ----------
     function money(n, currency = 'USD') {
       return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(n);
