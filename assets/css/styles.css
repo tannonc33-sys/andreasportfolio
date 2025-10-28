@@ -31,7 +31,7 @@ body {
 
 .card {
   background: var(--card);
-  border-color: var(--red);
+  border-color: var(--darkgreen);
 }
 
 .serif{ font-family:"Cormorant Garamond", serif; }
@@ -387,7 +387,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 .btn{ background:var(--red); }
 .btn:hover{ background:var(--red-600); }
 .btn.ghost{ background:transparent; border-color:var(--red); }
-.btn.ghost:hover{ border-color:var(--red-600); color:var(--text); }
+.btn.ghost:hover{ border-color:var(--line); color:var(--text); }
 .cta{ background:transparent; border-color:var(--red); }
 .cta:hover{ border-color:var(--red-600); color:var(--text); }
 
