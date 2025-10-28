@@ -223,3 +223,102 @@ export function clearCart(){ localStorage.removeItem('cart'); }
     if (link) closeMenu();
   });
 })();
+
+/* ======================
+   CART DRAWER CONTROLLER
+   ====================== */
+
+// If your helpers are in this file they already exist; else import them:
+import { getCart, clearCart } from './main.js'; // remove this line if the same file
+
+(function cartDrawer(){
+  const drawerE1 = document.getElementById('cartDrawer');
+  if (!drawerE1) return; // not on this page
+
+  const overlay  = drawer.querySelector('.cart-overlay');
+  const panel    = drawer.querySelector('.cart-panel');
+  const listEl   = document.getElementById('cartItems');
+  const totalEl  = document.getElementById('cartSubtotal');
+  const clearBtn = document.getElementById('cartClear');
+  const checkout = document.getElementById('cartCheckout');
+  const countEl  = document.getElementById('cartCount');
+
+  // --- open/close ---
+  const open  = () => { drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden','false'); };
+  const close = () => { drawer.classList.remove('is-open'); drawer.setAttribute('aria-hidden','true'); };
+
+  // Toggle from any element with data-cart-toggle
+  document.querySelectorAll('[data-cart-toggle]').forEach(el=>{
+    el.addEventListener('click', (e)=>{ e.preventDefault(); render(); open(); });
+  });
+
+  drawer.addEventListener('click', (e)=>{
+    if (e.target.hasAttribute('data-cart-close')) close();
+  });
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+
+  // --- render ---
+  function money(centsLike){
+    // your prices are numbers like 180.00 or 300.00 – keep it simple:
+    return new Intl.NumberFormat('en-US',{ style:'currency', currency:'USD' }).format(centsLike);
+  }
+
+  function render(){
+    const cart = getCart() || [];
+    let html = '';
+    let subtotal = 0;
+
+    cart.forEach((item, i)=>{
+      subtotal += Number(item.price) || 0;
+      html += `
+        <div class="cart-item" data-i="${i}">
+          <img src="${item.image || item.img || ''}" alt="${item.alt || item.name || ''}">
+          <div>
+            <h4>${item.name || 'Untitled'}</h4>
+            <div class="meta">${item.group ? item.group : ''}</div>
+            <div class="price">${money(item.price || 0)}</div>
+          </div>
+          <button class="remove" type="button" aria-label="Remove item" data-remove="${i}">Remove</button>
+        </div>`;
+    });
+
+    listEl.innerHTML = html || `<p style="padding:10px;">Your cart is empty.</p>`;
+    totalEl.textContent = money(subtotal);
+    if (countEl) countEl.textContent = cart.length;
+  }
+
+  // Remove item
+  listEl.addEventListener('click', (e)=>{
+    const i = e.target.getAttribute('data-remove');
+    if (i==null) return;
+    const cart = getCart() || [];
+    cart.splice(Number(i), 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    render();
+  });
+
+  // Clear cart
+  clearBtn.addEventListener('click', ()=>{
+    clearCart();
+    render();
+  });
+
+  // Placeholder checkout (replace with Stripe/PayPal)
+  checkout.addEventListener('click', ()=>{
+    const cart = getCart() || [];
+    // TODO: send cart to server or payment provider with priceId’s
+    alert('Checkout coming soon. Items in cart: ' + cart.length);
+  });
+
+  // Listen for external cart changes (after addToCart)
+  window.addEventListener('cart:changed', render);
+
+  // Initial badge update on page load
+  render();
+
+  // inside addToCart(item)
+  window.dispatchEvent(new CustomEvent('cart:changed'));
+  // Optionally auto-open after add:
+  const drawer = document.getElementById('cartDrawer');
+  if (drawer) drawer.classList.add('is-open'), drawer.setAttribute('aria-hidden','false');
+})();
