@@ -272,7 +272,7 @@ a.logo:hover::after { animation: underline-pulse 2s ease-in-out infinite; }
 
 /* hero */
 .hero {
-  padding: 48px 0px 16px;   /* keep your spacing */
+  padding: 48px 0px 0px;   /* keep your spacing */
 }
 
 /* keep your heading margins + serif rule */
@@ -290,7 +290,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   color: var(--text);       /* change to var(--text) if you don't want gold */
   font-size: .95rem;
   max-width: 58ch;
-  padding-top: 10px;
+  padding-top: 0px;
 }
 
 /* buttons row */
