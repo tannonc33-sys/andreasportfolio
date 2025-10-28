@@ -1,66 +1,166 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="Paintings and ceramics by Andrea — organic, elegant works for home and gallery.">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Original ceramics & paintings, plus limited edition prints." />
   <title>Shop</title>
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
   <div id="site-header"></div>
 
   <main class="container">
-    <!-- Page-specific content goes here -->
     <section class="hero">
-        <h1 class="serif">Shop</h1>
-        <p class="small">Original ceramics & paintings, plus limited edition prints.</p>
+      <h1 class="serif">Shop</h1>
+      <p class="small">Original ceramics & paintings, plus limited edition prints.</p>
     </section>
 
     <h2 class="serif">Originals</h2>
-    <section class="products" id="originals"></section>
+    <section class="products" id="originals" aria-label="Original artworks for sale"></section>
 
     <h2 class="serif" style="margin-top:24px;">Prints</h2>
-    <section class="products" id="prints"></section>
-
-    <script type="module">
-        import { addToCart } from './assets/js/main.js';
-
-        const originals = [
-            { id:'orig-vase-01', name:'Soft Vessel No. 3', price:180.00, img:'assets/img/IMG_2567.JPG' },
-            { id:'orig-paint-01', name:'Red Horizon (Original)', price:950.00, img:'assets/img/IMG_1113.jpg' }
-        ];
-        const prints = [
-            { id:'print-horizon-01', name:'Red Horizon — 12×16" Print', price:45.00, img:'assets/img/IMG_1113.jpg' }
-        ];
-
-        function render(list, elId){
-            const el = document.getElementById(elId);
-            el.innerHTML = list.map(p => `
-            <article class="product">
-                <img src="${p.img}" alt="${p.name}">
-                <div class="info">
-                <h3>${p.name}</h3>
-                <div class="price">$${p.price.toFixed(2)}</div>
-                <button class="btn" data-id="${p.id}">Add to cart</button>
-                </div>
-            </article>`).join('');
-            el.addEventListener('click', e=>{
-            if(e.target.matches('button[data-id]')){
-                const id=e.target.getAttribute('data-id');
-                const item=[...originals, ...prints].find(p=>p.id===id);
-                addToCart({ id:item.id, name:item.name, price:item.price });
-            }
-            });
-        }
-        render(originals,'originals');
-        render(prints,'prints');
-    </script>
+    <section class="products" id="prints" aria-label="Fine art prints for sale"></section>
   </main>
 
   <div id="site-footer"></div>
+
+  <!-- Page-only script -->
+  <script type="module">
+    import { addToCart } from './assets/js/main.js';
+
+    /** ******************************************************************
+     * PRODUCTS
+     * - id: internal id you control
+     * - priceId: your payment provider's price identifier (e.g. Stripe "price_123")
+     * - inventory: 0 means sold out
+     ******************************************************************* */
+    const products = [
+      // -------- Originals --------
+      {
+        id: 'orig-vase-01',
+        group: 'originals',
+        name: 'Soft Vessel No. 3',
+        price: 180.00,
+        currency: 'USD',
+        image: 'assets/img/IMG_2567.JPG',
+        width: 800, height: 800,
+        alt: 'Ceramic vessel with layered, organic textures',
+        inventory: 1,
+        priceId: 'price_soft_vessel_no3' // placeholder
+      },
+      {
+        id: 'orig-horizon-01',
+        group: 'originals',
+        name: 'Red Horizon (Original)',
+        price: 950.00,
+        currency: 'USD',
+        image: 'assets/img/IMG_1113.jpg',
+        width: 800, height: 800,
+        alt: 'Original wall sculpture with red horizon coloration',
+        inventory: 1,
+        priceId: 'price_red_horizon_original' // placeholder
+      },
+
+      // shop.html (inside the products array)
+      {
+        id: 'orig-bowl-02',
+        group: 'originals',
+        name: 'Stoneware Bowl No. 2',   // <-- colon
+        price: 240.00,
+        currency: 'USD',
+        image: 'assets/img/IMG_2068.jpeg',
+        width: 800,
+        height: 800,
+        alt: 'Wheel-thrown stoneware bowl with satin glaze',
+        inventory: 1,
+        priceId: 'price_bowl_no2'
+      },
+      
+      // -------- Prints --------
+      {
+        id: 'print-horizon-01',
+        group: 'prints',
+        name: 'Red Horizon — 12×16" Print',
+        price: 45.00,
+        currency: 'USD',
+        image: 'assets/img/IMG_2073.jpeg',
+        width: 800, height: 800,
+        alt: 'Fine art print of Red Horizon sculpture, 12×16 inches',
+        inventory: 12,
+        priceId: 'price_red_horizon_print_12x16' // placeholder
+      }
+    ];
+
+    // ---------- Render ----------
+    function money(n, currency = 'USD') {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(n);
+    }
+
+    function productCard(p) {
+      const sold = p.inventory <= 0;
+      return `
+<article class="card product" data-id="${p.id}" itemscope itemtype="https://schema.org/Product">
+  <meta itemprop="name" content="${p.name}" />
+  <link itemprop="image" href="${p.image}" />
+  <div class="thumb">
+    <img src="${p.image}" width="${p.width}" height="${p.height}" alt="${p.alt}" loading="lazy" decoding="async">
+    ${sold ? '<span class="badge sold">Sold</span>' : ''}
+  </div>
+  <div class="body">
+    <h3 class="title serif" itemprop="name">${p.name}</h3>
+    <p class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+      <span itemprop="price" content="${p.price}">${money(p.price, p.currency)}</span>
+      <meta itemprop="priceCurrency" content="${p.currency}">
+      <link itemprop="availability" href="${sold ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock'}">
+    </p>
+    <button
+      class="btn add"
+      ${sold ? 'disabled aria-disabled="true"' : ''}
+      data-id="${p.id}"
+      data-name="${p.name}"
+      data-price="${p.price}"
+      data-currency="${p.currency}"
+      data-price-id="${p.priceId}">
+      ${sold ? 'Sold' : 'Add to cart'}
+    </button>
+  </div>
+</article>`;
+    }
+
+    function renderGroup(groupName, elId) {
+      const el = document.getElementById(elId);
+      const items = products.filter(p => p.group === groupName);
+      el.innerHTML = items.map(productCard).join('');
+    }
+
+    renderGroup('originals', 'originals');
+    renderGroup('prints', 'prints');
+
+    // ---------- Interactions ----------
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn.add');
+      if (!btn) return;
+
+      const item = {
+        id: btn.dataset.id,
+        name: btn.dataset.name,
+        price: Number(btn.dataset.price),
+        currency: btn.dataset.currency,
+        priceId: btn.dataset.priceId, // future checkout hook
+        qty: 1
+      };
+
+      addToCart(item); // uses your existing helper
+      btn.classList.add('added');
+      btn.textContent = 'Added!';
+      setTimeout(() => { btn.classList.remove('added'); btn.textContent = 'Add to cart'; }, 1200);
+    });
+  </script>
+
   <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>
