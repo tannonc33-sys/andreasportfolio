@@ -745,8 +745,7 @@ body {
 }
 
 .main {
-  flex: 1 0 auto;
-  width: 70%;               /* main takes the remaining vertical space */
+  flex: 1 0 auto;               /* main takes the remaining vertical space */
 }
 
 #site-footer {
