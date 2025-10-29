@@ -39,6 +39,7 @@ body {
 .serif{ font-family:"Cormorant Garamond", serif; }
 
 .container{
+  max-height: 100%;
   max-width:1280px;   /* try 1280; or 1360/1440 if you want wider */
   margin:0 auto;
   padding:24px;
