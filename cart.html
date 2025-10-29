@@ -14,47 +14,49 @@
 
   <main class="container">
     <!-- Page-specific content goes here -->
-     <section class="hero">
-  <h1>Your Cart</h1>
-  <p class="small">Items stored in your browser for demo purposes.</p>
-</section>
-<section>
-  <table class="table" id="cart-table">
-    <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th></th></tr></thead>
-    <tbody></tbody>
-  </table>
-  <div class="total" id="cart-total"></div>
-  <div style="display:flex; gap:10px; justify-content:flex-end;">
-    <button class="btn ghost" id="clear">Clear</button>
-    <button class="btn">Checkout (demo)</button>
-  </div>
-</section>
+    <section class="hero">
+      <h1>Your Cart</h1>
+      <p class="small">Items stored in your browser for demo purposes.</p>
+    </section>
+    <section>
+      <table class="table" id="cart-table">
+        <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="total" id="cart-total"></div>
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button class="btn ghost" id="clear">Clear</button>
+        <button class="btn">Checkout (demo)</button>
+        <!-- cart.html -->
+        <button id="checkoutBtn" class="btn ghost">Checkout</button>
+      </div>
+    </section>
 
-<script type="module">
-  import { getCart, removeFromCart, clearCart } from './assets/js/main.js';
-  const tbody = document.querySelector('#cart-table tbody');
-  const total = document.getElementById('cart-total');
-  function render() {
-    const items = getCart();
-    let sum = 0;
-    tbody.innerHTML = items.map(i => {
-      const sub = i.price * i.qty;
-      sum += sub;
-      return `<tr>
-        <td>${i.name}</td><td>${i.qty}</td>
-        <td>$${sub.toFixed(2)}</td>
-        <td><button class="btn ghost" data-remove="${i.id}">Remove</button></td>
-      </tr>`;
-    }).join('') || `<tr><td colspan="4">Your cart is empty.</td></tr>`;
-    total.textContent = "Total: $" + sum.toFixed(2);
-  }
-  tbody.addEventListener('click', e => {
-    const id = e.target.getAttribute('data-remove');
-    if (id) { removeFromCart(id); render(); }
-  });
-  document.getElementById('clear').addEventListener('click', () => { clearCart(); render(); });
-  render();
-</script>
+    <script type="module">
+      import { getCart, removeFromCart, clearCart } from './assets/js/main.js';
+      const tbody = document.querySelector('#cart-table tbody');
+      const total = document.getElementById('cart-total');
+      function render() {
+        const items = getCart();
+        let sum = 0;
+        tbody.innerHTML = items.map(i => {
+          const sub = i.price * i.qty;
+          sum += sub;
+          return `<tr>
+            <td>${i.name}</td><td>${i.qty}</td>
+            <td>$${sub.toFixed(2)}</td>
+            <td><button class="btn ghost" data-remove="${i.id}">Remove</button></td>
+          </tr>`;
+        }).join('') || `<tr><td colspan="4">Your cart is empty.</td></tr>`;
+        total.textContent = "Total: $" + sum.toFixed(2);
+      }
+      tbody.addEventListener('click', e => {
+        const id = e.target.getAttribute('data-remove');
+        if (id) { removeFromCart(id); render(); }
+      });
+      document.getElementById('clear').addEventListener('click', () => { clearCart(); render(); });
+      render();
+    </script>
 
   </main>
 
