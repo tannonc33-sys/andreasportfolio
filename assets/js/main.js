@@ -26,37 +26,6 @@ export function addToCart(item){
 export function getCart(){ return JSON.parse(localStorage.getItem('cart')||'[]'); }
 export function clearCart(){ localStorage.removeItem('cart'); }
 
-// assets/js/main.js (or wherever your cart JS lives)
-async function startCheckout(cartItems) {
-  // cartItems = [{ priceId: 'price_123', quantity: n }, …]
-  const res = await fetch('/api/create-checkout-session', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items: cartItems }),
-  });
-
-  const data = await res.json();
-  if (!res.ok) {
-    alert(data?.error || 'Checkout failed.');
-    return;
-  }
-  window.location = data.url; // Stripe Checkout URL
-}
-
-document.getElementById('checkoutBtn')?.addEventListener('click', () => {
-  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  if (!cart.length) {
-    alert('Your cart is empty.');
-    return;
-  }
-  // Map your cart to Stripe line items based on priceId
-  const lineItems = cart.map(item => ({
-    priceId: item.priceId,              // must exist on each item
-    quantity: item.qty ? +item.qty : 1, // default 1
-  }));
-  startCheckout(lineItems);
-});
-
 // GLOBAL TILT + AMBIENT LIGHT FOR PORTFOLIO CARDS
 (() => {
   const grid = document.querySelector('.products');
