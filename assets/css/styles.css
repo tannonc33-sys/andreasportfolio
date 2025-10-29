@@ -734,3 +734,51 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 }
 
 .reel-track a { pointer-events: none; }
+
+/* -----------------------------
+   Container: keep your layout width
+   ----------------------------- */
+:root {
+  --page-max: 1280px;   /* <- your site’s max content width */
+  --page-pad: 24px;     /* <- side padding inside the container */
+}
+
+.container {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+  box-sizing: border-box;
+}
+
+/* -----------------------------
+   Sticky footer without width skew
+   ----------------------------- */
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100svh;          /* handles mobile UI chrome better than 100vh */
+  display: flex;
+  flex-direction: column;
+}
+
+/* header is normal flow */
+#site-header {
+  flex: 0 0 auto;
+}
+
+/* main grows to take the remaining height */
+main {
+  flex: 1 0 auto;
+  /* DO NOT set width or max-width here—let .container handle that */
+}
+
+/* footer sits at the bottom when content is short */
+#site-footer {
+  flex: 0 0 auto;
+  margin-top: auto;            /* <- the key line */
+  /* Optional: full-bleed background while contents stay centered */
+  /* background: #2f4234; */
+}
