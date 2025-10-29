@@ -734,28 +734,3 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 }
 
 .reel-track a { pointer-events: none; }
-
-/* Sticky footer layout */
-html, body { height: 100%; }
-
-body {
-  min-height: 100svh;           /* 'svh' handles mobile browser UI correctly */
-  display: flex;
-  flex-direction: column;
-}
-
-.main {
-  flex: 1 0 auto;    
-  width: 100%;           /* main takes the remaining vertical space */
-}
-
-#site-footer {
-  margin-top: auto;             /* pushes footer to the bottom when content is short */
-}
-
-/* Utility: add a spacer at the end of main to push the footer below the fold */
-.main.push-under::after {
-  content: "";
-  display: block;
-  height: var(--push-under, 64px); /* tweak this; 48–96px feels nice */
-}
