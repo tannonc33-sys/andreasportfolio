@@ -31,6 +31,7 @@ body {
 
 .card {
   background: var(--card);
+  border-width: 3px;
   border-color: var(--darkgreen);
   margin-bottom: 26px;
 }
