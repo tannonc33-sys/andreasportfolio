@@ -32,7 +32,7 @@ body {
 .card {
   background: var(--card);
   border-color: var(--darkgreen);
-  padding-bottom: 26px;
+  margin-bottom: 26px;
 }
 
 .serif{ font-family:"Cormorant Garamond", serif; }
