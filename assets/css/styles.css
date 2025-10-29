@@ -314,7 +314,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 }
 
 /* cards / grid */
-.grid{display:grid; grid-template-columns:repeat(12,1fr); gap:16px; padding:24px 24px 70px 24px;}
+.grid{display:grid; grid-template-columns:repeat(12,1fr); gap:16px; padding:72px 24px 70px 24px;}
 .card{
   background:var(--card); border:1px solid var(--darkgreen);
   border-radius:14px; padding:16px;
@@ -745,7 +745,8 @@ body {
 }
 
 .main {
-  flex: 1 0 auto;               /* main takes the remaining vertical space */
+  flex: 1 0 auto;
+  width: 70%;               /* main takes the remaining vertical space */
 }
 
 #site-footer {
