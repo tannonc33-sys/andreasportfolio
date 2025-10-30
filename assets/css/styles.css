@@ -782,3 +782,13 @@ main {
   /* Optional: full-bleed background while contents stay centered */
   /* background: #2f4234; */
 }
+
+.products .card .thumb img {
+  transition: transform .35s ease, filter .35s ease;
+  will-change: transform;
+}
+
+.products .card:hover .thumb img {
+  transform: scale(1.035); /* adjust strength here */
+  filter: saturate(1.02) contrast(1.02);
+}
