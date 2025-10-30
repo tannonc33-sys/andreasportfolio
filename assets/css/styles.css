@@ -262,7 +262,6 @@ a.logo:hover::after { animation: underline-pulse 2s ease-in-out infinite; }
   .burger {
     display: block;
     background: none;
-    border: 1px solid var(--gold);
     color: var(--gold);
     padding: 6px 10px;
     border-radius: 4px;
