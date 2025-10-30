@@ -158,32 +158,33 @@
     function productCard(p) {
       const sold = p.inventory <= 0;
       return `
-<article class="card product" data-id="${p.id}" itemscope itemtype="https://schema.org/Product">
-  <meta itemprop="name" content="${p.name}" />
-  <link itemprop="image" href="${p.image}" />
-  <div class="thumb">
-    <img src="${p.image}" width="${p.width}" height="${p.height}" alt="${p.alt}" loading="lazy" decoding="async">
-    ${sold ? '<span class="badge sold">Sold</span>' : ''}
-  </div>
-  <div class="body">
-    <h3 class="title serif" itemprop="name">${p.name}</h3>
-    <p class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-      <span itemprop="price" content="${p.price}">${money(p.price, p.currency)}</span>
-      <meta itemprop="priceCurrency" content="${p.currency}">
-      <link itemprop="availability" href="${sold ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock'}">
-    </p>
-    <button
-      class="btn add"
-      ${sold ? 'disabled aria-disabled="true"' : ''}
-      data-id="${p.id}"
-      data-name="${p.name}"
-      data-price="${p.price}"
-      data-currency="${p.currency}"
-      data-price-id="${p.priceId}">
-      ${sold ? 'Sold' : 'Add to cart'}
-    </button>
-  </div>
-</article>`;
+      <article class="card product" data-id="${p.id}" itemscope itemtype="https://schema.org/Product">
+        <meta itemprop="name" content="${p.name}" />
+        <link itemprop="image" href="${p.image}" />
+        <div class="thumb">
+          <img src="${p.image}" width="${p.width}" height="${p.height}" alt="${p.alt}" loading="lazy" decoding="async">
+          ${sold ? '<span class="badge sold">Sold</span>' : ''}
+        </div>
+        <div class="body">
+          <h3 class="title serif" itemprop="name">${p.name}</h3>
+          <p class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+            <span itemprop="price" content="${p.price}">${money(p.price, p.currency)}</span>
+            <meta itemprop="priceCurrency" content="${p.currency}">
+            <link itemprop="availability" href="${sold ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock'}">
+          </p>
+          <button
+            class="btn add"
+            ${sold ? 'disabled aria-disabled="true"' : ''}
+            data-id="${p.id}"
+            data-name="${p.name}"
+            data-price="${p.price}"
+            data-currency="${p.currency}"
+            data-price-id="${p.priceId}"
+            data-image="${p.image}">
+            ${sold ? 'Sold' : 'Add to cart'}
+          </button>
+        </div>
+      </article>`;
     }
 
     function renderGroup(groupName, elId) {
@@ -206,6 +207,7 @@
         price: Number(btn.dataset.price),
         currency: btn.dataset.currency,
         priceId: btn.dataset.priceId, // future checkout hook
+        image: btn.dataset.image || '',
         qty: 1
       };
 
