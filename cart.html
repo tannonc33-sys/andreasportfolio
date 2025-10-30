@@ -32,6 +32,113 @@
       </div>
     </section>
 
+    <section>
+      <table class="table" id="cartTable" aria-label="Cart items">
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Price</th><th></th></tr>
+        </thead>
+        <tbody id="cartBody"></tbody>
+      </table>
+
+      <div id="cart-total" class="total">
+        <strong>Total:</strong> <span id="cartSum">$0.00</span>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button id="clearCart" class="btn ghost">Clear</button>
+        <button id="checkoutDemo" class="btn danger">Checkout (demo)</button>
+        <button id="checkout" class="btn">Checkout</button>
+      </div>
+    </section>
+
+    <script type="module">
+      // If you already export these from assets/js/main.js you can import them:
+      // import { getCart, clearCart } from './assets/js/main.js';
+
+      // Lightweight local versions to keep this page independent:
+      const getCart   = () => JSON.parse(localStorage.getItem('cart') || '[]');
+      const setCart   = (c) => localStorage.setItem('cart', JSON.stringify(c));
+      const clearCart = () => localStorage.removeItem('cart');
+
+      const money = (n, curr='USD') =>
+        new Intl.NumberFormat('en-US', { style: 'currency', currency: curr }).format(n);
+
+      const bodyEl   = document.getElementById('cartBody');
+      const sumEl    = document.getElementById('cartSum');
+      const clearBtn = document.getElementById('clearCart');
+      const demoBtn  = document.getElementById('checkoutDemo');
+      const goBtn    = document.getElementById('checkout');
+
+      function render() {
+        const cart = getCart();
+        bodyEl.innerHTML = cart.length
+          ? cart.map((it, i) => rowHTML(it, i)).join('')
+          : `<tr><td colspan="4" style="opacity:.7;">Your cart is empty.</td></tr>`;
+        sumEl.textContent = money(total(cart), cart[0]?.currency || 'USD');
+      }
+
+      function rowHTML(it, i) {
+        const line = it.price * it.qty;
+        return `
+          <tr data-i="${i}">
+            <td style="display:flex;align-items:center;gap:12px;">
+              ${it.image ? `<img src="${it.image}" alt="" width="52" height="52" style="object-fit:cover;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.12)">` : ''}
+              <div>
+                <div class="serif" style="line-height:1.2">${escapeHTML(it.name)}</div>
+                ${it.priceId ? `<small style="opacity:.7">SKU: ${it.priceId}</small>` : ''}
+              </div>
+            </td>
+            <td>
+              <button class="qty" data-delta="-1" aria-label="Decrease">−</button>
+              <span class="q">${it.qty}</span>
+              <button class="qty" data-delta="1" aria-label="Increase">+</button>
+            </td>
+            <td>${money(line, it.currency)}</td>
+            <td><button class="remove" aria-label="Remove">×</button></td>
+          </tr>`;
+      }
+
+      function total(cart) {
+        return cart.reduce((s, it) => s + it.price * it.qty, 0);
+      }
+
+      function escapeHTML(s='') {
+        return s.replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+      }
+
+      // interactions (qty +/−, remove)
+      bodyEl.addEventListener('click', (e) => {
+        const tr = e.target.closest('tr[data-i]'); if (!tr) return;
+        const i  = Number(tr.dataset.i);
+        const cart = getCart();
+
+        if (e.target.matches('.qty')) {
+          const delta = Number(e.target.dataset.delta || 0);
+          cart[i].qty = Math.max(1, (cart[i].qty || 1) + delta);
+          setCart(cart); render();
+        } else if (e.target.matches('.remove')) {
+          cart.splice(i, 1);
+          setCart(cart); render();
+        }
+      });
+
+      clearBtn.addEventListener('click', () => { clearCart(); render(); });
+
+      // demo checkout just clears the cart to show flow
+      demoBtn.addEventListener('click', () => {
+        alert('Demo only – this would redirect to Stripe Checkout.');
+      });
+
+      // real Checkout – wire this to your serverless function later
+      goBtn.addEventListener('click', async () => {
+        const cart = getCart();
+        if (!cart.length) return alert('Cart is empty.');
+        alert('Next step: send cart items (priceId + quantity) to your server to create a Stripe Checkout Session, then redirect.');
+      });
+
+      render();
+    </script>
+
     <script type="module">
       import { getCart, removeFromCart, clearCart } from './assets/js/main.js';
       const tbody = document.querySelector('#cart-table tbody');
