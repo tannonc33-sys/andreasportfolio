@@ -88,18 +88,6 @@ body {
   animation: bob 1.8s ease-in-out infinite;
 }
 
-/* Hide burger on desktop, show on mobile */
-.burger {
-  display: none;
-  position: relative;
-  width: 44px;
-  height: 36px;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-}
-
 /* the three lines */
 .burger span {
   position: absolute;
@@ -119,33 +107,39 @@ body {
 .burger.is-open span:nth-child(2) { opacity: 0; }
 .burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* --- Mobile breakpoint (new code, safe to paste below) --- */
-@media (max-width: 768px) {
-  .burger { display: inline-flex; align-items: center; justify-content: center; }
+/* Hide the burger on desktop (shows on mobile below) */
+.burger { display: none; }
 
-  .nav-links {
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+  .burger { 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center;
+  }
+
+  /* Panel base (hidden) */
+  .nav-links{
     position: fixed;
     left: 0; right: 0; top: 64px;
     background: var(--darkgreen);
-    display: grid;
-    gap: 10px;
-    padding: 14px 20px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: grid; gap: 10px; padding: 14px 20px;
     transform: translateY(-110%);
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0; pointer-events: none;
     transition: transform .28s ease, opacity .28s ease;
     z-index: 1000;
   }
 
-  .nav-links.open {
+  /* Open state */
+  .nav-links.open{
     transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
+    opacity: 1; pointer-events: auto;
   }
 
+  /* Optional: prevent background scroll when open */
   body.menu-open { overflow: hidden; }
 }
-
 
 /* Bobbing motion */
 @keyframes bob {
