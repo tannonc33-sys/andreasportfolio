@@ -119,38 +119,32 @@ body {
 .burger.is-open span:nth-child(2) { opacity: 0; }
 .burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile breakpoint */
+/* --- Mobile breakpoint (new code, safe to paste below) --- */
 @media (max-width: 768px) {
   .burger { display: inline-flex; align-items: center; justify-content: center; }
-}
 
-/* Slide-down panel base — do NOT use display:none */
-.nav-links {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 64px;                  /* match header height */
-  background: var(--darkgreen);
-  border-top: 1px solid rgba(255,255,255,.08);
-  display: grid;              /* allows neat vertical layout */
-  gap: 8px;
-  padding: 14px 20px;
-  transform: translateY(-110%);   /* hidden state */
-  opacity: 0;
-  pointer-events: none;
-  transition: transform .28s ease, opacity .28s ease;
-  z-index: 1000;
-}
+  .nav-links {
+    position: fixed;
+    left: 0; right: 0; top: 64px;
+    background: var(--darkgreen);
+    display: grid;
+    gap: 10px;
+    padding: 14px 20px;
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .28s ease, opacity .28s ease;
+    z-index: 1000;
+  }
 
-/* Visible/open state */
-.nav-links.open {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
+  .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-/* Optional: stop scroll when open */
-body.menu-open { overflow: hidden; }
+  body.menu-open { overflow: hidden; }
+}
 
 
 /* Bobbing motion */

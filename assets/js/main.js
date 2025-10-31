@@ -184,15 +184,16 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   setTimeout(setReelSpacer, 150);
 })();
 
-// --- Burger toggle (simple & safe) ---
+// --- Mobile burger menu toggle (simple & safe) ---
 document.addEventListener('DOMContentLoaded', () => {
   const btn   = document.querySelector('button.burger');
   const panel = document.getElementById('mobile-nav');
-
   if (!btn || !panel) return;
 
+  // Single source of truth for state → apply classes/attributes
   const setState = (open) => {
     panel.classList.toggle('open', open);
+    panel.toggleAttribute('hidden', !open);
     btn.classList.toggle('is-open', open);
     btn.setAttribute('aria-expanded', String(open));
     document.body.classList.toggle('menu-open', open);
@@ -200,16 +201,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    const open = !panel.classList.contains('open');
-    setState(open);
+    setState(!panel.classList.contains('open'));
   });
 
-  // Close on link click inside panel (mobile)
+  // Close when clicking a link inside the panel (mobile)
   panel.addEventListener('click', (e) => {
     if (e.target.closest('a')) setState(false);
   });
 
-  // Click outside closes
+  // Close on outside click
   document.addEventListener('click', (e) => {
     if (panel.classList.contains('open') &&
         !panel.contains(e.target) &&
@@ -218,8 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Escape closes
-  window.addEventListener('keydown', (e) => {
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') setState(false);
   });
 });
