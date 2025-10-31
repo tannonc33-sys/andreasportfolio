@@ -196,3 +196,41 @@ export function clearCart(){ localStorage.removeItem('cart'); }
     burger.setAttribute('aria-expanded', String(!expanded));
   });
 })();
+
+// ===== Burger toggle (simple) =====
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('.burger');
+  const panel = document.getElementById('mobile-nav');
+  if (!btn || !panel) return;
+
+  const toggle = () => {
+    const isOpen = panel.classList.toggle('open');
+    btn.classList.toggle('is-open', isOpen);
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.classList.toggle('menu-open', isOpen);
+  };
+
+  btn.addEventListener('click', toggle);
+
+  // Close when clicking a link (mobile)
+  panel.addEventListener('click', (e) => {
+    if (e.target.closest('a')) {
+      panel.classList.remove('open');
+      btn.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+    }
+  });
+
+  // Close on Escape
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      panel.classList.remove('open');
+      btn.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+      btn.focus();
+    }
+  });
+});
+
