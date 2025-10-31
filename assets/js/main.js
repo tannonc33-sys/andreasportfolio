@@ -184,19 +184,6 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   setTimeout(setReelSpacer, 150);
 })();
 
-// Simple mobile menu toggle
-(() => {
-  const burger = document.querySelector('.burger');
-  const nav = document.getElementById('mobile-nav');
-
-  if (!burger || !nav) return;
-
-  burger.addEventListener('click', () => {
-    const expanded = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!expanded));
-  });
-})();
-
 // ===== Burger toggle (simple) =====
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.querySelector('.burger');
