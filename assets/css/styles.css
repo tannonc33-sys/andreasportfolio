@@ -270,6 +270,30 @@ a.logo:hover::after { animation: underline-pulse 2s ease-in-out infinite; }
   }
 }
 
+/* Transparent hamburger button */
+button.burger {
+  background: transparent !important;  /* removes the “bubble” */
+  border: none !important;             /* removes outline/border */
+  box-shadow: none !important;         /* removes shadows */
+  padding: 0;                          /* tightens spacing */
+  margin: 0;
+  cursor: pointer;                     /* keep pointer behavior */
+}
+
+/* Optional: prevent background flash when tapped or focused */
+button.burger:focus,
+button.burger:active {
+  outline: none;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+/* Optional aesthetic: change cursor and give smooth animation */
+button.burger:hover span {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
 /* hero */
 .hero {
   padding: 48px 0px 0px;   /* keep your spacing */
