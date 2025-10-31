@@ -252,85 +252,45 @@ a.logo:hover::after { animation: underline-pulse 2s ease-in-out infinite; }
 @keyframes underline-pulse { 0%,100%{transform:scaleX(1)} 50%{transform:scaleX(1.05)} }
 */
 
-/* Hide burger menu on large screens */
-.burger {
-  display: none;
-}
-
-/* Show it again on mobile if you decide to make it responsive later */
-@media (max-width: 768px) {
-  .burger {
-    display: block;
-    background: transparent;
-    color: var(--gold);
-    padding: 6px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-}
-
-/* Transparent hamburger button */
+/* --- Burger base: invisible background, visible bars --- */
 button.burger {
-  background: transparent !important;  /* removes the “bubble” */
-  border: none !important;             /* removes outline/border */
-  box-shadow: none !important;         /* removes shadows */
-  padding: 0;                          /* tightens spacing */
-  margin: 0;
-  cursor: pointer;                     /* keep pointer behavior */
-}
-
-/* Optional: prevent background flash when tapped or focused */
-button.burger:focus,
-button.burger:active {
-  outline: none;
-  background: transparent !important;
+  background: transparent;       /* No bubble */
+  border: none;
   box-shadow: none;
-}
-
-/* Optional aesthetic: change cursor and give smooth animation */
-button.burger:hover span {
-  opacity: 0.8;
-  transition: opacity 0.2s ease;
-}
-
-/* Default: hide mobile nav */
-#mobile-nav { 
-  display: none;
-}
-
-/* When the burger is expanded, show the nav (burger is immediately before nav) */
-button.burger[aria-expanded="true"] + #mobile-nav {
-  display: block;
-}
-
-/* Desktop: always show nav, hide burger */
-@media (min-width: 768px) {
-  button.burger { display: none; }
-  #mobile-nav { display: flex !important; }
-}
-
-/* Your transparent button styles (keep these) */
-button.burger {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
   padding: 0;
   margin: 0;
-  cursor: pointer;
-  /* Optional size so the hit target is comfortable */
   width: 44px;
   height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
-button.burger:focus,
-button.burger:active {
-  outline: none;
-  background: transparent !important;
-  box-shadow: none;
+button.burger:focus { outline: none; }
+
+/* The 3 bars */
+button.burger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);       /* Make the bars visible */
+  margin: 4px 0;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+/* --- Mobile behavior: menu hidden by default --- */
+#mobile-nav { display: none; }
+
+/* When burger is expanded, show menu (adjacent sibling) */
+button.burger[aria-expanded="true"] + #mobile-nav {
+  display: block;
+}
+
+/* --- Desktop behavior: always show menu, hide burger --- */
+@media (min-width: 768px) {
+  button.burger { display: none; }
+  #mobile-nav { display: flex !important; gap: 1rem; } /* your desktop nav layout */
 }
 
 /* hero */

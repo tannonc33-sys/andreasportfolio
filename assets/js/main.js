@@ -184,58 +184,36 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   setTimeout(setReelSpacer, 150);
 })();
 
-// --- Mobile burger menu toggle ---
-(function () {
-  const btn = document.querySelector('.burger');
-  const panel = document.querySelector('.nav-links');
-  if (!btn || !panel) return;
-
-  const closeMenu = () => {
-    btn.classList.remove('is-open');
-    panel.classList.remove('open');
-    btn.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('menu-open');
-  };
-
-  const openMenu = () => {
-    btn.classList.add('is-open');
-    panel.classList.add('open');
-    btn.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('menu-open');
-  };
-
-  btn.addEventListener('click', () => {
-    const isOpen = panel.classList.contains('open');
-    isOpen ? closeMenu() : openMenu();
-  });
-
-  // Close on ESC
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && panel.classList.contains('open')) {
-      closeMenu();
-      btn.focus();
-    }
-  });
-
-  // Close when clicking a link
-  panel.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
-    if (link) closeMenu();
-  });
-})();
-
 // Mobile nav toggle
 (() => {
   const burger = document.querySelector('button.burger');
   const nav = document.getElementById('mobile-nav');
   if (!burger || !nav) return;
 
-  // Ensure initial state is hidden if aria-expanded=false
-  nav.hidden = burger.getAttribute('aria-expanded') === 'false';
+  // Set initial hidden state for mobile (desktop is overridden by CSS)
+  const close = () => {
+    burger.setAttribute('aria-expanded', 'false');
+    nav.hidden = true;
+  };
+  const open = () => {
+    burger.setAttribute('aria-expanded', 'true');
+    nav.hidden = false;
+  };
+
+  // Initialize
+  close();
 
   burger.addEventListener('click', () => {
-    const expanded = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!expanded));
-    nav.hidden = expanded; // hide when it was expanded
+    const isOpen = burger.getAttribute('aria-expanded') === 'true';
+    if (isOpen) close(); else open();
   });
+
+  // Optional: ensure nav is not hidden on desktop when resizing
+  const mq = window.matchMedia('(min-width: 768px)');
+  const sync = () => {
+    if (mq.matches) nav.hidden = false; // desktop: always visible
+    else if (burger.getAttribute('aria-expanded') === 'false') nav.hidden = true;
+  };
+  mq.addEventListener?.('change', sync);
+  sync();
 })();
