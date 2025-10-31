@@ -221,3 +221,45 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// --- Burger: tiny, safe toggle ---
+// Put this at the *very end* of assets/js/main.js
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('[burger] init');
+
+  const btn   = document.querySelector('button.burger');
+  const panel = document.getElementById('mobile-nav');
+
+  if (!btn || !panel) {
+    console.warn('[burger] elements not found');
+    return;
+  }
+
+  const setState = (open) => {
+    panel.classList.toggle('open', open);
+    btn.classList.toggle('is-open', open);
+    document.body.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); // don’t let the document handler immediately close it
+    setState(!panel.classList.contains('open'));
+  });
+
+  // Close when clicking outside the panel
+  document.addEventListener('click', (e) => {
+    if (!panel.classList.contains('open')) return;
+    if (panel.contains(e.target) || e.target === btn) return;
+    setState(false);
+  });
+
+  // Close when tapping a link in the panel
+  panel.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setState(false);
+  });
+
+  // Close on ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setState(false);
+  });
+});
