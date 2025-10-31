@@ -91,7 +91,7 @@ body {
 /* --- Burger (mobile only) --- */
 .burger {
   display: none;                /* hidden on desktop */
-  background: transparent;      /* no bubble */
+  /* background: transparent;      no bubble */
   border: none;
   padding: 0;
   cursor: pointer;
