@@ -184,42 +184,15 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   setTimeout(setReelSpacer, 150);
 })();
 
-// --- Mobile burger menu toggle ---
-(function () {
-  const btn = document.querySelector('.burger');
-  const panel = document.querySelector('.nav-links');
-  if (!btn || !panel) return;
+// Simple mobile menu toggle
+(() => {
+  const burger = document.querySelector('.burger');
+  const nav = document.getElementById('mobile-nav');
 
-  const closeMenu = () => {
-    btn.classList.remove('is-open');
-    panel.classList.remove('open');
-    btn.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('menu-open');
-  };
+  if (!burger || !nav) return;
 
-  const openMenu = () => {
-    btn.classList.add('is-open');
-    panel.classList.add('open');
-    btn.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('menu-open');
-  };
-
-  btn.addEventListener('click', () => {
-    const isOpen = panel.classList.contains('open');
-    isOpen ? closeMenu() : openMenu();
-  });
-
-  // Close on ESC
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && panel.classList.contains('open')) {
-      closeMenu();
-      btn.focus();
-    }
-  });
-
-  // Close when clicking a link
-  panel.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
-    if (link) closeMenu();
+  burger.addEventListener('click', () => {
+    const expanded = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!expanded));
   });
 })();
