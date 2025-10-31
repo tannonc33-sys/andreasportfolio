@@ -184,36 +184,42 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   setTimeout(setReelSpacer, 150);
 })();
 
-// Mobile nav toggle
-(() => {
-  const burger = document.querySelector('button.burger');
-  const nav = document.getElementById('mobile-nav');
-  if (!burger || !nav) return;
+// --- Mobile burger menu toggle ---
+(function () {
+  const btn = document.querySelector('.burger');
+  const panel = document.querySelector('.nav-links');
+  if (!btn || !panel) return;
 
-  // Set initial hidden state for mobile (desktop is overridden by CSS)
-  const close = () => {
-    burger.setAttribute('aria-expanded', 'false');
-    nav.hidden = true;
-  };
-  const open = () => {
-    burger.setAttribute('aria-expanded', 'true');
-    nav.hidden = false;
+  const closeMenu = () => {
+    btn.classList.remove('is-open');
+    panel.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
   };
 
-  // Initialize
-  close();
+  const openMenu = () => {
+    btn.classList.add('is-open');
+    panel.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  };
 
-  burger.addEventListener('click', () => {
-    const isOpen = burger.getAttribute('aria-expanded') === 'true';
-    if (isOpen) close(); else open();
+  btn.addEventListener('click', () => {
+    const isOpen = panel.classList.contains('open');
+    isOpen ? closeMenu() : openMenu();
   });
 
-  // Optional: ensure nav is not hidden on desktop when resizing
-  const mq = window.matchMedia('(min-width: 768px)');
-  const sync = () => {
-    if (mq.matches) nav.hidden = false; // desktop: always visible
-    else if (burger.getAttribute('aria-expanded') === 'false') nav.hidden = true;
-  };
-  mq.addEventListener?.('change', sync);
-  sync();
+  // Close on ESC
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      closeMenu();
+      btn.focus();
+    }
+  });
+
+  // Close when clicking a link
+  panel.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (link) closeMenu();
+  });
 })();
