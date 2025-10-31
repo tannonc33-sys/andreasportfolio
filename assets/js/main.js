@@ -223,3 +223,19 @@ export function clearCart(){ localStorage.removeItem('cart'); }
     if (link) closeMenu();
   });
 })();
+
+// Mobile nav toggle
+(() => {
+  const burger = document.querySelector('button.burger');
+  const nav = document.getElementById('mobile-nav');
+  if (!burger || !nav) return;
+
+  // Ensure initial state is hidden if aria-expanded=false
+  nav.hidden = burger.getAttribute('aria-expanded') === 'false';
+
+  burger.addEventListener('click', () => {
+    const expanded = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!expanded));
+    nav.hidden = expanded; // hide when it was expanded
+  });
+})();

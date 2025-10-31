@@ -294,6 +294,45 @@ button.burger:hover span {
   transition: opacity 0.2s ease;
 }
 
+/* Default: hide mobile nav */
+#mobile-nav { 
+  display: none;
+}
+
+/* When the burger is expanded, show the nav (burger is immediately before nav) */
+button.burger[aria-expanded="true"] + #mobile-nav {
+  display: block;
+}
+
+/* Desktop: always show nav, hide burger */
+@media (min-width: 768px) {
+  button.burger { display: none; }
+  #mobile-nav { display: flex !important; }
+}
+
+/* Your transparent button styles (keep these) */
+button.burger {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  /* Optional size so the hit target is comfortable */
+  width: 44px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.burger:focus,
+button.burger:active {
+  outline: none;
+  background: transparent !important;
+  box-shadow: none;
+}
+
 /* hero */
 .hero {
   padding: 48px 0px 0px;   /* keep your spacing */
