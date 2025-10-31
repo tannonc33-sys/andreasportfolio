@@ -184,40 +184,40 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   setTimeout(setReelSpacer, 150);
 })();
 
-// ===== Burger toggle (simple & safe) =====
-(() => {
+// --- Minimal burger toggle ---
+document.addEventListener('DOMContentLoaded', () => {
   const btn   = document.querySelector('button.burger');
   const panel = document.getElementById('mobile-nav');
   if (!btn || !panel) return;
 
-  // Start closed (keeps aria/state predictable)
-  const setState = (open) => {
+  function setState(open){
     panel.classList.toggle('open', open);
+    btn.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.classList.toggle('menu-open', open);
-    btn.setAttribute('aria-expanded', String(open));
-  };
-  setState(false);
+  }
 
-  // Toggle on button click
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    const open = !panel.classList.contains('open');
-    setState(open);
+    setState(!panel.classList.contains('open'));
   });
 
-  // Close when clicking a link in the panel
+  // Close when clicking a link inside
   panel.addEventListener('click', (e) => {
     if (e.target.closest('a')) setState(false);
   });
 
-  // Close when clicking outside the panel
+  // Close on outside click
   document.addEventListener('click', (e) => {
-    const clickedOutside = !panel.contains(e.target) && e.target !== btn;
-    if (panel.classList.contains('open') && clickedOutside) setState(false);
+    if (panel.classList.contains('open') &&
+        !panel.contains(e.target) && e.target !== btn){
+      setState(false);
+    }
   });
 
-  // Close on Escape
+  // Close on ESC
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') setState(false);
   });
-})();
+});
+

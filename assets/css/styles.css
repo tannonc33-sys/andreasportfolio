@@ -88,57 +88,49 @@ body {
   animation: bob 1.8s ease-in-out infinite;
 }
 
-/* the three lines */
-.burger span {
-  position: absolute;
-  left: 6px;
-  right: 6px;
-  height: 2px;
-  background: var(--gold);    /* your palette */
-  transform-origin: 50% 50%;
-  transition: transform .25s ease, opacity .2s ease;
+/* Bars icon (desktop hidden) */
+.burger{
+  display:none;          /* shown in media query */
+  position:relative;
+  width:40px; height:30px;
+  border:0; background:transparent; padding:0;
+  cursor:pointer;
 }
-.burger span:nth-child(1) { top: 10px; }
-.burger span:nth-child(2) { top: 17px; }
-.burger span:nth-child(3) { top: 24px; }
+.burger span{
+  position:absolute; left:6px; right:6px; height:2px;
+  background:var(--gold);
+  transition:transform .2s ease, opacity .2s ease, top .2s ease;
+}
+.burger span:nth-child(1){ top:8px; }
+.burger span:nth-child(2){ top:14px; }
+.burger span:nth-child(3){ top:20px; }
+.burger.is-open span:nth-child(1){ top:14px; transform:rotate(45deg); }
+.burger.is-open span:nth-child(2){ opacity:0; }
+.burger.is-open span:nth-child(3){ top:14px; transform:rotate(-45deg); }
 
-/* X animation when open */
-.burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.burger.is-open span:nth-child(2) { opacity: 0; }
-.burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+/* --- Mobile breakpoint --- */
+@media (max-width:768px){
+  .burger{ display:inline-flex; align-items:center; justify-content:center; }
 
-/* Hide the burger on desktop (shows on mobile below) */
-.burger { display: none; }
-
-/* Mobile breakpoint */
-@media (max-width: 768px) {
-  .burger { 
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center;
-  }
-
-  /* Panel base (hidden) */
+  /* Slide-down panel base (hidden) */
   .nav-links{
-    position: fixed;
-    left: 0; right: 0; top: 64px;
-    background: var(--darkgreen);
-    border-top: 1px solid rgba(255,255,255,.08);
-    display: grid; gap: 10px; padding: 14px 20px;
-    transform: translateY(-110%);
-    opacity: 0; pointer-events: none;
-    transition: transform .28s ease, opacity .28s ease;
-    z-index: 1000;
+    position:fixed;
+    left:0; right:0; top:64px;       /* match your header height */
+    background:var(--darkgreen);
+    border-top:1px solid rgba(255,255,255,.08);
+    display:grid; gap:10px;
+    padding:14px 20px;
+    transform:translateY(-110%);
+    opacity:0; pointer-events:none;
+    transition:transform .28s ease, opacity .28s ease;
+    z-index:1000;
   }
-
-  /* Open state */
+  
   .nav-links.open{
-    transform: translateY(0);
-    opacity: 1; pointer-events: auto;
+    transform:translateY(0);
+    opacity:1; pointer-events:auto;
   }
-
-  /* Optional: prevent background scroll when open */
-  body.menu-open { overflow: hidden; }
+  body.menu-open{ overflow:hidden; }
 }
 
 /* Bobbing motion */
