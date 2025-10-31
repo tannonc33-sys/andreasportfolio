@@ -184,40 +184,42 @@ export function clearCart(){ localStorage.removeItem('cart'); }
   setTimeout(setReelSpacer, 150);
 })();
 
-// ===== Burger toggle (simple) =====
+// --- Burger toggle (simple & safe) ---
 document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.querySelector('.burger');
+  const btn   = document.querySelector('button.burger');
   const panel = document.getElementById('mobile-nav');
+
   if (!btn || !panel) return;
 
-  const toggle = () => {
-    const isOpen = panel.classList.toggle('open');
-    btn.classList.toggle('is-open', isOpen);
-    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    document.body.classList.toggle('menu-open', isOpen);
+  const setState = (open) => {
+    panel.classList.toggle('open', open);
+    btn.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('menu-open', open);
   };
 
-  btn.addEventListener('click', toggle);
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = !panel.classList.contains('open');
+    setState(open);
+  });
 
-  // Close when clicking a link (mobile)
+  // Close on link click inside panel (mobile)
   panel.addEventListener('click', (e) => {
-    if (e.target.closest('a')) {
-      panel.classList.remove('open');
-      btn.classList.remove('is-open');
-      btn.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('menu-open');
+    if (e.target.closest('a')) setState(false);
+  });
+
+  // Click outside closes
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('open') &&
+        !panel.contains(e.target) &&
+        e.target !== btn) {
+      setState(false);
     }
   });
 
-  // Close on Escape
+  // Escape closes
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && panel.classList.contains('open')) {
-      panel.classList.remove('open');
-      btn.classList.remove('is-open');
-      btn.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('menu-open');
-      btn.focus();
-    }
+    if (e.key === 'Escape') setState(false);
   });
 });
-
