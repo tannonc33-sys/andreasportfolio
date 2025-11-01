@@ -16,15 +16,33 @@ async function load(id, url){
 load('site-header', 'partials/header.html');
 load('site-footer', 'partials/footer.html');
 
-// --- simple cart helpers (if you used them before) ---
-export function addToCart(item){
-  const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-  cart.push(item);
-  localStorage.setItem('cart', JSON.stringify(cart));
-  alert('Added to cart');
+// assets/js/main.js
+
+// ----- Cart helpers -----
+export function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
 }
-export function getCart(){ return JSON.parse(localStorage.getItem('cart')||'[]'); }
-export function clearCart(){ localStorage.removeItem('cart'); }
+
+export function setCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+export function clearCart() {
+  localStorage.removeItem('cart');
+}
+
+export function addToCart(item) {
+  const cart = getCart();
+  cart.push(item);
+  setCart(cart);
+}
+
+export function removeFromCart(id) {
+  // remove by id; change to sku/priceId if that’s your key
+  const next = getCart().filter(item => item.id !== id);
+  setCart(next);
+}
+
 
 // GLOBAL TILT + AMBIENT LIGHT FOR PORTFOLIO CARDS
 (() => {
@@ -263,3 +281,35 @@ window.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') setState(false);
   });
 });
+
+// ----- Burger init -----
+(function initBurger() {
+  const btn   = document.querySelector('button.burger');
+  const panel = document.getElementById('mobile-nav');
+  if (!btn || !panel) return;
+
+  const setState = (open) => {
+    panel.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  };
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setState(!panel.classList.contains('open'));
+  });
+
+  panel.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setState(false);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) {
+      setState(false);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setState(false);
+  });
+})();
