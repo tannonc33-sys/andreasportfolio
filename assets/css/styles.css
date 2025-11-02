@@ -782,3 +782,41 @@ main {
 
 .site-header { --header-h: 64px; } /* adjust if needed */
 
+/* Desktop: show the row of links inside the header bar */
+.site-header .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;                 /* tweak spacing */
+}
+
+/* Hamburger hidden on desktop */
+.burger { display: none; }
+
+/* Mobile breakpoint: hide the row and turn it into a slide-down panel */
+@media (max-width: 768px) {
+  .burger {
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+
+  .site-header .nav-links {
+    position: fixed;
+    left: 0; right: 0;
+    top: 64px;                          /* match your header height */
+    background: var(--darkgreen);
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: grid;                      /* stacked links */
+    gap: 10px;
+    padding: 14px 20px;
+    transform: translateY(-110%);       /* hidden by default */
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .28s ease, opacity .28s ease;
+    z-index: 1000;
+  }
+  .site-header .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  body.menu-open { overflow: hidden; }
+}

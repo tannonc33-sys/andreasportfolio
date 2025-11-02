@@ -202,15 +202,15 @@ export function removeFromCart(id) {
   setTimeout(setReelSpacer, 150);
 })();
 
-// ===== AH BURGER INIT =====
+// ===== Burger (matches your header.html) =====
 document.addEventListener('DOMContentLoaded', () => {
-  const btn   = document.getElementById('ah-burger');
-  const panel = document.getElementById('ah-nav');
+  const btn   = document.querySelector('button.burger');
+  const panel = document.getElementById('mobile-nav');
   if (!btn || !panel) return;
 
   const setOpen = (open) => {
     btn.classList.toggle('is-open', open);
-    panel.classList.toggle('open', open);
+    panel.classList.toggle('open', open);            // CSS uses .nav-links.open
     btn.setAttribute('aria-expanded', String(open));
     document.body.classList.toggle('menu-open', open);
   };
