@@ -7,7 +7,7 @@ async function load(id, url){
 
   // mark active nav
   const path = location.pathname.split('/').pop() || 'index.html';
-  host.querySelectorAll('.nav-links a').forEach(a=>{
+  host.querySelectorAll('.nav-links a, #ah-nav a').forEach(a=>{
     const href = a.getAttribute('href');
     if(href === path) a.classList.add('active');
   });
@@ -202,114 +202,37 @@ export function removeFromCart(id) {
   setTimeout(setReelSpacer, 150);
 })();
 
-// --- Minimal burger toggle ---
+// ===== AH BURGER INIT =====
 document.addEventListener('DOMContentLoaded', () => {
-  const btn   = document.querySelector('button.burger');
-  const panel = document.getElementById('mobile-nav');
+  const btn   = document.getElementById('ah-burger');
+  const panel = document.getElementById('ah-nav');
   if (!btn || !panel) return;
 
-  function setState(open){
-    panel.classList.toggle('open', open);
+  const setOpen = (open) => {
     btn.classList.toggle('is-open', open);
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    panel.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
     document.body.classList.toggle('menu-open', open);
-  }
+  };
 
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    setState(!panel.classList.contains('open'));
+    setOpen(!panel.classList.contains('open'));
   });
 
-  // Close when clicking a link inside
   panel.addEventListener('click', (e) => {
-    if (e.target.closest('a')) setState(false);
+    if (e.target.closest('a')) setOpen(false);
   });
 
-  // Close on outside click
   document.addEventListener('click', (e) => {
     if (panel.classList.contains('open') &&
-        !panel.contains(e.target) && e.target !== btn){
-      setState(false);
-    }
-  });
-
-  // Close on ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setState(false);
-  });
-});
-
-// --- Burger: tiny, safe toggle ---
-// Put this at the *very end* of assets/js/main.js
-window.addEventListener('DOMContentLoaded', () => {
-  console.log('[burger] init');
-
-  const btn   = document.querySelector('button.burger');
-  const panel = document.getElementById('mobile-nav');
-
-  if (!btn || !panel) {
-    console.warn('[burger] elements not found');
-    return;
-  }
-
-  const setState = (open) => {
-    panel.classList.toggle('open', open);
-    btn.classList.toggle('is-open', open);
-    document.body.classList.toggle('menu-open', open);
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  };
-
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation(); // don’t let the document handler immediately close it
-    setState(!panel.classList.contains('open'));
-  });
-
-  // Close when clicking outside the panel
-  document.addEventListener('click', (e) => {
-    if (!panel.classList.contains('open')) return;
-    if (panel.contains(e.target) || e.target === btn) return;
-    setState(false);
-  });
-
-  // Close when tapping a link in the panel
-  panel.addEventListener('click', (e) => {
-    if (e.target.closest('a')) setState(false);
-  });
-
-  // Close on ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setState(false);
-  });
-});
-
-// ----- Burger init -----
-(function initBurger() {
-  const btn   = document.querySelector('button.burger');
-  const panel = document.getElementById('mobile-nav');
-  if (!btn || !panel) return;
-
-  const setState = (open) => {
-    panel.classList.toggle('open', open);
-    document.body.classList.toggle('menu-open', open);
-    btn.setAttribute('aria-expanded', String(open));
-  };
-
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    setState(!panel.classList.contains('open'));
-  });
-
-  panel.addEventListener('click', (e) => {
-    if (e.target.closest('a')) setState(false);
-  });
-
-  document.addEventListener('click', (e) => {
-    if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) {
-      setState(false);
+        !panel.contains(e.target) &&
+        e.target !== btn) {
+      setOpen(false);
     }
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setState(false);
+    if (e.key === 'Escape') setOpen(false);
   });
-})();
+});

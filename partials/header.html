@@ -2,16 +2,8 @@
   <div class="container nav">
     <a class="logo" href="./index.html">Andrea Hernandez<span class="dot">.</span></a>
 
-    <!-- Hamburger -->
-    <button class="burger" type="button"
-            aria-label="Menu"
-            aria-controls="mobile-nav"
-            aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-
-    <!-- Mobile panel -->
-    <nav id="mobile-nav" class="nav-links">
+    <!-- Desktop row (inline) -->
+    <nav class="nav-links">
       <a href="./index.html">Home</a>
       <a href="./portfolio.html">Portfolio</a>
       <a href="./shop.html">Shop</a>
@@ -20,5 +12,22 @@
       <a href="./contact.html">Contact</a>
       <a href="./cart.html">Cart</a>
     </nav>
+
+    <!-- Mobile burger (no bubble) -->
+    <button id="ah-burger" class="ah-burger" type="button"
+            aria-label="Menu" aria-controls="ah-nav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+
+  <!-- Mobile slide-down panel -->
+  <nav id="ah-nav" class="ah-nav" aria-label="Site">
+    <a href="./index.html">Home</a>
+    <a href="./portfolio.html">Portfolio</a>
+    <a href="./shop.html">Shop</a>
+    <a href="./cv.html">CV</a>
+    <a href="./about.html">About</a>
+    <a href="./contact.html">Contact</a>
+    <a href="./cart.html">Cart</a>
+  </nav>
 </header>
