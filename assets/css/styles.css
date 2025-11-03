@@ -733,7 +733,7 @@ main {
     z-index: 10001; /* above panel */
   }
   #ah-burger.ah-burger span {
-    display: block;
+    /*display: block;*/
     height: 2px;
     width: 26px;
     background: var(--gold, #e0c28a);

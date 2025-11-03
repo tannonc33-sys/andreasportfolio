@@ -236,3 +236,62 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') setOpen(false);
   });
 });
+
+// assets/js/main.js
+
+// fetch + inject a partial, return a Promise when done
+function load(id, url){
+  const host = document.getElementById(id);
+  if(!host) return Promise.resolve(null);
+  return fetch(url)
+    .then(r => r.text())
+    .then(html => {
+      host.innerHTML = html;
+      // mark active nav
+      const path = location.pathname.split('/').pop() || 'index.html';
+      host.querySelectorAll('.nav-links a').forEach(a=>{
+        if (a.getAttribute('href') === path) a.classList.add('active');
+      });
+      return host;
+    });
+}
+
+// ===== AH BURGER INIT =====
+function initBurger(){
+  const btn   = document.getElementById('ah-burger');
+  const panel = document.getElementById('ah-nav');
+  if (!btn || !panel) return;
+
+  const setOpen = (open) => {
+    btn.classList.toggle('is-open', open);
+    panel.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('menu-open', open);
+  };
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setOpen(!panel.classList.contains('open'));
+  });
+
+  panel.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) {
+      setOpen(false);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+}
+
+// Load header, THEN init burger; load footer (optional)
+(async () => {
+  await load('site-header', 'partials/header.html');
+  initBurger();
+  await load('site-footer', 'partials/footer.html');
+})();
