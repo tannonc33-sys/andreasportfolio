@@ -202,41 +202,6 @@ export function removeFromCart(id) {
   setTimeout(setReelSpacer, 150);
 })();
 
-// ===== Burger (matches your header.html) =====
-document.addEventListener('DOMContentLoaded', () => {
-  const btn   = document.querySelector('button.burger');
-  const panel = document.getElementById('mobile-nav');
-  if (!btn || !panel) return;
-
-  const setOpen = (open) => {
-    btn.classList.toggle('is-open', open);
-    panel.classList.toggle('open', open);            // CSS uses .nav-links.open
-    btn.setAttribute('aria-expanded', String(open));
-    document.body.classList.toggle('menu-open', open);
-  };
-
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    setOpen(!panel.classList.contains('open'));
-  });
-
-  panel.addEventListener('click', (e) => {
-    if (e.target.closest('a')) setOpen(false);
-  });
-
-  document.addEventListener('click', (e) => {
-    if (panel.classList.contains('open') &&
-        !panel.contains(e.target) &&
-        e.target !== btn) {
-      setOpen(false);
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setOpen(false);
-  });
-});
-
 // assets/js/main.js
 
 // fetch + inject a partial, return a Promise when done

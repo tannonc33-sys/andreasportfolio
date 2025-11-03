@@ -794,11 +794,11 @@ main {
 
 /* Mobile breakpoint: hide the row and turn it into a slide-down panel */
 @media (max-width: 768px) {
-  .burger {
+  #ah-burger.burger {
     display: inline-flex; align-items: center; justify-content: center;
   }
 
-  .site-header .nav-links {
+  #ah-nav.ah-nav {
     position: fixed;
     left: 0; right: 0;
     top: 64px;                          /* match your header height */
@@ -813,7 +813,7 @@ main {
     transition: transform .28s ease, opacity .28s ease;
     z-index: 1000;
   }
-  .site-header .nav-links.open {
+  #ah-nav.ah-nav.open {
     transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
