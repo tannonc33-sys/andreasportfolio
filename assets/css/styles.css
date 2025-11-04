@@ -831,7 +831,7 @@ main {
 
 
   /* Menu */
-  .menu1 {
+  .nav-links {
     position: absolute;
     width: 100%;
     background-color: #02173F;
@@ -853,11 +853,11 @@ main {
     transition: all 0.3s ease;
   }
 
-  .menu1 a:first-child {
+  .nav-links a:first-child {
     margin-top: 40px;
   }
 
-  .menu1 a:last-child {
+  .nav-links a:last-child {
     margin-bottom: 40px;
   }
 
