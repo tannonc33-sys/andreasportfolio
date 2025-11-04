@@ -783,7 +783,7 @@ main {
 .site-header { --header-h: 64px; } /* adjust if needed */
 
 /* Hamburger */
-@media (max-width: 1280px) {
+@media (min-width: 1100px) {
   .hamburger1 {
     height: 45px;
     margin: 10px;
