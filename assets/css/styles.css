@@ -831,6 +831,7 @@ main {
 
 /* Menu */
 .menu1 {
+  position: absolute;
   width: 100%;
   background-color: #02173F;
   margin: 0;
@@ -847,7 +848,6 @@ main {
   overflow: hidden;
   transition: height .4s ease;
   z-index: 120;
-  position: absolute;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
