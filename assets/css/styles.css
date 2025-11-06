@@ -308,7 +308,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 .product .small{ color:var(--muted); }
 
 /* footer */
-.site-footer{ margin: 24px 0px 0px 260px; border-top:1px solid var(--line); padding:24px 0; background-color:var(--darkgreen); }
+.site-footer{ margin-top: 24px; border-top:1px solid var(--line); padding:24px 0; background-color:var(--darkgreen); }
 
 .site-footer .container{
   padding-left: 0px;
