@@ -803,9 +803,9 @@ main {
   transition: all 0.2s ease-in-out;
 }
 
-#toggle1 {
+/*#toggle1 {
   display: none;
-}
+}*/
 
 #toggle1:checked + .hamburger .top {
   -webkit-transform: rotate(-45deg);
