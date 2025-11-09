@@ -713,65 +713,7 @@ main {
 }
 
 /* ===== AH BURGER (namespaced, mobile only) ===== */
-@media (max-width: 768px) {
-  /* ensure header doesn't clip the panel */
-  .site-header { position: relative; z-index: 2; }
-
-  /* button visuals (no bubble) */
-  #ah-burger.ah-burger {
-    appearance: none;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    z-index: 10001; /* above panel */
-  }
-  #ah-burger.ah-burger span {
-    display: block;
-    height: 2px;
-    width: 26px;
-    background: var(--gold, #e0c28a);
-    transition: transform .2s ease, opacity .2s ease;
-  }
-  #ah-burger.ah-burger.is-open span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
-  #ah-burger.ah-burger.is-open span:nth-child(2){ opacity: 0; }
-  #ah-burger.ah-burger.is-open span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
-
-  /* panel */
-  #ah-nav.ah-nav {
-    position: fixed;
-    left: 0; right: 0;
-    top: var(--header-h, 64px);  /* tweak if header taller */
-    background: var(--darkgreen, #2e4232);
-    border-top: 1px solid rgba(255,255,255,.08);
-    display: grid;
-    gap: 10px;
-    padding: 14px 20px;
-    transform: translateY(-110%); /* hidden */
-    opacity: 0;
-    pointer-events: none;
-    transition: transform .28s ease, opacity .28s ease;
-    z-index: 10000;
-  }
-  #ah-nav.ah-nav.open {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  /* links inside the panel */
-  #ah-nav.ah-nav a {
-    color: var(--gold, #e0c28a);
-    text-decoration: none;
-    padding: 10px 6px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-  }
+@media (max-width: 1500px) {
 
   /* Hide the inline desktop row on mobile */
   .nav .nav-links { display: none; }
@@ -899,3 +841,5 @@ a {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
+/* End of Self Test */
+
