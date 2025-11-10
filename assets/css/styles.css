@@ -804,7 +804,7 @@ a {
 /* Menu */
 .menu1 {
   width: 100%;
-  background-color: #02173F;
+  background-color: var(--darkgreen);
   margin: 0;
   display: -ms-grid;
   display: grid;
