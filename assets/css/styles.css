@@ -810,7 +810,7 @@ a {
   display: -ms-grid;
   display: grid;
   grid-template-rows: 1fr repeat(4, 0.5fr);
-  grid-row-gap: 25px;
+  grid-row-gap: 5px;
   padding: 0;
   list-style: none;
   clear: both;
