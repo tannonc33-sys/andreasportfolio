@@ -720,6 +720,11 @@ main {
 
   /* lock page scroll when open */
   body.menu-open { overflow: hidden; }
+
+  .site-footer {
+    margin-left: 0px;
+    padding-left: 0px;
+  }
 }
 
 .site-header { --header-h: 64px; } /* adjust if needed */
