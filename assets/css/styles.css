@@ -715,11 +715,14 @@ main {
 /* ===== AH BURGER (namespaced, mobile only) ===== */
 @media (max-width: 1500px) {
 
-  /* Hide the inline desktop row on mobile */
+  /* Hide the inline desktop row on mobile and tablet */
   .nav .nav-links { display: none; }
 
   /* lock page scroll when open */
   body.menu-open { overflow: hidden; }
+
+  /* Footer alignment fix on Tablet */
+  .site-footer { margin-left: 80px;}
 }
 
 .site-header { --header-h: 64px; } /* adjust if needed */
