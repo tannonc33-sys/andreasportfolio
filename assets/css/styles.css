@@ -807,7 +807,7 @@ a {
 /* Menu */
 .menu1 {
   width: 100%;
-  color: var(--gold);
+  color: var(--red);
   background-color: var(--darkgreen);
   margin: 0;
   display: -ms-grid;
@@ -844,7 +844,7 @@ a {
 
 .link1:hover {
   background-color: var(--gold);
-  color: var(--red);
+  color: var(--card);
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
