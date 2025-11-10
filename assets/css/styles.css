@@ -806,7 +806,6 @@ a {
 
 /* Menu */
 .menu1 {
-  border-radius: 10px;
   width: 100%;
   color: var(--red);
   background-color: var(--darkgreen);
@@ -845,6 +844,7 @@ a {
 }
 
 .link1:hover {
+  border-radius: 10px;
   background-color: var(--gold);
   color: var(--card);
   -webkit-transition: all 0.3s ease;
