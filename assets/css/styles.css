@@ -836,6 +836,7 @@ a {
 }
 
 .link1 {
+  color: var(--gold);
   width: 100%;
   margin: 0;
   padding: 10px 0;
