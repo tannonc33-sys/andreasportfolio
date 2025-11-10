@@ -720,12 +720,15 @@ main {
 
   /* lock page scroll when open */
   body.menu-open { overflow: hidden; }
-
-  /* Footer alignment fix on Tablet */
-  .site-footer { padding-left: 2px;}
 }
 
 .site-header { --header-h: 64px; } /* adjust if needed */
+
+@media (min-width: 1500px) {
+  .p-menu1{
+     display: none;
+  }
+}
 
 /* Header Burger Section Self Test */
 /* General */
