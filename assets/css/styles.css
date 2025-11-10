@@ -840,7 +840,7 @@ a {
 }
 
 .link1:hover {
-  background-color: #fff;
+  background-color: var(--gold);
   color: var(--red);
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
