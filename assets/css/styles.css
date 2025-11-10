@@ -443,7 +443,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 }
 
 /* 3-up on large screens if you like; adjust to taste */
-@media (min-width: 1100px) {
+@media (min-width: 1500px) {
   .products { grid-template-columns: repeat(3, minmax(280px, 1fr)); }
 }
 
