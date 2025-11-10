@@ -818,7 +818,6 @@ a {
   z-index: 1200;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  position: absolute;
 }
 
 .menu1 a:first-child {
