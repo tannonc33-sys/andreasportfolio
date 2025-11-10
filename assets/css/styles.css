@@ -804,6 +804,7 @@ a {
 /* Menu */
 .menu1 {
   width: 100%;
+  color: var(--gold);
   background-color: var(--darkgreen);
   margin: 0;
   display: -ms-grid;
