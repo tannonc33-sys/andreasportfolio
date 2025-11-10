@@ -722,7 +722,7 @@ main {
   body.menu-open { overflow: hidden; }
 
   /* Footer alignment fix on Tablet */
-  .site-footer { padding-left: 80px;}
+  .site-footer { padding-left: 2px;}
 }
 
 .site-header { --header-h: 64px; } /* adjust if needed */
