@@ -733,6 +733,11 @@ main {
   .p-menu1{
      display: none;
   }
+
+  .site-footer .container{
+    margin-left: 30px;
+    padding-left: 0px;
+  }
 }
 
 /* Header Burger Section Self Test */
