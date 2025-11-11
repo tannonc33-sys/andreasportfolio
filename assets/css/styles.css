@@ -722,7 +722,7 @@ main {
   body.menu-open { overflow: hidden; }
 
   .site-footer .container{
-    margin-left: 0px;
+    margin-left: 30px;
     padding-left: 0px;
   }
 }
