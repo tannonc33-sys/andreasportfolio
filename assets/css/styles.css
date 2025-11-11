@@ -632,6 +632,12 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
   background: linear-gradient(to left, var(--bg), transparent);
 }
 
+/* site footer container margin left adjustment */
+@media (max-width: 900px){
+  .site-footer .container{
+    margin-left: 40px;}
+}
+
 /* a bit taller on larger screens */
 @media (min-width: 900px){
   .reel-track img { height: 200px; width: 280px; }
