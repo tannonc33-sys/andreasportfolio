@@ -312,7 +312,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 
 .site-footer .container{
   padding-left: 0px;
-  margin-left: 180px;
+  margin-left: 220px;
 }
 
 /* Footer color */
@@ -721,7 +721,7 @@ main {
   /* lock page scroll when open */
   body.menu-open { overflow: hidden; }
 
-  .site-footer {
+  .site-footer .container{
     margin-left: 0px;
     padding-left: 0px;
   }
