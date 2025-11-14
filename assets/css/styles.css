@@ -345,7 +345,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 
 #lightbox .lb-caption{
   position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-  color:var(--card); background: var(--darkgreen);
+  color:var(--gold); background: var(--darkgreen);
   border:1px solid var(--gold); border-radius:12px; padding:10px 14px;
   max-width:min(92vw,900px); text-align:center;
 }
