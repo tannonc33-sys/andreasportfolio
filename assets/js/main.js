@@ -45,7 +45,7 @@ export function removeFromCart(id) {
 
 
 // GLOBAL TILT + AMBIENT LIGHT FOR PORTFOLIO CARDS
-(() => {
+/*(() => {
   const grid = document.querySelector('.products');
   if (!grid) return;
 
@@ -109,6 +109,74 @@ export function removeFromCart(id) {
 
   // Initial position
   queue();
+})();*/
+
+// HOVER-ONLY tilt for portfolio/shop cards
+(() => {
+  const grid = document.querySelector('.products');
+  if (!grid) return;
+
+  // Respect accessibility
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const maxTilt = 6;               // gentle = 4–8
+  const cards  = [...grid.querySelectorAll('.product')];
+
+  cards.forEach(card => {
+    let raf = 0;
+    let mx = 0, my = 0;           // last mouse/touch position
+
+    const animate = () => {
+      raf = 0;
+      const r = card.getBoundingClientRect();
+
+      // Normalized vector from card center to pointer in [-1, 1]
+      const ndx = ((mx - r.left) / r.width)  * 2 - 1;
+      const ndy = ((my - r.top)  / r.height) * 2 - 1;
+
+      const rx = -ndy * maxTilt;  // tilt up/down
+      const ry =  ndx * maxTilt;  // tilt left/right
+
+      card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+
+      // shadow “lean” + ambient light (your CSS uses these)
+      card.style.setProperty('--dx', ndx.toFixed(3));
+      card.style.setProperty('--dy', ndy.toFixed(3));
+
+      const px = Math.max(0, Math.min(100, ((mx - r.left) / r.width)  * 100));
+      const py = Math.max(0, Math.min(100, ((my - r.top)  / r.height) * 100));
+      card.style.setProperty('--mx', `${px}%`);
+      card.style.setProperty('--my', `${py}%`);
+    };
+
+    const queue = () => { if (!raf) raf = requestAnimationFrame(animate); };
+
+    const enter = (p) => {
+      card.classList.add('tilt');
+      mx = p.clientX; my = p.clientY;
+      queue();
+    };
+    const move = (p) => { mx = p.clientX; my = p.clientY; queue(); };
+    const leave = () => {
+      card.classList.remove('tilt');
+      card.style.transform = 'none';
+      card.style.removeProperty('--dx');
+      card.style.removeProperty('--dy');
+      card.style.removeProperty('--mx');
+      card.style.removeProperty('--my');
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    };
+
+    // Mouse
+    card.addEventListener('mouseenter', e => enter(e));
+    card.addEventListener('mousemove',  e => move(e));
+    card.addEventListener('mouseleave', leave);
+
+    // Touch (nice to have; passive so it stays smooth)
+    card.addEventListener('touchstart', e => { if (e.touches[0]) enter(e.touches[0]); }, {passive:true});
+    card.addEventListener('touchmove',  e => { if (e.touches[0]) move(e.touches[0]);  }, {passive:true});
+    card.addEventListener('touchend',  leave);
+  });
 })();
 
 /* ============ Reel (CSS-driven) bootstrap ============ */

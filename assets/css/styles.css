@@ -360,36 +360,6 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 #lightbox .lb-prev{ left:24px; top:50%; transform:translateY(-50%); }
 #lightbox .lb-next{ right:24px; top:50%; transform:translateY(-50%); }
 
-/* Smooth hover effect for portfolio cards */
-/*.product {
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
-
-.product:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-}*/
-
-/* Image zooms in just a touch */
-/*.product img {
-  width: 100%;
-  height: auto;
-  transition: transform 0.5s ease;
-}
-
-.product:hover img {
-  transform: scale(1.05);
-}*/
-
-/* Optional: slight lift shadow */
-/*.product:active {
-  transform: translateY(-2px);
-}*/
-
 /* --- 3D tilt polish: depth shadow + ambient light ---------------------------------- */
 .products .product{
   position: relative;
@@ -429,7 +399,7 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 }
 
 /* Optional: very soft lift when pointer is on the page (JS toggles this class) */
-.products.tilt-active .product::before{ opacity:.65; margin: 0px 0px 35px 0px; }
+.products.tilt::before{ opacity:.65; margin: 0px 0px 35px 0px; }
 
 /* Keep cards crisp */
 .products .product img{ display:block; width:100%; height:auto; }
