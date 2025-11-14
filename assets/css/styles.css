@@ -345,14 +345,14 @@ h1.serif, h2.serif, h3.serif { font-family: "Cormorant Garamond", serif; }
 
 #lightbox .lb-caption{
   position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-  color:var(--text); background:rgba(21,21,23,.85);
-  border:1px solid var(--line); border-radius:12px; padding:10px 14px;
+  color:var(--gold); background: var(--darkgreen);
+  border:1px solid var(--gold); border-radius:12px; padding:10px 14px;
   max-width:min(92vw,900px); text-align:center;
 }
 
 #lightbox .lb-close, #lightbox .lb-prev, #lightbox .lb-next{
   position:fixed; background: var(--darkgreen); color:var(--gold);
-  border:1px solid var(--line); border-radius:10px; padding:6px 12px;
+  border:1px solid var(--gold); border-radius:10px; padding:6px 12px;
   font-size:24px; line-height:1; cursor:pointer;
 }
 
